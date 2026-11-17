@@ -389,7 +389,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='1.9.1';
+const GAME_VER='1.9.2';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -408,7 +408,7 @@ const totalComets=()=>S.cnt.reduce((a,b)=>a+b,0);
 const buyCost=()=>8*Math.pow(1.14,S.bought0);
 const upCost=k=>UPDEF[k].base*Math.pow(UPDEF[k].g,S.up[k]);
 const maxTier=()=>{let m=0;for(let t=0;t<TIERS;t++)if(S.cnt[t]>0||S.lvl[t]>0)m=t;return m;};
-const starsFor=d=>d>=12?Math.floor(Math.pow(d-9,1.25)/1.5):0;
+const ASC_MIN=20,starsFor=d=>d>=ASC_MIN?Math.floor(Math.pow(d-16,1.2)/1.3):0;
 const baseHp=d=>2*Math.pow(1.75,d-1);
 
 /* ---------- plateau ---------- */
@@ -1046,7 +1046,7 @@ function buildList(){
     const el=document.createElement('div');el.className='cd wide vt';
     el.innerHTML=`<h3>La Voûte</h3><p>Referme la mine et recommence plus fort. Tu perds tes comètes, tes niveaux et tes pièces, mais chaque étoile gagnée augmente <b>pour toujours</b> tes gains et tes dégâts de 10 %.</p><div class="big" id="vstars"></div><p id="vinfo"></p><p id="vprev"></p><button class="g vi" id="vbtn" style="width:70%"></button>`;
     listEl.appendChild(el);ui.v={stars:el.querySelector('#vstars'),info:el.querySelector('#vinfo'),prev:el.querySelector('#vprev'),b:el.querySelector('#vbtn')};
-    ui.v.b.addEventListener('click',()=>{initAudio();const gn=starsFor(S.runBest);if(gn<=0){sDeny();toast('Atteins la profondeur 12 pour ascensionner (record actuel : '+S.runBest+')');return;}
+    ui.v.b.addEventListener('click',()=>{initAudio();const gn=starsFor(S.runBest);if(gn<=0){sDeny();toast('Atteins la profondeur '+ASC_MIN+' pour ascensionner (record actuel : '+S.runBest+')');return;}
       if(!ui.confirm){ui.confirm=true;ui.v.b.textContent='Confirmer : +'+gn+' ★';setTimeout(()=>{ui.confirm=false;},3500);return;}
       ui.confirm=false;ascend();sBoost();toast('Ascension ! +'+gn+' étoiles');buildList();});
   }
@@ -1100,7 +1100,7 @@ function refreshUI(force){
     for(const o of ui.stats){const v=String(STATDEF[o.k][1]());if(o._v!==v){o._v=v;o.b.textContent=v;}}
   }else if(tab==='vault'&&ui.v){
     const gn=starsFor(S.runBest);ui.v.stars.textContent='★ '+S.stars+'  ·  +'+(S.stars*10)+' %';
-    ui.v.info.textContent=gn>0?`Ascension disponible : +${gn} étoile${gn>1?'s':''} (profondeur max ${S.runBest}).`:`Atteins la profondeur 12 pour pouvoir ascensionner (record de cette mine : ${S.runBest}).`;
+    ui.v.info.textContent=gn>0?`Ascension disponible : +${gn} étoile${gn>1?'s':''} (profondeur max ${S.runBest}).`:`Atteins la profondeur ${ASC_MIN} pour pouvoir ascensionner (record de cette mine : ${S.runBest}).`;
     {const cur=Math.pow(1+.1*S.stars,2),nxt=Math.pow(1+.1*(S.stars+gn),2);let nd=S.runBest+1;while(starsFor(nd)<=gn&&nd<S.runBest+300)nd++;
      const rec=gn>=3&&gn>=S.stars*.3;
      ui.v.prev.innerHTML=(gn>0?`Après l'ascension : gains et dégâts <b>×${cur.toFixed(2)} → ×${nxt.toFixed(2)}</b>.`:`Multiplicateur actuel : gains et dégâts <b>×${cur.toFixed(2)}</b>.`)+`<br>Étoile supplémentaire à la profondeur <b>${nd}</b>.`+(gn>0?(rec?'<br><span class="rec">✓ Ascension conseillée : tu gagnes beaucoup d\'étoiles.</span>':'<br>Tu peux encore progresser pour en gagner plus avant de recommencer.'):'');}
