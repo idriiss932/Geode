@@ -209,6 +209,15 @@ html,body{background:#05060a}
 #set .bt{display:flex;gap:6px;margin-bottom:6px}#set .bt .g{padding:11px 4px;font-size:13px}
 #set textarea{width:100%;box-sizing:border-box;background:#0b1117;color:#9fb;border:1px solid #234;border-radius:10px;padding:8px;font:11px monospace;margin-bottom:6px}
 #set .dg{background:linear-gradient(180deg,#ff8c8c,#e04848);box-shadow:0 3px 0 #8f2323;color:#2b0505}
+.pwb{position:absolute;width:54px;height:54px;border-radius:50%;border:0;padding:0;display:none;z-index:4;color:#fff;touch-action:manipulation;-webkit-appearance:none;background:conic-gradient(var(--c) calc(var(--p,100)*1%),rgba(255,255,255,.14) 0);box-shadow:0 6px 16px rgba(0,0,0,.5)}
+.pwb.on{display:block}
+.pwb::before{content:'';position:absolute;inset:3.5px;border-radius:50%;background:#0b1118}
+.pwb i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:22px;opacity:.45;filter:grayscale(.6)}
+.pwb b{position:absolute;right:-2px;top:-2px;min-width:20px;height:20px;border-radius:10px;background:#1b2530;font-size:11px;line-height:20px;font-weight:600;color:#cfe}
+.pwb b:empty{display:none}
+.pwb.rdy i{opacity:1;filter:none;animation:nvb 1.6s ease-in-out infinite}
+.pwb.rdy{box-shadow:0 0 18px var(--c),0 6px 16px rgba(0,0,0,.5)}
+.pwb.act{box-shadow:0 0 22px var(--c)}.pwb.act i{opacity:1;filter:none}
 #fpsc{position:fixed;left:6px;bottom:4px;z-index:50;font:10px monospace;color:#9fe;opacity:.7;pointer-events:none}
 </style>
 </head>
@@ -272,7 +281,7 @@ const BOOSTDEF={
   dmg:{n:'Fureur',d:'Dégâts ×3',dur:60,cost:8}
 };
 const fresh=()=>({coins:30,gems:0,stars:0,depth:1,maxDepth:1,runBest:1,cnt:[3,0,0,0,0,0,0,0,0,0],lvl:new Array(TIERS).fill(0),bought0:0,
-  up:{speed:0,dmg:0,gain:0,crit:0,split:0,cap:0,tap:0,off:0,auto:0},pow:{nova:{u:false,l:0,seen:false}},stats:{kills:0,bosses:0,maxCombo:0,taps:0,merges:0,buys:0,gold:0,play:0},mis:[{n:0,base:0},{n:0,base:0},{n:0,base:0},{n:0,base:0}],daily:{last:'',streak:0},boost:{gain:0,speed:0,dmg:0},cps:0,last:Date.now(),total:0,asc:0,taps:0,tutStep:0});
+  up:{speed:0,dmg:0,gain:0,crit:0,split:0,cap:0,tap:0,off:0,auto:0},pow:{nova:{u:false,l:0,seen:false},bolt:{u:false,l:0,seen:false},magnet:{u:false,l:0,seen:false},midas:{u:false,l:0,seen:false}},stats:{kills:0,bosses:0,maxCombo:0,taps:0,merges:0,buys:0,gold:0,play:0},mis:[{n:0,base:0},{n:0,base:0},{n:0,base:0},{n:0,base:0}],daily:{last:'',streak:0},boost:{gain:0,speed:0,dmg:0},cps:0,last:Date.now(),total:0,asc:0,taps:0,tutStep:0});
 let S=fresh();
 const SAVEK='geode_v1',BAKK='geode_v1_bak',PREFK='geode_prefs',SAVE_VER=3;
 let lastBak=0;
@@ -287,7 +296,7 @@ function sanitize(o){
   if(r.cnt.reduce((a,b)=>a+b,0)<1)r.cnt[0]=1;
   r.bought0=int(o.bought0,0,0,1e6);
   const u=o.up||{};for(const k in UPDEF)r.up[k]=Math.min(UPDEF[k].max,int(u[k],0,0,1e4));
-  const nv=(o.pow&&o.pow.nova)||{};r.pow={nova:{u:!!nv.u,l:Math.min(NOVA_MAX,int(nv.l,0,0,100)),seen:!!nv.seen}};
+  {const pw=o.pow||{};r.pow={};for(const k of ['nova','bolt','magnet','midas']){const q=pw[k]||{};r.pow[k]={u:!!q.u,l:Math.min(NOVA_MAX,int(q.l,0,0,100)),seen:!!q.seen};}}
   const b=o.boost||{};for(const k in r.boost)r.boost[k]=num(b[k],0,0,6*3600);
   const st=o.stats||{};for(const k in r.stats)r.stats[k]=num(st[k],0,0,1e15);
   if(A(o.mis))for(let i=0;i<4;i++){const m=o.mis[i]||{};r.mis[i]={n:int(m.n,0,0,1e4),base:num(m.base,0,0,1e15)};}
@@ -310,7 +319,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='1.5.0';
+const GAME_VER='1.6.0';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -320,7 +329,8 @@ function exportSave(){S.last=Date.now();const j=JSON.stringify(S);return 'GEODE1
 function decodeSave(code){try{code=String(code||'').trim();if(!code.startsWith('GEODE1.'))return null;return parseSave(decodeURIComponent(escape(atob(code.slice(7)))));}catch(e){return null;}}
 
 /* ---------- calculs ---------- */
-const gm=()=>(1+.15*S.up.gain)*(1+.1*S.stars)*(S.boost.gain>0?2:1);
+let magnetT=0,midasT=0,boltFx=[];const pcd={bolt:0,magnet:0,midas:0};
+const gm=()=>(1+.15*S.up.gain)*(1+.1*S.stars)*(S.boost.gain>0?2:1)*(midasT>0?3:1);
 const dmgOf=t=>D(t)*Math.pow(1.25,S.lvl[t])*(1+.2*S.up.dmg)*(1+.1*S.stars)*(S.boost.dmg>0?3:1);
 const cometSpeed=()=>1.3*spdMul(S.up.speed)*(S.boost.speed>0?1.6:1);
 const capN=()=>10+5*S.up.cap;
@@ -418,6 +428,7 @@ function sTap(){if(!AC)return;const b=bus(0,.2);glide('sine',360,120,.12,.22,.16
 function sGem(){if(!AC)return;const b=bus(0,.3);glide('sine',900,1900,.08,.2,.09,b);glide('sine',1350,2600,.08,.22,.07,b,.07);}
 function sBoost(){if(!AC)return;const b=bus(0,.3);swoosh(300,7000,.7,.14,b);for(let i=0;i<4;i++)glide('sine',600+i*220,1000+i*260,.06,.2,.07,b,i*.06);}
 function sGoldSpawn(){if(!AC||bulk)return;const b=bus(0,.35);swoosh(2500,7000,.6,.1,b);glide('sine',1500,2600,.1,.3,.06,b);}
+function sBolt(){if(!AC)return;const b=bus(0,.3);swoosh(3200,300,.22,.2,b);tick(.3,b,0,2200,.5);tick(.2,b,.07,1400,.3);}
 function sNova(){if(!AC)return;const b=bus(0,.4);glide('sine',110,28,.5,1,.55,b);swoosh(200,5000,.8,.2,b);tick(.25,b,0,1500,.4);for(let i=0;i<5;i++)tick(.07,b,.1+i*.08,3000+i*500,.04);}
 function sDeny(){if(!AC)return;const b=bus(0,.05);glide('square',170,110,.08,.1,.035,b);}
 let muteBtn=null;
@@ -462,13 +473,15 @@ function killBlock(b){
 let clearing=false;
 function nextDepth(){
   clearing=false;S.depth++;if(S.depth>S.maxDepth)S.maxDepth=S.depth;if(S.depth>S.runBest)S.runBest=S.depth;
-  genBoard();if(!SIM){sDepth();novaSeen();flashA=Math.max(flashA,.45);zoom=Math.max(zoom,.035);rips.push({x:0,y:0,r:.1,mr:1.15,l:.9,ml:.9,h:TC[0]});rips.push({x:0,y:0,r:.05,mr:1,l:.7,ml:.7,h:50});}
+  genBoard();if(!SIM){sDepth();novaSeen();powSeen();flashA=Math.max(flashA,.45);zoom=Math.max(zoom,.035);rips.push({x:0,y:0,r:.1,mr:1.15,l:.9,ml:.9,h:TC[0]});rips.push({x:0,y:0,r:.05,mr:1,l:.7,ml:.7,h:50});}
 }
 function hitBlock(b,c){
   const dmg=dmgOf(c.t);damageBlock(b,dmg,true);
   if(!SIM)sHit(c.t,c.x);
 }
 function moveComet(c,dt){
+  if(magnetT>0){let bd=1e9,bx=0,by=0;for(const b of blocks){if(b.dead)continue;const dx=b.x-c.x,dy=b.y-c.y,q=dx*dx+dy*dy;if(q<bd){bd=q;bx=b.x;by=b.y;}}
+    if(bd<1e9){const d=Math.sqrt(bd)||1e-6,k=Math.min(1,dt*5);c.vx+=((bx-c.x)/d-c.vx)*k;c.vy+=((by-c.y)/d-c.vy)*k;const m=Math.hypot(c.vx,c.vy)||1;c.vx/=m;c.vy/=m;}}
   const sp=cometSpeed(),cr=cometR(c.t),n=Math.max(1,Math.ceil(sp*dt/(cr*.7))),h=dt/n;
   for(let i=0;i<n;i++){
     c.x+=c.vx*sp*h;c.y+=c.vy*sp*h;
@@ -490,6 +503,9 @@ function step(dt){
   for(const k in S.boost)if(S.boost[k]>0)S.boost[k]=Math.max(0,S.boost[k]-dt);
   S.stats.play+=dt;
   if(novaCD>0)novaCD=Math.max(0,novaCD-dt);
+  for(const k in pcd)if(pcd[k]>0)pcd[k]=Math.max(0,pcd[k]-dt);
+  if(magnetT>0)magnetT=Math.max(0,magnetT-dt);if(midasT>0)midasT=Math.max(0,midasT-dt);
+  for(let i=boltFx.length-1;i>=0;i--){boltFx[i].l-=dt;if(boltFx[i].l<=0)boltFx.splice(i,1);}
   if(novaFx){novaFx.r+=dt*1.9;for(const b of blocks){if(b.dead||novaFx.hit.has(b))continue;if(Math.hypot(b.x,b.y)-b.s<=novaFx.r){novaFx.hit.add(b);damageBlock(b,novaFx.dmg,false);}}flushKills();if(novaFx.r>1.4)novaFx=null;}
   if(S.up.auto>0){autoT+=dt;if(autoT>=autoInt(S.up.auto)){autoT=0;for(let t=0;t<TIERS-1;t++)if(S.cnt[t]>=3){mergeTier(t);break;}}}
   for(const c of comets)moveComet(c,dt);
@@ -554,6 +570,33 @@ let novaCD=0,novaFx=null;
 function novaDamage(){let top=0;for(let t=0;t<TIERS;t++)if(S.cnt[t]>0)top=t;return dmgOf(top)*novaDmgMul(S.pow.nova.l);}
 function fireNova(){const p=S.pow.nova;if(!p.u||novaCD>0||novaFx)return false;
   novaFx={r:0,hit:new Set(),dmg:novaDamage()};novaCD=novaCdSec(p.l);shake=Math.max(shake,9);flashA=Math.max(flashA,.5);zoom=Math.max(zoom,.045);sNova();return true;}
+const POWS={
+ bolt:{n:'Foudre',ic:'⚡',c:'#6fd8ff',unl:25,gems:15,max:10,cost:l=>6000*Math.pow(2.6,l),cd:l=>Math.max(8,20-1.2*l),
+  d:l=>`Frappe ${4+l} cristaux au hasard · dégâts ×${boltMul(l).toFixed(0)}`,info:'Des éclairs frappent plusieurs cristaux d’un coup.'},
+ magnet:{n:'Aimant',ic:'🧲',c:'#c58cff',unl:35,gems:18,max:10,cost:l=>25000*Math.pow(2.6,l),cd:l=>Math.max(22,45-2.5*l),
+  d:l=>`Les comètes visent les cristaux pendant ${(8+.8*l).toFixed(0)} s · recharge ${Math.max(22,45-2.5*l).toFixed(0)} s`,info:'Tes comètes sont attirées par les cristaux restants.'},
+ midas:{n:'Midas',ic:'👑',c:'#ffc66b',unl:45,gems:22,max:10,cost:l=>80000*Math.pow(2.6,l),cd:l=>Math.max(35,70-4*l),
+  d:l=>`Pièces ×3 pendant ${(10+1.5*l).toFixed(0)} s · recharge ${Math.max(35,70-4*l).toFixed(0)} s`,info:'Tout ce que tu gagnes est triplé un court instant.'}
+};
+const boltMul=l=>12*(1+.3*l),powDur=(k,l)=>k==='magnet'?8+.8*l:10+1.5*l;
+function firePow(k){const p=S.pow[k];if(!p||!p.u||pcd[k]>0)return false;
+  if(k==='bolt'){const al=blocks.filter(b=>!b.dead&&b.hp>0);if(!al.length)return false;
+    for(let i=al.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[al[i],al[j]]=[al[j],al[i]];}
+    let top=0;for(let t=0;t<TIERS;t++)if(S.cnt[t]>0)top=t;const dmg=dmgOf(top)*boltMul(p.l);
+    for(const b of al.slice(0,4+p.l)){damageBlock(b,dmg,false);if(!SIM){const a=rnd()*6.283,sx=Math.cos(a)*1.05,sy=Math.sin(a)*1.05,pts=[sx,sy];for(let i=1;i<6;i++){const f=i/6;pts.push(sx+(b.x-sx)*f+(rnd()-.5)*.14,sy+(b.y-sy)*f+(rnd()-.5)*.14);}pts.push(b.x,b.y);boltFx.push({pts,l:.45});rips.push({x:b.x,y:b.y,r:b.s*.4,mr:b.s*1.6,l:.3,ml:.3,h:195});}}
+    flushKills();if(!SIM){shake=Math.max(shake,6);flashA=Math.max(flashA,.25);zoom=Math.max(zoom,.025);sBolt();}}
+  else if(k==='magnet'){magnetT=powDur(k,p.l);if(!SIM)sBoost();}
+  else{midasT=powDur(k,p.l);if(!SIM){sBoost();flashA=Math.max(flashA,.2);}}
+  pcd[k]=POWS[k].cd(p.l);return true;}
+function powSeen(){for(const k in POWS){const p=S.pow[k],d=POWS[k];if(S.maxDepth>=d.unl&&!p.seen){p.seen=true;toast(d.ic+' Nouveau pouvoir : '+d.n+' est débloquable (onglet Boosts)');}}}
+function powAction(k,first){const p=S.pow[k],d=POWS[k];
+  if(!p.u){
+    if(S.maxDepth<d.unl){sDeny();if(first)toast('Atteins la profondeur '+d.unl+' pour débloquer '+d.n+' (record : '+S.maxDepth+')');return false;}
+    if(S.gems<d.gems){sDeny();if(first)toast('Il te faut '+d.gems+' gemmes ◆ pour débloquer '+d.n);return false;}
+    S.gems-=d.gems;p.u=true;sBoost();toast(d.ic+' '+d.n+' débloqué ! Le bouton est dans l’arène.');return true;}
+  if(p.l>=d.max)return false;const c=d.cost(p.l);
+  if(S.coins<c){sDeny();if(first)toast(needMsg(c));return false;}
+  S.coins-=c;p.l++;sLevel();return true;}
 function novaSeen(){if(S.maxDepth>=NOVA_DEPTH&&!S.pow.nova.seen){S.pow.nova.seen=true;toast('⚡ Nouveau pouvoir : la Nova est débloquable (onglet Boosts)');}}
 function tapAt(x,y){ // coordonnées normalisées
   if(gold&&Math.hypot(x-gold.x,y-gold.y)<.17){collectGold();return;}
@@ -775,7 +818,9 @@ function buildList(){
     }
     {const sc=document.createElement('div');sc.className='sect';sc.textContent='Pouvoirs';listEl.appendChild(sc);
      const el=document.createElement('div');el.className='cd wide ur';el.innerHTML='<div class="tx"><div class="nm">Nova · onde de choc</div><div class="ds"></div></div><button class="g vi"></button>';
-     ui.nova={ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(ui.nova.b,f=>novaAction(f!==false));listEl.appendChild(el);}
+     ui.nova={ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(ui.nova.b,f=>novaAction(f!==false));listEl.appendChild(el);
+     ui.pw={};for(const k in POWS){const d=POWS[k],e2=document.createElement('div');e2.className='cd wide ur';e2.innerHTML='<div class="tx"><div class="nm">'+d.ic+' '+d.n+'</div><div class="ds"></div></div><button class="g vi"></button>';
+       ui.pw[k]={ds:e2.querySelector('.ds'),b:e2.querySelector('.g')};holdBind(ui.pw[k].b,f=>powAction(k,f!==false));listEl.appendChild(e2);}}
     const n=document.createElement('div');n.className='cd wide vt';n.innerHTML='<p>Les gemmes violettes tombent des cristaux géants (toutes les 10 profondeurs) et, plus rarement, des cristaux ordinaires.</p>';listEl.appendChild(n);
   }else if(tab==='mis'){
     ui.mis=[];
@@ -825,6 +870,10 @@ function refreshUI(force){
   }else if(tab==='boosts'){
     for(const o of ui.rows){const d=BOOSTDEF[o.k],t=S.boost[o.k];o.tm.style.width=Math.min(100,t/d.dur*100)+'%';
       setBtn(o.b,(t>0?'Prolonger':'Activer')+'<small>'+d.cost+' ◆</small>',S.gems>=d.cost);}
+    if(ui.pw)for(const k in POWS){const o=ui.pw[k],d=POWS[k],p=S.pow[k];let t,ds,ok;
+      if(!p.u){ds=d.info+` Déblocage : profondeur ${d.unl} + ${d.gems} ◆.`;if(S.maxDepth<d.unl){t='Verrouillé<small>profondeur '+d.unl+'</small>';ok=false;}else{t='Débloquer<small>'+d.gems+' ◆</small>';ok=S.gems>=d.gems;}}
+      else{ds=`Niv. ${p.l} · ${d.d(p.l)}`;if(p.l>=d.max){t='MAX';ok=false;}else{const c=d.cost(p.l);t='Améliorer<small>'+fmt(c)+'</small>';ok=S.coins>=c;}}
+      if(o.ds.textContent!==ds)o.ds.textContent=ds;setBtn(o.b,t,ok);}
     if(ui.nova){const p=S.pow.nova;let t,ds,ok;
       if(!p.u){ds=`Une onde de choc frappe tous les cristaux (×${novaDmgMul(0)} de ta meilleure comète). Déblocage : profondeur ${NOVA_DEPTH} + ${NOVA_GEMS} ◆.`;
         if(S.maxDepth<NOVA_DEPTH){t='Verrouillé<small>profondeur '+NOVA_DEPTH+'</small>';ok=false;}else{t='Débloquer<small>'+NOVA_GEMS+' ◆</small>';ok=S.gems>=NOVA_GEMS;}}
@@ -853,6 +902,9 @@ function refreshUI(force){
   {const lb=bmLabel();listEl.querySelectorAll('.xm').forEach(x=>{if(x._l!==lb){x.textContent=lb;x._l=lb;}});}
 }
 const hudEls={};
+const powBtn={};{const st=$('stage'),pos={bolt:'left:12px;bottom:14px',magnet:'left:12px;bottom:78px',midas:'right:14px;bottom:100px'};
+  if(st&&st.appendChild)for(const k in POWS){const d=POWS[k],el=document.createElement('button');el.className='pwb';el.setAttribute('aria-label',d.n);el.style.cssText=pos[k]+';--c:'+d.c;el.innerHTML='<i>'+d.ic+'</i><b></b>';
+    el.addEventListener('click',()=>{initAudio();if(!firePow(k)){sDeny();toast(pcd[k]>0?d.n+' en recharge : '+Math.ceil(pcd[k])+' s':d.n+' indisponible');}});st.appendChild(el);powBtn[k]={el,tx:el.querySelector('b')};}}
 function hudSet(id,v){const e=hudEls[id]||(hudEls[id]=$(id));if(e._v!==v){e._v=v;e.textContent=v;}}
 function hudStyle(id,prop,v){const e=hudEls[id]||(hudEls[id]=$(id));if(e['_s'+prop]!==v){e['_s'+prop]=v;e.style[prop]=v;}}
 function refreshHud(dt){
@@ -863,10 +915,14 @@ function refreshHud(dt){
   {const nv=hudEls.nova||(hudEls.nova=$('nova')),p=S.pow.nova;
    if(nv){if(nv._u!==p.u){nv._u=p.u;nv.classList.toggle('on',p.u);}
     if(p.u){const tot=novaCdSec(p.l),pc=novaCD>0?Math.round(100*(1-novaCD/tot)):100,rdy=novaCD<=0&&!novaFx;if(nv._p!==pc){nv._p=pc;const pg=hudEls.nvpg||(hudEls.nvpg=$('nv-pg'));pg.style.strokeDashoffset=(219.9*(1-pc/100)).toFixed(1);}if(nv._r!==rdy){nv._r=rdy;nv.classList.toggle('rdy',rdy);}hudSet('nova-t',rdy?'':String(Math.ceil(novaCD)));}}}
+  for(const k in POWS){const o=powBtn[k];if(!o)continue;const p=S.pow[k];if(o.u!==p.u){o.u=p.u;o.el.classList.toggle('on',p.u);}
+    if(p.u){const tot=POWS[k].cd(p.l),act=(k==='magnet'?magnetT:k==='midas'?midasT:0),pc=pcd[k]>0?Math.round(100*(1-pcd[k]/tot)):100,rdy=pcd[k]<=0;if(o.p!==pc){o.p=pc;o.el.style.setProperty('--p',pc);}
+      if(o.r!==rdy){o.r=rdy;o.el.classList.toggle('rdy',rdy);}const tx=act>0?String(Math.ceil(act)):(rdy?'':String(Math.ceil(pcd[k])));if(o.t!==tx){o.t=tx;o.tx.textContent=tx;}if(o.a!==(act>0)){o.a=act>0;o.el.classList.toggle('act',act>0);}}}
   let alive=0;for(const b of blocks)if(!b.dead)alive++;const tot=blocks.length;
   hudSet('dl',(S.depth%10===0?'Cristal géant · ':'')+'Profondeur '+S.depth+' · '+BIOMES[bgTo].n);hudSet('bl',alive+' / '+tot);
   hudStyle('barf','width',(tot?(100*(1-alive/tot)).toFixed(1):0)+'%');
   let h='';for(const k in S.boost)if(S.boost[k]>0)h+=`<span class="bchip">${BOOSTDEF[k].n} ${fmtT(S.boost[k])}</span>`;
+  if(magnetT>0)h+=`<span class="bchip">Aimant ${fmtT(magnetT)}</span>`;if(midasT>0)h+=`<span class="bchip">Midas ×3 ${fmtT(midasT)}</span>`;
   const bx=$('boosts');if(bx._h!==h){bx.innerHTML=h;bx._h=h;}
 }
 
@@ -948,6 +1004,7 @@ function render(dt){
     g.globalCompositeOperation='source-over';
     g.fillStyle=`hsl(${hue},100%,56%)`;g.beginPath();g.arc(c.x,c.y,cr,0,7);g.fill();g.lineWidth=cr*.22;g.strokeStyle=`hsl(${hue},100%,80%)`;g.stroke();g.fillStyle=`hsl(${hue},80%,88%)`;g.beginPath();g.arc(c.x-cr*.25,c.y-cr*.25,cr*.3,0,7);g.fill();
   }
+  if(boltFx.length){g.globalCompositeOperation='lighter';g.lineJoin='round';for(const f of boltFx){const a=Math.max(0,f.l/.45),p=f.pts;g.beginPath();g.moveTo(p[0],p[1]);for(let i=2;i<p.length;i+=2)g.lineTo(p[i],p[i+1]);g.strokeStyle=`rgba(90,200,255,${a*.5})`;g.lineWidth=.05*a+.01;g.stroke();g.strokeStyle=`rgba(235,250,255,${a})`;g.lineWidth=.012;g.stroke();}g.globalCompositeOperation='source-over';}
   if(novaFx){const a=Math.max(0,1-novaFx.r/1.4);g.globalCompositeOperation='lighter';g.strokeStyle=`hsla(${bgH+30},100%,66%,${a*.8})`;g.lineWidth=.07*a+.012;g.beginPath();g.arc(0,0,novaFx.r,0,7);g.stroke();g.strokeStyle=`hsla(${bgH+30},100%,88%,${a})`;g.lineWidth=.014;g.beginPath();g.arc(0,0,novaFx.r,0,7);g.stroke();g.globalCompositeOperation='source-over';}
   // éclats
   for(const p of parts){const a=clamp(p.l/p.ml,0,1);if(p.spark){g.globalCompositeOperation='lighter';g.fillStyle=`hsla(${p.hue},100%,72%,${a*.9})`;g.beginPath();g.arc(p.x,p.y,p.s*.55*(.4+a)+.002,0,7);g.fill();g.globalCompositeOperation='source-over';continue;}g.save();g.translate(p.x,p.y);g.rotate(p.rot);g.fillStyle=`hsla(${p.hue},65%,${60+20*a}%,${a})`;
@@ -1061,6 +1118,7 @@ function openSettings(){
 }
 /* --- réinitialisation --- */
 function rebuildWorld(){
+  pcd.bolt=pcd.magnet=pcd.midas=0;magnetT=midasT=0;boltFx=[];
   tutEnd=0;novaCD=0;novaFx=null;comets=[];parts=[];floats=[];rips=[];killQ=[];coinsFx=[];orbsFx=[];gold=null;clearing=false;streak=0;streakT=0;coinAcc=0;ts=1;flashA=0;zoom=0;
   dispCoins=S.coins;lastGems=S.gems;genBoard();syncComets();bgTo=0;bgFrom=0;bgMix=1;bgFirst=true;buildTabs();buildList();
 }
@@ -1097,7 +1155,7 @@ function frame(now){
   saveT+=dt;if(saveT>6){saveT=0;save();}
   requestAnimationFrame(frame);
 }
-if(window.__GEODE_TEST)window.__GEODE_TEST({openSettings,closeSettings,P,get S(){return S;},set S(v){S=v;},save,load,sanitize,exportSave,decodeSave,importCode,resetGame,step,frame,buildList,buildTabs,setTab:t=>{tab=t;buildList();},refreshUI,fireNova,ascend,claimAll,dailyClaim,offlineGain,setQMode,get qLevel(){return qLevel;},fmt});
+if(window.__GEODE_TEST)window.__GEODE_TEST({firePow,powAction,POWS,pcd,openSettings,closeSettings,P,get S(){return S;},set S(v){S=v;},save,load,sanitize,exportSave,decodeSave,importCode,resetGame,step,frame,buildList,buildTabs,setTab:t=>{tab=t;buildList();},refreshUI,fireNova,ascend,claimAll,dailyClaim,offlineGain,setQMode,get qLevel(){return qLevel;},fmt});
 requestAnimationFrame(frame);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save();else wakeSet();});
 addEventListener('pagehide',save);
