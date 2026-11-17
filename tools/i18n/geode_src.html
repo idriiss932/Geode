@@ -229,6 +229,7 @@ html,body{background:#05060a}
 #set .dg{background:linear-gradient(180deg,#ff8c8c,#e04848);box-shadow:0 3px 0 #8f2323;color:#2b0505}
 .pwb{position:absolute;width:54px;height:54px;border-radius:50%;border:0;padding:0;display:none;z-index:4;color:#fff;touch-action:manipulation;-webkit-appearance:none;background:conic-gradient(var(--c) calc(var(--p,100)*1%),rgba(255,255,255,.14) 0);box-shadow:0 6px 16px rgba(0,0,0,.5)}
 .pwb.on{display:block}
+.pwb.qb{width:44px;height:44px;right:10px}.pwb.qb::before{inset:3px}.pwb.qb i{font-size:15px;font-weight:700;opacity:.5}.pwb.qb b{min-width:18px;height:18px;line-height:18px;font-size:10px;padding:0 3px;box-sizing:border-box;right:-4px;top:-4px}
 .pwb::before{content:'';position:absolute;inset:3.5px;border-radius:50%;background:#0b1118}
 .pwb i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:22px;opacity:.45;filter:grayscale(.6)}
 .pwb b{position:absolute;right:-2px;top:-2px;min-width:20px;height:20px;border-radius:10px;background:#1b2530;font-size:11px;line-height:20px;font-weight:600;color:#cfe}
@@ -536,7 +537,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.2.0';
+const GAME_VER='2.3.0';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -1273,6 +1274,13 @@ function refreshUI(force){
   {const lb=bmLabel();listEl.querySelectorAll('.xm').forEach(x=>{if(x._l!==lb){x.textContent=lb;x._l=lb;}});}
 }
 const hudEls={};
+const qBtn={};let qbArm='',qbT=0;
+function quickBoost(k){const d=BOOSTDEF[k];
+  if(S.boost[k]>0&&qbArm!==k){qbArm=k;clearTimeout(qbT);qbT=setTimeout(()=>{qbArm='';},2500);toast(d.n+' déjà actif ('+Math.ceil(S.boost[k])+' s) : retouche pour prolonger');return false;}
+  qbArm='';if(!buyBoost(k)){toast('Il te faut '+d.cost+' gemmes ◆ pour '+d.n);return false;}toast(d.n+' activé ! '+d.d);return true;}
+{const st=$('stage'),ic={gain:'×2',speed:'»',dmg:'×3'},top={gain:10,speed:62,dmg:114};
+  if(st&&st.appendChild)for(const k in BOOSTDEF){const d=BOOSTDEF[k],el=document.createElement('button');el.className='pwb qb';el.setAttribute('aria-label',d.n);el.title=d.n;el.style.cssText='top:'+top[k]+'px;--c:'+BCOL[k];el.innerHTML='<i>'+ic[k]+'</i><b></b>';
+    el.addEventListener('click',()=>{initAudio();quickBoost(k);});st.appendChild(el);qBtn[k]={el,tx:el.querySelector('b')};}}
 const powBtn={};{const st=$('stage'),pos={bolt:'left:12px;bottom:14px',magnet:'left:12px;bottom:78px',midas:'right:14px;bottom:100px'};
   if(st&&st.appendChild)for(const k in POWS){const d=POWS[k],el=document.createElement('button');el.className='pwb';el.setAttribute('aria-label',d.n);el.style.cssText=pos[k]+';--c:'+d.c;el.innerHTML='<i>'+d.ic+'</i><b></b>';
     el.addEventListener('click',()=>{initAudio();if(!firePow(k)){sDeny();toast(pcd[k]>0?d.n+' en recharge : '+Math.ceil(pcd[k])+' s':d.n+' indisponible');}});st.appendChild(el);powBtn[k]={el,tx:el.querySelector('b')};}}
@@ -1289,6 +1297,14 @@ function refreshHud(dt){
   for(const k in POWS){const o=powBtn[k];if(!o)continue;const p=S.pow[k];if(o.u!==p.u){o.u=p.u;o.el.classList.toggle('on',p.u);}
     if(p.u){const tot=POWS[k].cd(p.l),act=(k==='magnet'?magnetT:k==='midas'?midasT:0),pc=pcd[k]>0?Math.round(100*(1-pcd[k]/tot)):100,rdy=pcd[k]<=0;if(o.p!==pc){o.p=pc;o.el.style.setProperty('--p',pc);}
       if(o.r!==rdy){o.r=rdy;o.el.classList.toggle('rdy',rdy);}const tx=act>0?String(Math.ceil(act)):(rdy?'':String(Math.ceil(pcd[k])));if(o.t!==tx){o.t=tx;o.tx.textContent=tx;}if(o.a!==(act>0)){o.a=act>0;o.el.classList.toggle('act',act>0);}}}
+  {const show=S.gems>0||S.boost.gain>0||S.boost.speed>0||S.boost.dmg>0;
+   for(const k in qBtn){const o=qBtn[k],d=BOOSTDEF[k],left=S.boost[k]||0,act=left>0;
+    if(o.on!==show){o.on=show;o.el.classList.toggle('on',show);}
+    if(!show)continue;
+    const p=act?Math.min(100,Math.round(100*left/d.dur)):100;if(o.p!==p){o.p=p;o.el.style.setProperty('--p',p);}
+    const rd=!act&&S.gems>=d.cost;if(o.r!==rd){o.r=rd;o.el.classList.toggle('rdy',rd);}
+    if(o.a!==act){o.a=act;o.el.classList.toggle('act',act);}
+    const tx=act?String(Math.ceil(left)):d.cost+'◆';if(o.t!==tx){o.t=tx;o.tx.textContent=tx;}}}
   let alive=0;for(const b of blocks)if(!b.dead)alive++;const tot=blocks.length;
   hudSet('dl',(S.depth%10===0?'Cristal géant · ':'')+'Profondeur '+S.depth+' · '+BIOMES[bgTo].n);hudSet('bl',alive+' / '+tot);
   hudStyle('barf','width',(tot?(100*(1-alive/tot)).toFixed(1):0)+'%');
@@ -1564,7 +1580,7 @@ function frame(now){
   saveT+=dt;if(saveT>6){saveT=0;save();}
   requestAnimationFrame(frame);
 }
-if(window.__GEODE_TEST)window.__GEODE_TEST({ACHS,achCheck,dcEnsure,dcCheck,DCD,RELICS,RM,pickRelic,relChoices,cdxList,cdxScan,bossOf,SKINS,skinHue,openJournal,genBoard,get blocks(){return blocks;},get cdxN(){return cdxN;},renderRel,CH:CHS,DEALS,buyChest,buyDeal,claimFree,freeReady,giveChest,rollChest,openChest,todaysDeals,firePow,powAction,POWS,pcd,openSettings,closeSettings,P,get S(){return S;},set S(v){S=v;},save,load,sanitize,exportSave,decodeSave,importCode,resetGame,step,frame,buildList,buildTabs,setTab:t=>{tab=t;buildList();},refreshUI,fireNova,ascend,claimAll,dailyClaim,offlineGain,setQMode,get qLevel(){return qLevel;},fmt});
+if(window.__GEODE_TEST)window.__GEODE_TEST({quickBoost,ACHS,achCheck,dcEnsure,dcCheck,DCD,RELICS,RM,pickRelic,relChoices,cdxList,cdxScan,bossOf,SKINS,skinHue,openJournal,genBoard,get blocks(){return blocks;},get cdxN(){return cdxN;},renderRel,CH:CHS,DEALS,buyChest,buyDeal,claimFree,freeReady,giveChest,rollChest,openChest,todaysDeals,firePow,powAction,POWS,pcd,openSettings,closeSettings,P,get S(){return S;},set S(v){S=v;},save,load,sanitize,exportSave,decodeSave,importCode,resetGame,step,frame,buildList,buildTabs,setTab:t=>{tab=t;buildList();},refreshUI,fireNova,ascend,claimAll,dailyClaim,offlineGain,setQMode,get qLevel(){return qLevel;},fmt});
 requestAnimationFrame(frame);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();notifSchedule();}else{wakeSet();notifCancel();}});
 addEventListener('pagehide',save);

@@ -6,7 +6,7 @@ for k in ["Vaincre § cristal§ géant§","Attraper § comète§ dorée§","Ouvr
 D.update({
 "Vaincre § cristal géant":"Defeat {0} giant crystal","Attraper § comète dorée":"Catch {0} golden comet","Ouvrir § coffre":"Open {0} chest","Réussir § défi du jour":"Complete {0} daily challenge",
 "Posséder § relique":"Own {0} relic","Posséder § reliques":"Own {0} relics",
-" ◆ et ":" ◆ and ","verte":"green","jaune":"yellow","rouge":"red","violette":"purple","bleue":"blue"," %":"%"," et 1 ◆":" and 1 ◆","gemmes":"gems","gemme":"gem"," pour ascensionner (record actuel : ":" to ascend (current best: "," en recharge : ":" cooling down: ",
+" ◆ et ":" ◆ and "," déjà actif (":" already active ("," s) : retouche pour prolonger":" s): tap again to extend"," gemmes ◆ pour ":" gems ◆ for "," activé ! ":" activated! ","verte":"green","jaune":"yellow","rouge":"red","violette":"purple","bleue":"blue"," %":"%"," et 1 ◆":" and 1 ◆","gemmes":"gems","gemme":"gem"," pour ascensionner (record actuel : ":" to ascend (current best: "," en recharge : ":" cooling down: ",
 })
 s=open('/home/claude/geode_src.html').read()
 m=re.search(r'<script>([\s\S]*)</script>',s)
