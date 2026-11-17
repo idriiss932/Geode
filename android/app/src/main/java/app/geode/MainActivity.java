@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+        web.clearCache(true); // toujours repartir de la dernière version publiée (la partie, elle, est conservée)
         if (b != null) web.restoreState(b); else web.loadUrl(URL);
         hideBars();
     }
@@ -52,5 +53,6 @@ public class MainActivity extends Activity {
     @Override protected void onSaveInstanceState(Bundle o) { super.onSaveInstanceState(o); web.saveState(o); }
     @Override protected void onPause() { super.onPause(); web.onPause(); web.evaluateJavascript("window.dispatchEvent(new Event('pagehide'))", null); }
     @Override protected void onResume() { super.onResume(); web.onResume(); }
+    @Override protected void onRestart() { super.onRestart(); }
     @Override public void onBackPressed() { moveTaskToBack(true); }
 }
