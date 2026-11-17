@@ -381,7 +381,7 @@ const seal=j=>sig(j)+'|'+j;
 function unseal(raw){if(typeof raw!=='string')return null;if(raw[0]==='{')return raw;const i=raw.indexOf('|');if(i<1)return null;const j=raw.slice(i+1);return sig(j)===raw.slice(0,i)?j:null;}
 function save(){
   if(SIM)return;
-  try{S.last=Date.now();S.v=SAVE_VER;const j=JSON.stringify(S);const sj=seal(j);localStorage.setItem(SAVEK,sj);if(Date.now()-lastBak>60000){localStorage.setItem(BAKK,sj);lastBak=Date.now();}}catch(e){}
+  try{S.last=Date.now();S.v=SAVE_VER;const j=JSON.stringify(S);const sj=seal(j);localStorage.setItem(SAVEK,sj);nativeMirror(sj);if(Date.now()-lastBak>60000){localStorage.setItem(BAKK,sj);lastBak=Date.now();}}catch(e){}
 }
 function parseSave(raw){try{const u=unseal(raw);if(u===null)return null;const o=JSON.parse(u);if(o&&typeof o==='object'&&!Array.isArray(o))return sanitize(o);}catch(e){}return null;}
 function load(){
@@ -389,7 +389,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.0.0';
+const GAME_VER='2.1.0';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -439,7 +439,7 @@ function syncComets(){
 }
 
 /* ---------- audio : tic de cristal, éclats, souffles ---------- */
-const P={notif:false,vid:true,vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
+const P={full:true,notif:false,vid:true,vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
 const gainV=()=>0.9*P.vol/100;
 let AC=null,master,wet,noiseBuf,muted=false,lastHit=0,hitBudget=0,hitWin=0;
 function initAudio(){
@@ -533,7 +533,7 @@ function killBlock(b){
     for(const nb of blocks){if(!nb.dead&&nb!==b&&Math.hypot(nb.x-b.x,nb.y-b.y)<b.s*2.6){nb.flash=Math.max(nb.flash,.7);nb.pulse=.8;}}
     if(b.boss){ts=.18;flashA=.9;}
     if(streak===10||streak===25||streak===50||streak===100){floatText(0,-.55,'COMBO ×'+streak,'#ffe6a0',24,1.6);sLevel();}
-    if(P.hap&&navigator.vibrate&&T-vibT>.08){vibT=T;try{navigator.vibrate(b.boss?[40,30,80]:10);}catch(e){}}
+    if(P.hap&&T-vibT>.08){vibT=T;buzz(b.boss?'boss':'l');}
   }
   if(b.boss){const g=3+Math.floor(S.depth/10);S.gems+=g;if(!SIM){floatText(0,-.25,'+'+g+' gemmes','#d6c8ff',18,1.8);sGem();}}
   else if(rnd()<.012){S.gems+=1;if(!SIM){floatText(b.x,b.y-.1,'+1 gemme','#d6c8ff',13,1.4);sGem();}}
@@ -927,7 +927,7 @@ function openChest(t){
   const doOpen=()=>{if(opened||!m.classList.contains('landed'))return;opened=true;initAudio();pr.style.display='none';chw.classList.remove('idle');chw.classList.add('anti');sTick3();
     later(()=>{chw.classList.remove('anti');chw.classList.add('shake');m.classList.add('leak');},260);
     later(()=>{chw.classList.remove('shake');chw.classList.add('open');m.classList.add('burst');sBoost();flashA=Math.max(flashA,.3);
-      if(navigator.vibrate&&P.hap)try{navigator.vibrate([25,35,70]);}catch(e){}
+      buzz('ok');
       for(let i=0;i<26;i++){const sp=document.createElement('b');sp.className='sp4';const a=-Math.PI/2+(Math.random()-.5)*2.3,r=80+Math.random()*200;sp.style.cssText=`--dx:${Math.cos(a)*r}px;--dy:${Math.sin(a)*r}px;--d:${(Math.random()*.5).toFixed(2)}s;--s:${8+Math.random()*12}px;--r:${Math.random()*180}deg`;st.appendChild(sp);}},900);
     items.forEach((it,i)=>later(()=>{const card=document.createElement('div');card.className='rc k-'+it.k;const col=it.k==='boost'?BCOL[it.b]:it.k==='gem'?'#b48cff':it.k==='star'||it.k==='coin'?'#ffc54a':CPAL[it.t||'r'].glow;card.style.setProperty('--rc',col);
       const ic=it.k==='coin'?icCoin():it.k==='gem'?icGem():it.k==='star'?icStar():it.k==='chest'?chestArt(it.t,46):icBolt(col);
@@ -1283,6 +1283,16 @@ function tutUpdate(){
 /* --- natif (Capacitor) : notifications --- */
 const nativeOK=()=>{try{return !!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());}catch(e){return false;}};
 const LN=()=>{try{return window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.LocalNotifications;}catch(e){return null;}};
+const NP=n=>{try{return window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins[n];}catch(e){return null;}};
+const IM=()=>{try{return nativeOK()?Capacitor.registerPlugin('Immersive'):null;}catch(e){return null;}};
+function buzz(k){if(!P.hap)return;const h=nativeOK()&&NP('Haptics');
+  try{if(h){if(k==='boss')h.impact({style:'HEAVY'});else if(k==='ok')h.notification({type:'SUCCESS'});else h.impact({style:'LIGHT'});return;}
+    if(navigator.vibrate)navigator.vibrate(k==='boss'?[40,30,80]:k==='ok'?[25,35,70]:10);}catch(e){}}
+function applyImmersive(){const im=IM();if(im)try{im.set({on:!!P.full});}catch(e){}}
+let nmT=0;
+function nativeMirror(sj){const p=NP('Preferences');if(!p||!nativeOK()||Date.now()-nmT<8000)return;nmT=Date.now();try{p.set({key:SAVEK,value:sj});}catch(e){}}
+async function nativeRestore(){const p=NP('Preferences');if(!p||!nativeOK())return;try{const r0=await p.get({key:SAVEK});if(!r0||!r0.value)return;const r=parseSave(r0.value);if(!r)return;S=r;S.last=Date.now();rebuildWorld();save();toast('Sauvegarde restaurée depuis le stockage de l’app');}catch(e){}}
+async function shareSave(){const sh=NP('Share');const code=exportSave();if(sh){try{await sh.share({title:'Sauvegarde Géode',text:code,dialogTitle:'Envoyer ma sauvegarde'});return;}catch(e){}}try{await navigator.clipboard.writeText(code);toast('Code copié');}catch(e){toast('Partage impossible');}}
 async function notifPerm(){const l=LN();if(!l)return false;try{let p=await l.checkPermissions();if(p.display!=='granted')p=await l.requestPermissions();return p.display==='granted';}catch(e){return false;}}
 function notifCancel(){const l=LN();if(!l||!nativeOK())return;try{l.cancel({notifications:[{id:1},{id:2}]});}catch(e){}}
 function notifSchedule(){const l=LN();if(!l||!nativeOK()||!P.notif)return;
@@ -1292,9 +1302,9 @@ function notifSchedule(){const l=LN();if(!l||!nativeOK()||!P.notif)return;
     l.cancel({notifications:[{id:1},{id:2}]}).catch(()=>{}).then(()=>{if(list.length)l.schedule({notifications:list}).catch(()=>{});});}catch(e){}}
 /* --- réglages --- */
 let wl=null;
-async function wakeSet(){try{if(P.wake&&navigator.wakeLock&&!wl&&document.visibilityState==='visible'){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null;});}else if(!P.wake&&wl){await wl.release();wl=null;}}catch(e){}}
+async function wakeSet(){try{const im=IM();if(im)im.keep({on:!!P.wake});}catch(e){}try{if(P.wake&&navigator.wakeLock&&!wl&&document.visibilityState==='visible'){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null;});}else if(!P.wake&&wl){await wl.release();wl=null;}}catch(e){}}
 const fpsEl=document.createElement('div');fpsEl.id='fpsc';fpsEl.style.display='none';document.body.appendChild(fpsEl);
-function applyPrefs(){fpsEl.style.display=P.fps?'block':'none';wakeSet();if(master)master.gain.setTargetAtTime(muted?0:gainV(),AC.currentTime,.05);if(muteBtn)muteBtn.textContent=muted?'🔇':'🔊';refreshUI(true);}
+function applyPrefs(){applyImmersive();fpsEl.style.display=P.fps?'block':'none';wakeSet();if(master)master.gain.setTargetAtTime(muted?0:gainV(),AC.currentTime,.05);if(muteBtn)muteBtn.textContent=muted?'🔇':'🔊';refreshUI(true);}
 function closeSettings(){const m=$('set');if(!m)return;m.classList.remove('on');setTimeout(()=>m.remove(),200);}
 function openSettings(){
   closeSettings();
@@ -1313,6 +1323,7 @@ function openSettings(){
   tog('Flashs lumineux','Éclair blanc sur les gros cristaux.',()=>P.flash,v=>{P.flash=v;});
   tog('Chiffres flottants','Gains affichés au-dessus des cristaux.',()=>P.floats,v=>{P.floats=v;});
   tog('Fonds animés (vidéo)','Décors en vidéo pour chaque zone (~1 Mo chacun). Désactivé en qualité Éco.',()=>P.vid,v=>{P.vid=v;vidKey='';});
+  if(nativeOK())tog('Plein écran immersif','Cache les barres Android. Glisse depuis le bord pour les revoir.',()=>P.full,v=>{P.full=v;});
   if(nativeOK())tog('Notifications','Coffre gratuit prêt, mine pleine… même quand le jeu est fermé.',()=>P.notif,v=>{P.notif=v;if(v)notifPerm().then(ok=>{if(!ok){P.notif=false;savePrefs();toast('Notifications refusées dans les réglages Android');}});});
   tog('Compteur FPS','Affiche la fluidité en bas à gauche.',()=>P.fps,v=>{P.fps=v;});
   st('Son & vibrations');
@@ -1328,6 +1339,7 @@ function openSettings(){
   {const ta=document.createElement('textarea');ta.rows=3;ta.spellcheck=false;ta.placeholder='Code de sauvegarde';bd.appendChild(ta);
    const w=document.createElement('div');w.className='bt';
    w.appendChild(btn('vi','Exporter',()=>{ta.value=exportSave();ta.focus();ta.select();try{navigator.clipboard.writeText(ta.value).then(()=>toast('Code copié'),()=>toast('Code généré : copie-le'));}catch(e){toast('Code généré : copie-le');}}));
+   if(nativeOK())w.appendChild(btn('vi','Partager',shareSave));
    w.appendChild(btn('am','Importer',()=>{const v=ta.value.trim();if(!v){sDeny();toast('Colle d’abord ton code');return;}if(!importCode(v)){sDeny();toast('Code invalide');return;}sBoost();toast('Sauvegarde importée');closeSettings();}));
    bd.appendChild(w);
    const w2=document.createElement('div');w2.className='bt';w2.appendChild(btn('','Sauvegarder maintenant',()=>{save();toast('Partie sauvegardée ✓');}));bd.appendChild(w2);
@@ -1358,6 +1370,8 @@ $('reset').addEventListener('click',()=>{initAudio();openSettings();});
 /* --- démarrage --- */
 loadPrefs();
 const had=load();
+if(!had)setTimeout(nativeRestore,500);
+setTimeout(applyImmersive,300);
 resize();
 if(had){
   const away=Math.max(0,(Date.now()-S.last)/1000);
