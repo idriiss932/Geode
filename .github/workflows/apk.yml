@@ -1,0 +1,28 @@
+name: Build APK
+on:
+  push:
+    branches: [main]
+    paths: ['android/**', '.github/workflows/apk.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '8.9' }
+      - name: Build
+        working-directory: android
+        run: gradle --no-daemon assembleRelease
+      - name: Publish APK
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk Geode.apk
+          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
+          gh release create latest Geode.apk --title "Géode (APK)" --notes "APK à installer sur Android. Le jeu se met à jour tout seul : bouton « Mettre à jour » dans Missions > Réglages." --latest
+      - uses: actions/upload-artifact@v4
+        with: { name: Geode-apk, path: Geode.apk }

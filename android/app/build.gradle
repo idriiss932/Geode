@@ -1,0 +1,25 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'app.geode'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'app.geode'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+    signingConfigs {
+        geode {
+            storeFile file('geode.keystore')
+            storePassword 'geodepass'
+            keyAlias 'geode'
+            keyPassword 'geodepass'
+        }
+    }
+    buildTypes {
+        release { signingConfig signingConfigs.geode; minifyEnabled false }
+        debug { signingConfig signingConfigs.geode }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
