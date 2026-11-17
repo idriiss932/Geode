@@ -230,7 +230,7 @@ html,body{background:#05060a}
 .pwb{position:absolute;width:54px;height:54px;border-radius:50%;border:0;padding:0;display:none;z-index:4;color:#fff;touch-action:manipulation;-webkit-appearance:none;background:conic-gradient(var(--c) calc(var(--p,100)*1%),rgba(255,255,255,.14) 0);box-shadow:0 6px 16px rgba(0,0,0,.5)}
 .pwb.on{display:block}
 .qp{flex:none;height:28px;padding:0 11px;border-radius:15px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);background:linear-gradient(90deg,color-mix(in srgb,var(--c) 38%,transparent) calc(var(--p,0)*1%),rgba(255,255,255,.05) 0);color:#fff;font:600 11.5px/1 inherit;font-family:inherit;display:none;align-items:center;gap:6px;-webkit-appearance:none;touch-action:manipulation;white-space:nowrap}
-.qp.on{display:inline-flex}.qp small{font-size:10.5px;font-weight:500;opacity:.85}.qp.dim{opacity:.45}.qp.rdy{box-shadow:0 0 10px color-mix(in srgb,var(--c) 45%,transparent)}
+.qp.on{display:inline-flex}.qp small{font-size:10.5px;font-weight:500;opacity:.85}.qp.dim{color:rgba(255,255,255,.62)}.qp em{font-style:normal;display:inline-flex;align-items:center;gap:5px;margin-right:-6px;padding:4px 9px 4px 8px;border-radius:12px;background:rgba(150,110,255,.28);border:1px solid rgba(190,160,255,.6);color:#e6dcff;font-size:12.5px;font-weight:700}.qp.dim em{background:rgba(255,90,100,.16);border-color:rgba(255,110,120,.55);color:#ffc4c8}.qg{width:9px;height:9px;transform:rotate(45deg);border-radius:2px;background:linear-gradient(135deg,#d9ccff,#8a62ff);box-shadow:0 0 6px rgba(160,120,255,.8)}.qp.rdy{box-shadow:0 0 10px color-mix(in srgb,var(--c) 45%,transparent)}
 #boosts{flex-wrap:nowrap;overflow:hidden;align-items:center;min-height:30px}#boosts .bch{display:flex;gap:6px;margin-left:auto}
 .pwb::before{content:'';position:absolute;inset:3.5px;border-radius:50%;background:#0b1118}
 .pwb i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:22px;opacity:.45;filter:grayscale(.6)}
@@ -539,7 +539,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.3.2';
+const GAME_VER='2.3.3';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -1306,7 +1306,7 @@ function refreshHud(dt){
     if(!show)continue;
     const p=act?Math.min(100,Math.round(100*left/d.dur)):0;if(o.p!==p){o.p=p;o.el.style.setProperty('--p',p);}
     const rd=!act&&S.gems>=d.cost,dm=!act&&!rd;if(o.r!==rd){o.r=rd;o.el.classList.toggle('rdy',rd);}if(o.d!==dm){o.d=dm;o.el.classList.toggle('dim',dm);}
-    const tx=act?fmtT(left):d.cost+' ◆';if(o.t!==tx){o.t=tx;o.el.innerHTML=d.n+'<small>'+tx+'</small>';}}}
+    const tx=act?fmtT(left):d.cost+(rd?'+':'-');if(o.t!==tx){o.t=tx;o.el.innerHTML=act?d.n+'<small>'+tx+'</small>':d.n+'<em><i class="qg"></i>'+d.cost+'</em>';}}}
   let alive=0;for(const b of blocks)if(!b.dead)alive++;const tot=blocks.length;
   hudSet('dl',(S.depth%10===0?'Cristal géant · ':'')+'Profondeur '+S.depth+' · '+BIOMES[bgTo].n);hudSet('bl',alive+' / '+tot);
   hudStyle('barf','width',(tot?(100*(1-alive/tot)).toFixed(1):0)+'%');
