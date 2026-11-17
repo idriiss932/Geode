@@ -389,7 +389,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='1.9.2';
+const GAME_VER='2.0.0';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -439,7 +439,7 @@ function syncComets(){
 }
 
 /* ---------- audio : tic de cristal, éclats, souffles ---------- */
-const P={vid:true,vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
+const P={notif:false,vid:true,vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
 const gainV=()=>0.9*P.vol/100;
 let AC=null,master,wet,noiseBuf,muted=false,lastHit=0,hitBudget=0,hitWin=0;
 function initAudio(){
@@ -1280,6 +1280,16 @@ function tutUpdate(){
   if(target&&target!==tutTarget){target.classList.add('tpulse');if(tutLast!==st&&target.scrollIntoView)target.scrollIntoView({block:'nearest',behavior:'smooth'});}
   tutTarget=target;tutLast=st;
 }
+/* --- natif (Capacitor) : notifications --- */
+const nativeOK=()=>{try{return !!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());}catch(e){return false;}};
+const LN=()=>{try{return window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.LocalNotifications;}catch(e){return null;}};
+async function notifPerm(){const l=LN();if(!l)return false;try{let p=await l.checkPermissions();if(p.display!=='granted')p=await l.requestPermissions();return p.display==='granted';}catch(e){return false;}}
+function notifCancel(){const l=LN();if(!l||!nativeOK())return;try{l.cancel({notifications:[{id:1},{id:2}]});}catch(e){}}
+function notifSchedule(){const l=LN();if(!l||!nativeOK()||!P.notif)return;
+  try{const list=[],now=Date.now();
+    if(S.shop.free>now+5000)list.push({id:1,title:'Géode',body:'📦 Ton coffre gratuit est prêt !',schedule:{at:new Date(S.shop.free+2000),allowWhileIdle:true}});
+    const cap=8*3600*(1+.2*S.up.off);if(S.cps>0)list.push({id:2,title:'Géode',body:'💎 Ta mine est pleine : viens récupérer tes gains.',schedule:{at:new Date(now+cap*1000),allowWhileIdle:true}});
+    l.cancel({notifications:[{id:1},{id:2}]}).catch(()=>{}).then(()=>{if(list.length)l.schedule({notifications:list}).catch(()=>{});});}catch(e){}}
 /* --- réglages --- */
 let wl=null;
 async function wakeSet(){try{if(P.wake&&navigator.wakeLock&&!wl&&document.visibilityState==='visible'){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null;});}else if(!P.wake&&wl){await wl.release();wl=null;}}catch(e){}}
@@ -1303,6 +1313,7 @@ function openSettings(){
   tog('Flashs lumineux','Éclair blanc sur les gros cristaux.',()=>P.flash,v=>{P.flash=v;});
   tog('Chiffres flottants','Gains affichés au-dessus des cristaux.',()=>P.floats,v=>{P.floats=v;});
   tog('Fonds animés (vidéo)','Décors en vidéo pour chaque zone (~1 Mo chacun). Désactivé en qualité Éco.',()=>P.vid,v=>{P.vid=v;vidKey='';});
+  if(nativeOK())tog('Notifications','Coffre gratuit prêt, mine pleine… même quand le jeu est fermé.',()=>P.notif,v=>{P.notif=v;if(v)notifPerm().then(ok=>{if(!ok){P.notif=false;savePrefs();toast('Notifications refusées dans les réglages Android');}});});
   tog('Compteur FPS','Affiche la fluidité en bas à gauche.',()=>P.fps,v=>{P.fps=v;});
   st('Son & vibrations');
   tog('Son','',()=>!muted,v=>{muted=!v;});
@@ -1370,7 +1381,7 @@ function frame(now){
 }
 if(window.__GEODE_TEST)window.__GEODE_TEST({CH:CHS,DEALS,buyChest,buyDeal,claimFree,freeReady,giveChest,rollChest,openChest,todaysDeals,firePow,powAction,POWS,pcd,openSettings,closeSettings,P,get S(){return S;},set S(v){S=v;},save,load,sanitize,exportSave,decodeSave,importCode,resetGame,step,frame,buildList,buildTabs,setTab:t=>{tab=t;buildList();},refreshUI,fireNova,ascend,claimAll,dailyClaim,offlineGain,setQMode,get qLevel(){return qLevel;},fmt});
 requestAnimationFrame(frame);
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save();else wakeSet();});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();notifSchedule();}else{wakeSet();notifCancel();}});
 addEventListener('pagehide',save);
 })();
 </script>

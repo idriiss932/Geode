@@ -1,0 +1,28 @@
+{
+  "appId": "app.geode.cap",
+  "appName": "Géode",
+  "webDir": "www",
+  "backgroundColor": "#070b12",
+  "server": {
+    "url": "https://idriiss932.github.io/Geode/",
+    "androidScheme": "https",
+    "allowNavigation": [
+      "idriiss932.github.io"
+    ],
+    "errorPath": "offline.html"
+  },
+  "android": {
+    "backgroundColor": "#070b12",
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#070b12",
+      "overlaysWebView": false
+    },
+    "LocalNotifications": {
+      "iconColor": "#34e8c8"
+    }
+  }
+}
