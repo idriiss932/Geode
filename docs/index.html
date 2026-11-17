@@ -27,7 +27,7 @@ html,body{margin:0;height:100%;background:#06121a;overflow:hidden;font-family:Ge
 .hr{display:flex;align-items:center;gap:10px}
 .gems{display:flex;align-items:center;gap:7px;font-size:18px;font-weight:400;color:#c9b8ff}
 .gem-ic{width:14px;height:14px;transform:rotate(45deg);background:linear-gradient(135deg,#efe6ff,#a98bff 60%,#6e52e0);border-radius:3px;box-shadow:0 0 10px rgba(169,139,255,.6)}
-#reset,#mute{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:15px;cursor:pointer}
+#jrn,#reset,#mute{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:15px;cursor:pointer}
 #reset.arm{background:rgba(255,80,90,.25);border-color:#ff6670;color:#ffd0d3}
 #prog{padding:6px 16px 0}
 #depthrow{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
@@ -144,7 +144,7 @@ html,body{background:#05060a}
 #coins{font-weight:600;letter-spacing:-.025em;font-variant-numeric:tabular-nums;font-size:36px}
 #cps{font-variant-numeric:tabular-nums;letter-spacing:.04em}
 .coin-ic{box-shadow:0 0 18px rgba(255,200,97,.45)}
-#mute,#reset{background:rgba(255,255,255,.06);border:1px solid var(--line);}
+#jrn,#mute,#reset{background:rgba(255,255,255,.06);border:1px solid var(--line);}
 #depthrow{letter-spacing:.16em;font-weight:500}
 #bar{height:5px;background:rgba(255,255,255,.08)}
 #barf{background:linear-gradient(90deg,#b6ff4a,#4af0c0);box-shadow:0 0 16px rgba(182,255,74,.55)}
@@ -208,6 +208,24 @@ html,body{background:#05060a}
 #set input[type=range]{width:120px;accent-color:#34e8c8}
 #set .bt{display:flex;gap:6px;margin-bottom:6px}#set .bt .g{padding:11px 4px;font-size:13px}
 #set textarea{width:100%;box-sizing:border-box;background:#0b1117;color:#9fb;border:1px solid #234;border-radius:10px;padding:8px;font:11px monospace;margin-bottom:6px}
+#set .jt{display:flex;gap:6px;padding:0 14px 8px;overflow-x:auto;flex:none}
+#set .jt button{flex:none;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);border-radius:10px;padding:8px 12px;font-size:13px;font-family:inherit}
+#set .jt button.on{background:#1fae95;color:#03211b;border-color:transparent;font-weight:600}
+#set .jh{margin:8px 2px 10px;font-size:15px}#set .jh .jm{display:block;font-size:11.5px;color:var(--dim);margin-top:3px;font-weight:400}
+#set .jc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:6px}
+#set .jrow{display:flex;align-items:center;gap:10px}#set .jrow.ok{border-color:rgba(255,198,107,.35)}
+#set .jx{flex:1;min-width:0}#set .jx b{display:block;font-weight:500;font-size:14px}#set .jx span{display:block;font-size:11.5px;color:var(--dim);margin-top:2px;line-height:1.3}
+#set .jm{font-size:11.5px;color:var(--dim);line-height:1.35}
+#set .jr{flex:none;font-size:12px;color:#ffd48a;min-width:34px;text-align:right}
+#set .ji{flex:none;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),var(--c) 55%,rgba(0,0,0,.35));display:flex;align-items:center;justify-content:center;font-size:17px}
+#set .tm{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:6px;overflow:hidden}#set .tm i{display:block;height:100%;background:linear-gradient(90deg,#34e8c8,#ffc66b)}
+#set .jsk{display:flex;gap:3px;flex:none}#set .jsk i{width:11px;height:32px;border-radius:6px}
+#set .jrow .g{flex:none;padding:9px 12px;font-size:12px;min-width:74px}
+#set .jdots{display:flex;gap:6px;margin:4px 0 8px}#set .jdots i{flex:1;aspect-ratio:1;max-width:40px;border-radius:50%;background:#26313c;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;color:#7b8b95}#set .jdots i.on{background:#1fae95;color:#03211b}
+#set .jg{display:grid;grid-template-columns:1fr 1fr;gap:8px}#set .jg div{background:rgba(255,255,255,.04);border-radius:10px;padding:8px;text-align:center}#set .jg b{display:block;font-size:15px;font-weight:600}#set .jg span{display:block;font-size:11px;color:var(--dim);margin-top:2px}
+.rlc{display:flex;align-items:center;gap:10px;text-align:left;margin:8px 0;padding:10px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);border-radius:14px;background:rgba(255,255,255,.04)}
+.rlc i{font-style:normal;font-size:22px;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--c) 22%,#0c121b);flex:none}
+.rlc div{flex:1;min-width:0}.rlc b{display:block;font-size:14px;font-weight:500}.rlc span{display:block;font-size:11.5px;color:var(--dim);line-height:1.3;margin-top:2px}.rlc .g{flex:none;padding:9px 12px;font-size:12px}
 #set .dg{background:linear-gradient(180deg,#ff8c8c,#e04848);box-shadow:0 3px 0 #8f2323;color:#2b0505}
 .pwb{position:absolute;width:54px;height:54px;border-radius:50%;border:0;padding:0;display:none;z-index:4;color:#fff;touch-action:manipulation;-webkit-appearance:none;background:conic-gradient(var(--c) calc(var(--p,100)*1%),rgba(255,255,255,.14) 0);box-shadow:0 6px 16px rgba(0,0,0,.5)}
 .pwb.on{display:block}
@@ -294,7 +312,7 @@ html,body{background:#05060a}
 <div id="app">
   <div id="hud">
     <div><div class="coins"><div class="coin-ic"></div><div id="coins">0</div></div><div id="cps"></div></div>
-    <div class="hr"><div class="gems"><div class="gem-ic"></div><span id="gems">0</span></div><button id="reset" title="Réglages">⚙</button><button id="mute" title="Son">🔊</button></div>
+    <div class="hr"><div class="gems"><div class="gem-ic"></div><span id="gems">0</span></div><button id="jrn" title="Journal">🏆</button><button id="reset" title="Réglages">⚙</button><button id="mute" title="Son">🔊</button></div>
   </div>
   <div id="prog"><div id="depthrow"><span id="dl">Profondeur 1</span><span id="bl"></span></div><div id="bar"><div id="barf"></div></div></div>
   <div id="boosts"></div>
@@ -308,6 +326,10 @@ html,body{background:#05060a}
 <script>
 (()=>{
 "use strict";
+let LANG='fr';try{const p=JSON.parse(localStorage.getItem('geode_prefs')||'{}'),l=p.P&&p.P.lang;LANG=(l==='en'||l==='fr')?l:(String((navigator&&navigator.language)||'fr').slice(0,2).toLowerCase()==='fr'?'fr':'en');}catch(e){}
+const EN={"Comètes §% plus rapides":"Comets {0}% faster","Dégâts +§%":"Damage +{0}%","Gains +§%":"Earnings +{0}%","§% de chances de coup ×4":"{0}% chance of a ×4 hit","Éclatement":"Splash","Un cristal brisé inflige §% de ses PV à ses voisins":"A shattered crystal deals {0}% of its HP to its neighbours","Capacité":"Capacity","§ comètes maximum":"{0} comets maximum","Toucher l'arène : zone +§%":"Tapping the arena: area +{0}%","Gains hors-ligne +§%":"Offline earnings +{0}%","Fusionne seul un triplet toutes les § s":"Merges a triplet on its own every {0} s","Fusionne seul les triplets de comètes":"Merges comet triplets on its own","Gains ×2":"Earnings ×2","Comètes ×1,6 plus rapides":"Comets ×1.6 faster","Dégâts ×3":"Damage ×3","Cuirassé":"Armored","Une armure absorbe les coups : brise-la d’abord.":"Armor soaks up hits: break it first.","Régénérant":"Regenerating","Brisé, il se divise en trois éclats.":"When shattered, it splits into three shards.","Lentille ardente":"Burning Lens","Dégâts ×1,5 · comètes 15 % plus lentes":"Damage ×1.5 · comets 15% slower","Vent solaire":"Solar Wind","Comètes 30 % plus rapides · dégâts −10 %":"Comets 30% faster · damage −10%","Cœur de mine":"Mine Heart","Gains +30 % · cristaux géants +20 % de PV":"Earnings +30% · giant crystals +20% HP","Œil du chasseur":"Hunter's Eye","Coups critiques ×6 au lieu de ×4 · 30 % moins fréquents":"Critical hits ×6 instead of ×4 · 30% less frequent","Éclat vorace":"Hungry Shard","Éclatement +60 % · dégâts −10 %":"Splash +60% · damage −10%","Gains hors-ligne ×1,6 · gains en jeu −10 %":"Offline earnings ×1.6 · in-game earnings −10%","Aimant doré":"Golden Magnet","Comètes dorées 2× plus fréquentes · dégâts −10 %":"Golden comets 2× more frequent · damage −10%","Cœur d’énergie":"Energy Core","Recharge des pouvoirs −30 % · gains −10 %":"Power cooldowns −30% · earnings −10%","Premiers éclats":"First Shards","Mineur assidu":"Steady Miner","Fléau des cristaux":"Crystal Scourge","Casser § cristaux":"Break {0} crystals","Premier forage":"First Drill","Cœur de roche":"Heart of Rock","Noyau de la Terre":"Earth's Core","Atteindre la profondeur §":"Reach depth {0}","Chasseur de géants":"Giant Hunter","Briseur de titans":"Titan Breaker","Fléau des colosses":"Colossus Scourge","Vaincre § cristaux géants":"Defeat {0} giant crystals","Enchaînement":"Chain","Frénésie":"Frenzy","Tempête":"Storm","Faire un combo ×§":"Reach a ×{0} combo","Maître des fusions":"Merge Master","Fusionner § fois":"Merge {0} times","Premier trésor":"First Treasure","Dragon sur son or":"Dragon on its Gold","Ouvrir § coffres":"Open {0} chests","Fortune stellaire":"Stellar Fortune","Gagner § pièces au total":"Earn {0} coins in total","Cycle éternel":"Eternal Cycle","Maître de la Voûte":"Vault Master","Ascensionner § fois":"Ascend {0} times","Étincelle d’or":"Golden Spark","Chasseur d’or":"Gold Hunter","Attraper § comètes dorées":"Catch {0} golden comets","Touche magique":"Magic Touch","Doigts de fée":"Fairy Fingers","Toucher l’arène § fois":"Tap the arena {0} times","Une heure de forage":"One Hour of Digging","Mineur dévoué":"Devoted Miner","Vétéran":"Veteran","Jouer § h":"Play for {0} h","Fidèle":"Loyal","Légende du matin":"Morning Legend","Série de § jours de connexion":"{0}-day login streak","Défi relevé":"Challenge Accepted","Habitué des défis":"Challenge Regular","Maître des défis":"Challenge Master","Réussir § défis du jour":"Complete {0} daily challenges","Premier pouvoir":"First Power","Maître des pouvoirs":"Power Master","Débloquer un pouvoir":"Unlock a power","Débloquer les 4 pouvoirs":"Unlock all 4 powers","Collectionneur de reliques":"Relic Collector","Gardien des reliques":"Relic Keeper","Encyclopédiste":"Encyclopedist","Découvrir § entrées du codex":"Discover {0} codex entries"," · ":" · "," pièces":" coins"," succès débloqués ! +":" achievements unlocked! +"," et ":" and ","Fusionner § fois des comètes":"Merge comets {0} times"," et un coffre rare":" and a rare chest","🎯 Défi réussi : ":"🎯 Challenge complete: ","🎯 3 défis réussis : +2 ◆ et un coffre !":"🎯 3 challenges done: +2 ◆ and a chest!","Améthyste":"Amethyst","Violette, elle dort dans la géode profonde.":"Purple, it sleeps in the deep geode.","Ardent et tiède, il vient des zones chaudes.":"Warm and glowing, it comes from the hot zones.","Bleu des abysses, froid et très dur.":"Deep-sea blue, cold and very hard.","Rouge sombre qui pulse comme un cœur.":"Dark red that pulses like a heart.","Rare : sa couleur change selon l’angle.":"Rare: its colour shifts with the angle.","Claire comme une étoile, au cœur de la supernova.":"Clear as a star, at the heart of the supernova.","Minéraux":"Minerals","Atteins la profondeur ":"Reach depth ","Cristaux géants":"Giant crystals","Comètes":"Comets","Comète ":"Comet ","Palier ":"Tier "," · dégâts ×":" · damage ×","Fusionne jusqu’au palier ":"Merge up to tier ","<b>§ / §</b> succès<span class=\"jm\">Chaque succès rapporte des pièces, et parfois des gemmes ◆.</span>":"<b>{0} / {1}</b> achievements<span class=\"jm\">Each achievement gives coins, and sometimes gems ◆.</span>","<b>Défis du jour</b><span class=\"jm\">Trois nouveaux défis chaque jour. La récompense arrive toute seule.</span>":"<b>Daily challenges</b><span class=\"jm\">Three new challenges every day. The reward arrives on its own.</span>","pièces":"coins","pièces + 1 ◆":"coins + 1 ◆","pièces + coffre rare":"coins + rare chest","<b>Série de connexions</b><span class=\"jm\">Reviens chaque jour : le coffre du jour (onglet Missions) rapporte de plus en plus.</span>":"<b>Login streak</b><span class=\"jm\">Come back every day: the daily chest (Missions tab) pays more and more.</span>","<div class=\"jdots\">§</div><span class=\"jm\" style=\"display:block\">§ Prochain bonus de pièces : ×§ · le 7ᵉ jour, un coffre épique.</span>":"<div class=\"jdots\">{0}</div><span class=\"jm\" style=\"display:block\">{1} Next coin bonus: ×{2} · on day 7, an epic chest.</span>","Ton coffre du jour est prêt !":"Your daily chest is ready!","Série en cours : ":"Current streak: "," jour":" day",". Reviens demain !":". Come back tomorrow!","<b>§ / §</b> découverts<span class=\"jm\">Chaque découverte donne +1 % de gains, pour toujours (actuellement +§ %).</span>":"<b>{0} / {1}</b> discovered<span class=\"jm\">Each discovery gives +1% earnings, forever (currently +{2}%).</span>","<b>Apparence des comètes</b><span class=\"jm\">Change la couleur des comètes et de leur traînée.</span>":"<b>Comet look</b><span class=\"jm\">Changes the colour of your comets and their trails.</span>","Équipée":"Equipped","Débloquée":"Unlocked","Succès : ":"Achievement: ","Équiper":"Equip","Il te faut ":"You need ","Succès":"Achievements","<b style=\"font-size:13px\">Ta progression</b><canvas width=\"640\" height=\"240\" style=\"width:100%;height:auto;margin-top:8px\"></canvas><span class=\"jm\" style=\"display:block\"><i style=\"color:#34e8c8\">━</i> profondeur · <i style=\"color:#ffc66b\">━</i> gains par seconde (échelle log)</span>":"<b style=\"font-size:13px\">Your progress</b><canvas width=\"640\" height=\"240\" style=\"width:100%;height:auto;margin-top:8px\"></canvas><span class=\"jm\" style=\"display:block\"><i style=\"color:#34e8c8\">━</i> depth · <i style=\"color:#ffc66b\">━</i> earnings per second (log scale)</span>","<div class=\"sp\"><div class=\"sh\"><b>🏆 Journal</b><button class=\"sx\">✕</button></div><div class=\"jt\"></div><div class=\"sb\"></div></div>":"<div class=\"sp\"><div class=\"sh\"><b>🏆 Journal</b><button class=\"sx\">✕</button></div><div class=\"jt\"></div><div class=\"sb\"></div></div>","Défis":"Challenges","<p><b>Une relique t’attend !</b> Choisis-en une : un bonus puissant, mais avec un prix à payer. Elle est permanente.</p>":"<p><b>A relic awaits!</b> Pick one: a powerful bonus, but with a price to pay. It is permanent.</p>","<div class=\"rlc\" style=\"--c:§\"><i>§</i><div><b>§</b><span>§</span></div><button class=\"g am\">Choisir</button></div>":"<div class=\"rlc\" style=\"--c:{0}\"><i>{1}</i><div><b>{2}</b><span>{3}</span></div><button class=\"g am\">Choose</button></div>","<p>Dès ta <b>3ᵉ ascension</b>, une relique permanente t’est offerte : un gros bonus avec un prix à payer. Ascensions : § / 3.</p>":"<p>From your <b>3rd ascension</b>, you get a permanent relic: a big bonus with a price to pay. Ascensions: {0} / 3.</p>","<p>Une nouvelle relique t’attend à ta prochaine ascension.</p>":"<p>A new relic awaits at your next ascension.</p>","ARMURE BRISÉE":"ARMOR BROKEN","COMBO ×":"COMBO ×"," gemmes":" gems","✦ Une comète dorée traverse l'arène : touche-la !":"✦ A golden comet crosses the arena: tap it!"," gemme":" gem","✦ Comète dorée : ":"✦ Golden comet: ","Frappe § cristaux au hasard · dégâts ×§":"Strikes {0} random crystals · damage ×{1}","Des éclairs frappent plusieurs cristaux d’un coup.":"Lightning bolts hit several crystals at once.","Les comètes visent les cristaux pendant § s · recharge § s":"Comets home in on crystals for {0} s · cooldown {1} s","Tes comètes sont attirées par les cristaux restants.":"Your comets are drawn to the remaining crystals.","Pièces ×3 pendant § s · recharge § s":"Coins ×3 for {0} s · cooldown {1} s","Tout ce que tu gagnes est triplé un court instant.":"Everything you earn is tripled for a short while.","🔒 Profondeur ":"🔒 Depth ","Débloquable":"Unlockable","En cours":"In progress","Actif · ":"Active · ","Recharge · ":"Cooldown · ","● Prêt":"● Ready"," est débloquable (onglet Boosts)":" can be unlocked (Boosts tab)"," pour débloquer ":" to unlock "," gemmes ◆ pour débloquer ":" gems ◆ to unlock "," débloqué ! Le bouton est dans l’arène.":" unlocked! The button is in the arena.","⚡ Nouveau pouvoir : la Nova est débloquable (onglet Pouvoirs)":"⚡ New power: Nova can be unlocked (Powers tab)","Géode profonde":"Deep Geode","Nébuleuse violette":"Violet Nebula","Ceinture d'astéroïdes":"Asteroid Belt","Trou noir":"Black Hole","Galaxie d'or":"Golden Galaxy","Supernova":"Supernova","Il te manque ":"You are missing "," pour débloquer la Nova (record : ":" to unlock Nova (best: "," gemmes ◆ pour débloquer la Nova":" gems ◆ to unlock Nova","⚡ Nova débloquée ! Le bouton est en bas à droite de l’arène.":"⚡ Nova unlocked! The button is at the bottom right of the arena.","Casse § cristaux":"Break {0} crystals","Enchaîne un combo ×§":"Chain a ×{0} combo","Fusionne § fois des comètes":"Merge comets {0} times","Atteins la profondeur §":"Reach depth {0}","Mission accomplie ! +":"Mission complete! +","Tout récupéré : +":"All collected: +"," pièces et un ":" coins and a ","coffre épique":"epic chest","coffre commun":"common chest","Coffre commun":"Common chest","~8 min de gains, parfois un boost":"~8 min of earnings, sometimes a boost","Coffre rare":"Rare chest","~30 min de gains, souvent un boost, parfois une gemme":"~30 min of earnings, often a boost, sometimes a gem","Coffre épique":"Epic chest","~1 h 40 de gains, boost garanti, 1 à 2 gemmes, parfois une ★":"~1 h 40 of earnings, guaranteed boost, 1–2 gems, sometimes a ★"," obtenu ! (onglet Boutique)":" obtained! (Shop tab)","étoile ★":"star ★","coffre rare":"rare chest","Pluie de pièces":"Coin Rain","25 min de gains instantanés":"25 min of instant earnings","Pack boosts":"Boost Pack","Surcharge + Turbo + Fureur (−40 %)":"Overload + Turbo + Fury (−40%)","Coffre rare en promo":"Rare Chest Sale","Un coffre rare à −30 %":"A rare chest at −30%","Coffre rare ajouté":"Rare chest added","Trio de coffres":"Chest Trio","3 coffres communs (−35 %)":"3 common chests (−35%)","3 coffres communs ajoutés":"3 common chests added","Offre déjà achetée aujourd’hui":"Offer already bought today"," gemmes ◆":" gems ◆"," gemmes ◆ : elles tombent des cristaux géants":" gems ◆: they drop from giant crystals","<div class=\"cname\">§</div><div class=\"cstage\"><div class=\"rays\"></div><div class=\"cglow\"></div><div class=\"cring\"></div><div class=\"chw drop\">§</div><div class=\"cdust\"></div></div><div class=\"cprompt\"><i></i>Touche le coffre</div><div class=\"crew\"></div><div class=\"cbtns\"></div><div class=\"cflash\"></div>":"<div class=\"cname\">{0}</div><div class=\"cstage\"><div class=\"rays\"></div><div class=\"cglow\"></div><div class=\"cring\"></div><div class=\"chw drop\">{1}</div><div class=\"cdust\"></div></div><div class=\"cprompt\"><i></i>Tap the chest</div><div class=\"crew\"></div><div class=\"cbtns\"></div><div class=\"cflash\"></div>","<button class=\"g am\" id=\"cmore\">Ouvrir un autre (§)</button>":"<button class=\"g am\" id=\"cmore\">Open another ({0})</button>","<button class=\"g vi\" id=\"cok\">Continuer</button>":"<button class=\"g vi\" id=\"cok\">Continue</button>"," min":" min","Cristaux cassés":"Crystals broken","Coffres ouverts":"Chests opened","Meilleur combo":"Best combo","Profondeur max":"Max depth","Pièces gagnées":"Coins earned","Comètes achetées":"Comets bought","Comètes dorées":"Golden comets","Étoiles":"Stars","Temps de jeu":"Play time","Les comètes rebondissent seules et brisent les cristaux. <b>Achète-en</b>, <b>améliore-les</b> (dégâts +25 %), ou <b>fusionne 3 comètes identiques</b> en une du palier suivant (6× plus puissante). Tu peux aussi <b>toucher les cristaux</b> dans le cercle pour les frapper toi-même.":"Comets bounce around on their own and break crystals. <b>Buy more</b>, <b>upgrade them</b> (damage +25%), or <b>merge 3 identical comets</b> into one of the next tier (6× stronger). You can also <b>tap the crystals</b> inside the circle to hit them yourself.","Arène pleine : améliore la Capacité pour en ajouter":"Arena full: upgrade Capacity to add more","Palier maximum atteint":"Maximum tier reached","Fusion : il faut 3 comètes du même palier (":"Merge: you need 3 comets of the same tier (","Économie":"Economy","Arène & automatisation":"Arena & automation","<div class=\"tx\"><div class=\"nm\">§</div><div class=\"ds\"></div></div><button class=\"xm\"></button><button class=\"g\"></button>":"<div class=\"tx\"><div class=\"nm\">{0}</div><div class=\"ds\"></div></div><button class=\"xm\"></button><button class=\"g\"></button>","Niveau maximum atteint":"Maximum level reached","<div class=\"tx\"><div class=\"nm\">Coffre offert</div><div class=\"ds\"></div></div><button class=\"g am\"></button>":"<div class=\"tx\"><div class=\"nm\">Free chest</div><div class=\"ds\"></div></div><button class=\"g am\"></button>","Prochain coffre offert dans ":"Next free chest in ","Aucun ":"No "," : achète-en un ou trouve-en en jouant":": buy one or find one while playing","Offres du jour":"Daily deals"," · renouvelé chaque jour</div></div><button class=\"g vi\"></button>":" · renewed every day</div></div><button class=\"g vi\"></button>","<div class=\"tx\"><div class=\"nm\">§</div><div class=\"ds\">§ pendant §s</div><div class=\"tm\"><i style=\"width:0\"></i></div></div><button class=\"g vi\"></button>":"<div class=\"tx\"><div class=\"nm\">{0}</div><div class=\"ds\">{1} for {2}s</div><div class=\"tm\"><i style=\"width:0\"></i></div></div><button class=\"g vi\"></button>"," gemmes ◆ : elles tombent des cristaux géants (tous les 10 niveaux)":" gems ◆: they drop from giant crystals (every 10 levels)","<p>Les gemmes violettes tombent des cristaux géants (toutes les 10 profondeurs) et, plus rarement, des cristaux ordinaires.</p>":"<p>Purple gems drop from giant crystals (every 10 depths) and, more rarely, from ordinary crystals.</p>","Les pouvoirs se lancent depuis les <b>boutons ronds dans l’arène</b>. Débloque-les avec des <b>gemmes ◆</b> une fois la profondeur atteinte, puis améliore-les avec des pièces.":"Powers are fired from the <b>round buttons in the arena</b>. Unlock them with <b>gems ◆</b> once you reach the depth, then upgrade them with coins.","Rien à récupérer pour le moment":"Nothing to collect right now","Coffre du jour":"Daily chest","<div class=\"tx\"><div class=\"nm\">Coffre quotidien</div><div class=\"ds\"></div></div><button class=\"g am\"></button>":"<div class=\"tx\"><div class=\"nm\">Daily chest</div><div class=\"ds\"></div></div><button class=\"g am\"></button>","Déjà récupéré : reviens demain pour prolonger ta série":"Already collected: come back tomorrow to extend your streak","<h3>La Voûte</h3><p>Referme la mine et recommence plus fort. Tu perds tes comètes, tes niveaux et tes pièces, mais chaque étoile gagnée augmente <b>pour toujours</b> tes gains et tes dégâts de 10 %.</p><div class=\"big\" id=\"vstars\"></div><p id=\"vinfo\"></p><p id=\"vprev\"></p><button class=\"g vi\" id=\"vbtn\" style=\"width:70%\"></button>":"<h3>The Vault</h3><p>Close the mine and start again stronger. You lose your comets, levels and coins, but every star earned boosts your earnings and damage by 10% <b>forever</b>.</p><div class=\"big\" id=\"vstars\"></div><p id=\"vinfo\"></p><p id=\"vprev\"></p><button class=\"g vi\" id=\"vbtn\" style=\"width:70%\"></button>","<h3>Reliques</h3><div class=\"rlbox\"></div>":"<h3>Relics</h3><div class=\"rlbox\"></div>","Ascension ! +":"Ascension! +"," étoiles":" stars","🔮 Une relique t’attend dans la Voûte !":"🔮 A relic awaits in the Vault!"," · palier ":" · tier ","</b> en jeu · <b>":"</b> in play · <b>","</b> dégâts par coup · niveau ":"</b> damage per hit · level ","Arène pleine · ":"Arena full · ","<small>Touche pour augmenter la Capacité →</small>":"<small>Tap to raise Capacity →</small>","Acheter une comète":"Buy a comet","Acheter ×":"Buy ×"," pièces · ":" coins · "," en jeu</small>":" in play</small>","Palier max":"Max tier","Fusionner ×":"Merge ×","Fusionner 3 → 1":"Merge 3 → 1"," / 3 comètes":" / 3 comets","Améliorer":"Upgrade","Améliorer +":"Upgrade +","dégâts ×1,25 · ":"damage ×1.25 · ","Pas encore acquis":"Not owned yet","Un coffre commun t’attend !":"A common chest awaits!","Prochain coffre dans ":"Next chest in ","Ouvrir<small>gratuit</small>":"Open<small>free</small>","Acheter<small>":"Buy<small>","Ouvrir<small>":"Open<small>","Acheté":"Bought"," Déblocage : profondeur § + § ◆.":" Unlock: depth {0} + {1} ◆.","Verrouillé<small>profondeur ":"Locked<small>depth ","Débloquer<small>":"Unlock<small>","Niv. § · §":"Lv. {0} · {1}","Améliorer<small>":"Upgrade<small>","Une onde de choc frappe tous les cristaux (×§ de ta meilleure comète). Déblocage : profondeur § + § ◆.":"A shockwave hits every crystal (×{0} of your best comet). Unlock: depth {1} + {2} ◆.","Niv. § · dégâts ×§ · recharge § s":"Lv. {0} · damage ×{1} · cooldown {2} s","  →  ×§ · § s":"  →  ×{0} · {1} s","Tout récupérer<small>":"Collect all<small>"," récompense":" reward"," à prendre</small>":" to collect</small>","Tout récupérer<small>rien à prendre pour l'instant</small>":"Collect all<small>nothing to collect for now</small>","Série : jour § · +§ ◆ et § pièces":"Streak: day {0} · +{1} ◆ and {2} coins","Déjà récupéré aujourd'hui · série de § jour§. Reviens demain !":"Already collected today · {0}-day streak{1}. Come back tomorrow!","Récupérer":"Collect"," · récompense : ":" · reward: ","Récupérer<small>+":"Collect<small>+","Ascension disponible : +§ étoile§ (profondeur max §).":"Ascension available: +{0} star{1} (max depth {2}).","Atteins la profondeur § pour pouvoir ascensionner (record de cette mine : §).":"Reach depth {0} to be able to ascend (this mine's best: {1}).","Après l'ascension : gains et dégâts <b>×§ → ×§</b>.":"After ascending: earnings and damage <b>×{0} → ×{1}</b>.","Multiplicateur actuel : gains et dégâts <b>×§</b>.":"Current multiplier: earnings and damage <b>×{0}</b>.","<br>Étoile supplémentaire à la profondeur <b>§</b>.":"<br>Next extra star at depth <b>{0}</b>.","<br><span class=\"rec\">✓ Ascension conseillée : tu gagnes beaucoup d'étoiles.</span>":"<br><span class=\"rec\">✓ Ascension recommended: you gain a lot of stars.</span>","<br>Tu peux encore progresser pour en gagner plus avant de recommencer.":"<br>You can keep progressing to earn more before starting over.","Verrouillée":"Locked"," indisponible":" unavailable","Cristal géant · ":"Giant crystal · ","Profondeur ":"Depth ","<span class=\"bchip\">Aimant §</span>":"<span class=\"bchip\">Magnet {0}</span>","PROFONDEUR ":"DEPTH ","Touche pour frapper":"Tap to strike","Tape sur les cristaux : un coup de pouce en plus des comètes.":"Tap the crystals: a little extra help on top of the comets.","Achète une comète":"Buy a comet","Les pièces gagnées en cassant des cristaux servent à acheter des comètes. Appuie sur le bouton doré.":"Coins earned by breaking crystals buy comets. Press the golden button.","Améliore-la":"Upgrade it","Chaque niveau augmente les dégâts de ta comète de 25 %.":"Each level increases your comet's damage by 25%.","Fusionne tes comètes":"Merge your comets","Achète encore des comètes : 3 identiques fusionnent en une comète du palier suivant, 6× plus forte.":"Buy more comets: 3 identical ones merge into a comet of the next tier, 6× stronger.","Appuie sur Fusionner : 3 comètes deviennent une seule, 6× plus forte.":"Press Merge: 3 comets become one, 6× stronger.","Les Upgrades":"The Upgrades","Vitesse, critique, capacité… Ouvre l’onglet Upgrades pour renforcer tout ton arsenal.":"Speed, critical, capacity… Open the Upgrades tab to strengthen your whole arsenal.","Bien joué !":"Well played!","Brise le cristal géant tous les 10 niveaux : il donne des gemmes pour les boosts.":"Break the giant crystal every 10 levels: it gives gems for boosts.","Sauvegarde restaurée depuis le stockage de l’app":"Save restored from the app's storage","Sauvegarde Géode":"Geode save","Envoyer ma sauvegarde":"Send my save","Code copié":"Code copied","Partage impossible":"Sharing failed","Géode":"Geode","📦 Ton coffre gratuit est prêt !":"📦 Your free chest is ready!","💎 Ta mine est pleine : viens récupérer tes gains.":"💎 Your mine is full: come and collect your earnings.","<div class=\"sp\"><div class=\"sh\"><b>⚙ Réglages</b><button class=\"sx\">✕</button></div><div class=\"sb\"></div></div>":"<div class=\"sp\"><div class=\"sh\"><b>⚙ Settings</b><button class=\"sx\">✕</button></div><div class=\"sb\"></div></div>","Graphismes & performance":"Graphics & performance","Qualité":"Quality","Éco":"Eco","Économie de batterie":"Battery saver","Limite le jeu à 30 images/s.":"Limits the game to 30 frames/s.","Tremblements & zoom":"Shake & zoom","Secousses et zoom à chaque explosion.":"Screen shake and zoom on every explosion.","Flashs lumineux":"Light flashes","Éclair blanc sur les gros cristaux.":"White flash on big crystals.","Chiffres flottants":"Floating numbers","Gains affichés au-dessus des cristaux.":"Earnings shown above the crystals.","Fonds animés (vidéo)":"Animated backgrounds (video)","Décors en vidéo pour chaque zone (~1 Mo chacun). Désactivé en qualité Éco.":"Video scenery for each zone (~1 MB each). Disabled in Eco quality.","Plein écran immersif":"Immersive full screen","Cache les barres Android. Glisse depuis le bord pour les revoir.":"Hides the Android bars. Swipe from the edge to bring them back.","Coffre gratuit prêt, mine pleine… même quand le jeu est fermé.":"Free chest ready, mine full… even when the game is closed.","Notifications refusées dans les réglages Android":"Notifications denied in Android settings","Compteur FPS":"FPS counter","Affiche la fluidité en bas à gauche.":"Shows smoothness at the bottom left.","Son & vibrations":"Sound & vibration","Ambiance sonore":"Ambient sound","Nappe grave en fond, qui change selon la zone.":"Low drone in the background, changing with the zone.","Petits retours haptiques (si ton téléphone le permet).":"Small haptic feedback (if your phone supports it).","Format des nombres":"Number format","Écran toujours allumé":"Keep screen on","Empêche la mise en veille pendant que tu joues.":"Prevents sleep while you play.","Rejouer le tutoriel":"Replay the tutorial","Tutoriel relancé":"Tutorial restarted","Code de sauvegarde":"Save code","Code généré : copie-le":"Code generated: copy it","Colle d’abord ton code":"Paste your code first","Code invalide":"Invalid code","Sauvegarde importée":"Save imported","Sauvegarder maintenant":"Save now","Partie sauvegardée ✓":"Game saved ✓","<span style=\"margin-bottom:4px\">La partie est aussi sauvegardée automatiquement toutes les 6 secondes.</span>":"<span style=\"margin-bottom:4px\">The game is also saved automatically every 6 seconds.</span>","Mise à jour":"Update","Mettre à jour":"Update now","Mise à jour…":"Updating…","Version ":"Version ","Récupère la dernière version du jeu. Ta partie est conservée.":"Gets the latest version of the game. Your progress is kept.","Zone dangereuse":"Danger zone","Réinitialiser la partie":"Reset the game","Touche encore pour tout effacer":"Tap again to erase everything","Partie réinitialisée":"Game reset","Nova en cours…":"Nova in progress…","🎁 Ton coffre du jour est prêt (onglet Missions)":"🎁 Your daily chest is ready (Missions tab)","Vitesse":"Speed","Puissance":"Power","Prospection":"Prospecting","Critique":"Critical","Percussion":"Percussion","Veille":"Standby","Auto-fusion":"Auto-merge","Surcharge":"Overload","Turbo":"Turbo","Fureur":"Fury","Colosse":"Colossus","Un cristal massif, sans ruse.":"A massive crystal, no tricks.","Il se soigne en continu : frappe fort et vite.":"It heals continuously: hit hard and fast.","Spectre":"Specter","Il devient intouchable par moments.":"It becomes untouchable at times.","Fractal":"Fractal","Veilleur":"Watcher","Relique obtenue : ":"Relic obtained: ","Classique":"Classic","Givre":"Frost","Braise":"Ember","Toxique":"Toxic","Royale":"Royal","Arc-en-ciel":"Rainbow","Broyeur":"Crusher","Abysses":"Abyss","Alchimiste":"Alchemist","Fusionneur":"Merger","Collectionneur":"Collector","Millionnaire":"Millionaire","Milliardaire":"Billionaire","Renaissance":"Rebirth","Assidu":"Dedicated","Porte-relique":"Relic Bearer","Curieux":"Curious","Ambre":"Amber","Saphir":"Sapphire","Rubis":"Ruby","Tanzanite":"Tanzanite","Aigue-marine":"Aquamarine","Vaincs-le une fois":"Defeat it once","Coût : ":"Cost: ","Acheter":"Buy","Gains / heure":"Earnings / hour","Codex":"Codex","Reliques":"Relics","Joue quelques minutes pour voir ta courbe.":"Play a few minutes to see your curve.","Stats":"Stats","INTOUCHABLE":"UNTOUCHABLE","CRITIQUE":"CRITICAL","+1 gemme":"+1 gem"," + un coffre":" + a chest","Foudre":"Lightning","Aimant":"Magnet","Midas":"Midas"," Nouveau pouvoir : ":" New power: ","MAX":"MAX","Coffre du jour : +":"Daily chest: +","Les 3 boosts sont actifs":"All 3 boosts are active","Fusions":"Merges","Touchers":"Taps","Ascensions":"Ascensions","Upgrades":"Upgrades","Pouvoirs":"Powers","Boutique":"Shop","Voûte":"Vault","Missions":"Missions","Combat":"Combat","Coffres":"Chests","Boosts":"Boosts","Nova":"Nova","Mission en cours : ":"Mission in progress: ","Statistiques":"Statistics","Confirmer : +":"Confirm: +","Niv. ":"Lv. ","En stock : ":"In stock: ","Prolonger":"Extend","Activer":"Activate","Demain":"Tomorrow","Ascension  +":"Ascension  +","COMBO  +":"COMBO  +","Auto baisse les effets si le jeu rame.":"Auto lowers effects if the game lags.","Auto":"Auto","Max":"Max","Notifications":"Notifications","Son":"Sound","Volume":"Volume","Vibrations":"Vibration","Affichage":"Display","Complet":"Full","Jeu":"Game","Tutoriel":"Tutorial","Sauvegarde":"Save","Exporter":"Export","Partager":"Share","Importer":"Import","Nova en recharge : ":"Nova cooling down: ","Pendant ton absence (":"While you were away (","Pendant ton absence : +":"While you were away: +","Passer le tuto":"Skip tutorial","Géode — le jeu qui creuse tout seul":"Geode — the game that digs by itself","Profondeur 1":"Depth 1","Journal":"Journal","Réglages":"Settings","Langue":"Language","Vaincre § cristal géant":"Defeat {0} giant crystal","Attraper § comète dorée":"Catch {0} golden comet","Ouvrir § coffre":"Open {0} chest","Réussir § défi du jour":"Complete {0} daily challenge","Posséder § relique":"Own {0} relic","Posséder § reliques":"Own {0} relics"," ◆ et ":" ◆ and ","verte":"green","jaune":"yellow","rouge":"red","violette":"purple","bleue":"blue"," %":"%"," et 1 ◆":" and 1 ◆","gemmes":"gems","gemme":"gem"," pour ascensionner (record actuel : ":" to ascend (current best: "," en recharge : ":" cooling down: "};
+const _T=s=>LANG==='en'&&EN[s]!==undefined?EN[s]:s;
+const _tt=(st,...v)=>{if(LANG==='en'){const e=EN[st.join('§')];if(e!==undefined)return e.replace(/\{(\d+)\}/g,(m,i)=>v[+i]);}let r=st[0];for(let i=0;i<v.length;i++)r+=String(v[i])+st[i+1];return r;};
 const SIM=!!window.__SIM;
 const clamp=(v,a,b)=>v<a?a:v>b?b:v,rnd=Math.random;
 const SUF=['','K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc'];
@@ -325,34 +347,153 @@ const fmtT=s=>{s=Math.ceil(s);return Math.floor(s/60)+':'+String(s%60).padStart(
 const TIERS=10;
 const TC=[190,125,52,20,350,305,265,225,165,95];            // teinte par palier
 const CRY=[[285,310,330],[28,44,14],[200,225,250],[18,38,352],[255,280,300],[185,205,225]];
-const TN=['cyan','verte','jaune','orange','rouge','magenta','violette','bleue','turquoise','lime'];
+const TN=['cyan',_T('verte'),_T('jaune'),'orange',_T('rouge'),'magenta',_T('violette'),_T('bleue'),'turquoise','lime'];
 const tcol=(t,l=62,a=1)=>`hsla(${TC[t%TIERS]},95%,${l}%,${a})`;
 const D=t=>Math.pow(6,t);
 const lvlCost=(t,l)=>30*Math.pow(10,t)*Math.pow(1.55,l);
 const cometR=t=>.034+.005*t;
-const spdMul=l=>1+1.6*(1-Math.pow(.94,l)),critP=l=>.55*(1-Math.pow(.9,l)),splitP=l=>.45*(1-Math.pow(.9,l));
+const spdMul=l=>1+1.6*(1-Math.pow(.94,l)),critP=l=>.55*(1-Math.pow(.9,l))*RM('crit'),splitP=l=>.45*(1-Math.pow(.9,l))*RM('split');
 const autoInt=l=>Math.max(.6,6-.55*l);
 const UPDEF={
-  speed:{n:'Vitesse',d:l=>`Comètes ${Math.round((spdMul(l)-1)*100)}% plus rapides`,max:999,base:80,g:1.8},
-  dmg:{n:'Puissance',d:l=>`Dégâts +${l*20}%`,max:999,base:120,g:1.85},
-  gain:{n:'Prospection',d:l=>`Gains +${l*15}%`,max:999,base:160,g:1.9},
-  crit:{n:'Critique',d:l=>`${Math.round(critP(l)*100)}% de chances de coup ×4`,max:999,base:300,g:2.0},
-  split:{n:'Éclatement',d:l=>`Un cristal brisé inflige ${Math.round(splitP(l)*100)}% de ses PV à ses voisins`,max:999,base:500,g:2.1},
-  cap:{n:'Capacité',d:l=>`${10+l*5} comètes maximum`,max:30,base:250,g:1.9},
-  tap:{n:'Percussion',d:l=>`Toucher l'arène : zone +${l*10}%`,max:60,base:200,g:1.8},
-  off:{n:'Veille',d:l=>`Gains hors-ligne +${l*20}%`,max:15,base:400,g:2},
-  auto:{n:'Auto-fusion',d:l=>l?`Fusionne seul un triplet toutes les ${autoInt(l).toFixed(1)} s`:'Fusionne seul les triplets de comètes',max:10,base:900,g:2.3}
+  speed:{n:_T('Vitesse'),d:l=>_tt`Comètes ${Math.round((spdMul(l)-1)*100)}% plus rapides`,max:999,base:80,g:1.8},
+  dmg:{n:_T('Puissance'),d:l=>_tt`Dégâts +${l*20}%`,max:999,base:120,g:1.85},
+  gain:{n:_T('Prospection'),d:l=>_tt`Gains +${l*15}%`,max:999,base:160,g:1.9},
+  crit:{n:_T('Critique'),d:l=>_tt`${Math.round(critP(l)*100)}% de chances de coup ×4`,max:999,base:300,g:2.0},
+  split:{n:_T('Éclatement'),d:l=>_tt`Un cristal brisé inflige ${Math.round(splitP(l)*100)}% de ses PV à ses voisins`,max:999,base:500,g:2.1},
+  cap:{n:_T('Capacité'),d:l=>_tt`${10+l*5} comètes maximum`,max:30,base:250,g:1.9},
+  tap:{n:_T('Percussion'),d:l=>_tt`Toucher l'arène : zone +${l*10}%`,max:60,base:200,g:1.8},
+  off:{n:_T('Veille'),d:l=>_tt`Gains hors-ligne +${l*20}%`,max:15,base:400,g:2},
+  auto:{n:_T('Auto-fusion'),d:l=>l?_tt`Fusionne seul un triplet toutes les ${autoInt(l).toFixed(1)} s`:_T('Fusionne seul les triplets de comètes'),max:10,base:900,g:2.3}
 };
 const BOOSTDEF={
-  gain:{n:'Surcharge',d:'Gains ×2',dur:120,cost:5},
-  speed:{n:'Turbo',d:'Comètes ×1,6 plus rapides',dur:120,cost:4},
-  dmg:{n:'Fureur',d:'Dégâts ×3',dur:60,cost:8}
+  gain:{n:_T('Surcharge'),d:_T('Gains ×2'),dur:120,cost:5},
+  speed:{n:_T('Turbo'),d:_T('Comètes ×1,6 plus rapides'),dur:120,cost:4},
+  dmg:{n:_T('Fureur'),d:_T('Dégâts ×3'),dur:60,cost:8}
 };
 const fresh=()=>({coins:30,gems:0,stars:0,depth:1,maxDepth:1,runBest:1,cnt:[3,0,0,0,0,0,0,0,0,0],lvl:new Array(TIERS).fill(0),bought0:0,
-  up:{speed:0,dmg:0,gain:0,crit:0,split:0,cap:0,tap:0,off:0,auto:0},pow:{nova:{u:false,l:0,seen:false},bolt:{u:false,l:0,seen:false},magnet:{u:false,l:0,seen:false},midas:{u:false,l:0,seen:false}},stats:{kills:0,bosses:0,maxCombo:0,taps:0,merges:0,buys:0,gold:0,play:0,chests:0},mis:[{n:0,base:0},{n:0,base:0},{n:0,base:0},{n:0,base:0}],daily:{last:'',streak:0},boost:{gain:0,speed:0,dmg:0},cps:0,last:Date.now(),total:0,asc:0,taps:0,tutStep:0,chests:{c:0,r:0,e:0},shop:{free:0,dd:'',db:[]}});
+  up:{speed:0,dmg:0,gain:0,crit:0,split:0,cap:0,tap:0,off:0,auto:0},pow:{nova:{u:false,l:0,seen:false},bolt:{u:false,l:0,seen:false},magnet:{u:false,l:0,seen:false},midas:{u:false,l:0,seen:false}},stats:{kills:0,bosses:0,maxCombo:0,taps:0,merges:0,buys:0,gold:0,play:0,chests:0,dc:0},ach:{},dc:{d:'',l:[]},cod:{b:{},t:0},rel:[],relPend:0,skin:'def',skins:{def:1},hist:[],mis:[{n:0,base:0},{n:0,base:0},{n:0,base:0},{n:0,base:0}],daily:{last:'',streak:0},boost:{gain:0,speed:0,dmg:0},cps:0,last:Date.now(),total:0,asc:0,taps:0,tutStep:0,chests:{c:0,r:0,e:0},shop:{free:0,dd:'',db:[]}});
 let S=fresh();
 const SAVEK='geode_v1',BAKK='geode_v1_bak',PREFK='geode_prefs',SAVE_VER=3;
 let lastBak=0;
+/* ===== contenu additionnel : succès, défis, boss, reliques, codex, apparences ===== */
+const DAYK=/^\d{4}-\d{2}-\d{2}$/;
+const BOSSES=[
+ {id:'colosse',n:_T('Colosse'),hu:285,d:_T('Un cristal massif, sans ruse.')},
+ {id:'cuirasse',n:_T('Cuirassé'),hu:210,d:_T('Une armure absorbe les coups : brise-la d’abord.')},
+ {id:'regen',n:_T('Régénérant'),hu:135,d:_T('Il se soigne en continu : frappe fort et vite.')},
+ {id:'fantome',n:_T('Spectre'),hu:255,d:_T('Il devient intouchable par moments.')},
+ {id:'fractal',n:_T('Fractal'),hu:322,d:_T('Brisé, il se divise en trois éclats.')}];
+const BOSS_IDS=BOSSES.map(b=>b.id);
+const bossOf=d=>BOSSES[((Math.floor(d/10)-1)%5+5)%5];
+let immT=0,histT=0,cdxN=0,featT=0;
+const RELICS=[
+ {id:'lens',n:_T('Lentille ardente'),ic:'🔥',c:'#ff8a5b',d:_T('Dégâts ×1,5 · comètes 15 % plus lentes'),m:{dmg:1.5,spd:.85}},
+ {id:'wind',n:_T('Vent solaire'),ic:'☄',c:'#5af0e0',d:_T('Comètes 30 % plus rapides · dégâts −10 %'),m:{spd:1.3,dmg:.9}},
+ {id:'heart',n:_T('Cœur de mine'),ic:'◆',c:'#ffc66b',d:_T('Gains +30 % · cristaux géants +20 % de PV'),m:{gain:1.3,boss:1.2}},
+ {id:'hunter',n:_T('Œil du chasseur'),ic:'◎',c:'#ff6b6b',d:_T('Coups critiques ×6 au lieu de ×4 · 30 % moins fréquents'),m:{critMul:1.5,crit:.7}},
+ {id:'shard',n:_T('Éclat vorace'),ic:'✧',c:'#b6ff4a',d:_T('Éclatement +60 % · dégâts −10 %'),m:{split:1.6,dmg:.9}},
+ {id:'watch',n:_T('Veilleur'),ic:'☾',c:'#a98bff',d:_T('Gains hors-ligne ×1,6 · gains en jeu −10 %'),m:{off:1.6,gain:.9}},
+ {id:'magnet',n:_T('Aimant doré'),ic:'✦',c:'#ffe08a',d:_T('Comètes dorées 2× plus fréquentes · dégâts −10 %'),m:{gold:2,dmg:.9}},
+ {id:'engine',n:_T('Cœur d’énergie'),ic:'⚡',c:'#6ec8ff',d:_T('Recharge des pouvoirs −30 % · gains −10 %'),m:{pcd:.7,gain:.9}}];
+let _rk=null,_rv={};
+function RM(k){if(_rk!==S.rel){_rk=S.rel;_rv={};for(const id of S.rel){const r=RELICS.find(x=>x.id===id);if(r)for(const q in r.m)_rv[q]=(_rv[q]||1)*r.m[q];}}return _rv[k]||1;}
+function relChoices(){const un=RELICS.filter(r=>!S.rel.includes(r.id));let h=(S.asc*7919+S.rel.length*104729+13)>>>0;const r=()=>{h=(h*1664525+1013904223)>>>0;return h/4294967296;};for(let i=un.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[un[i],un[j]]=[un[j],un[i]];}return un.slice(0,3);}
+function pickRelic(id){if(S.relPend<1||S.rel.includes(id)||!RELICS.some(r=>r.id===id))return false;S.rel=S.rel.concat([id]);S.relPend--;if(!SIM){sBoost();toast(_T('Relique obtenue : ')+RELICS.find(r=>r.id===id).n);}return true;}
+const SKINS={def:{n:_T('Classique'),cost:0},ice:{n:_T('Givre'),h:[190,205],cost:15},fire:{n:_T('Braise'),h:[8,42],cost:15},toxic:{n:_T('Toxique'),h:[85,135],cost:15},royal:{n:_T('Royale'),h:[270,408],cost:30},rainbow:{n:_T('Arc-en-ciel'),h:'rb',cost:0,ach:'a1'}};
+function skinHue(t,k){const s=SKINS[k||S.skin]||SKINS.def;if(!s.h)return TC[t];if(s.h==='rb')return k?t*40:(T*70+t*34)%360;return (s.h[0]+(s.h[1]-s.h[0])*(t/9))%360;}
+const ACHS=[];
+const addA=(b,nm,df,get,gl,gm)=>gl.forEach((g,i)=>ACHS.push({id:b+i,n:nm[i],df,get,g,gems:gm[i]}));
+addA('k',[_T('Premiers éclats'),_T('Mineur assidu'),_T('Broyeur'),_T('Fléau des cristaux')],g=>_tt`Casser ${fmt(g)} cristaux`,()=>S.stats.kills,[100,1000,10000,100000],[0,1,2,3]);
+addA('d',[_T('Premier forage'),_T('Cœur de roche'),_T('Abysses'),_T('Noyau de la Terre')],g=>_tt`Atteindre la profondeur ${g}`,()=>S.maxDepth,[10,20,35,50],[0,1,2,3]);
+addA('b',[_T('Chasseur de géants'),_T('Briseur de titans'),_T('Fléau des colosses')],g=>g>1?_tt`Vaincre ${g} cristaux géants`:_tt`Vaincre ${g} cristal géant`,()=>S.stats.bosses,[1,10,50],[0,1,2]);
+addA('c',[_T('Enchaînement'),_T('Frénésie'),_T('Tempête')],g=>_tt`Faire un combo ×${g}`,()=>S.stats.maxCombo,[25,50,100],[0,1,2]);
+addA('m',[_T('Alchimiste'),_T('Fusionneur'),_T('Maître des fusions')],g=>_tt`Fusionner ${g} fois`,()=>S.stats.merges,[10,100,500],[0,1,2]);
+addA('o',[_T('Premier trésor'),_T('Collectionneur'),_T('Dragon sur son or')],g=>g>1?_tt`Ouvrir ${g} coffres`:_tt`Ouvrir ${g} coffre`,()=>S.stats.chests,[1,10,50],[0,1,2]);
+addA('t',[_T('Millionnaire'),_T('Milliardaire'),_T('Fortune stellaire')],g=>_tt`Gagner ${fmt(g)} pièces au total`,()=>S.total,[1e6,1e9,1e12],[0,1,2]);
+addA('a',[_T('Renaissance'),_T('Cycle éternel'),_T('Maître de la Voûte')],g=>_tt`Ascensionner ${g} fois`,()=>S.asc,[1,3,10],[1,2,3]);
+addA('g',[_T('Étincelle d’or'),_T('Chasseur d’or')],g=>_tt`Attraper ${g} comètes dorées`,()=>S.stats.gold,[10,50],[1,2]);
+addA('p',[_T('Touche magique'),_T('Doigts de fée')],g=>_tt`Toucher l’arène ${g} fois`,()=>S.stats.taps,[200,2000],[0,1]);
+addA('h',[_T('Une heure de forage'),_T('Mineur dévoué'),_T('Vétéran')],g=>_tt`Jouer ${g/3600} h`,()=>S.stats.play,[3600,36000,180000],[0,1,2]);
+addA('s',[_T('Fidèle'),_T('Assidu'),_T('Légende du matin')],g=>_tt`Série de ${g} jours de connexion`,()=>S.daily.streak,[3,7,30],[1,2,3]);
+addA('q',[_T('Défi relevé'),_T('Habitué des défis'),_T('Maître des défis')],g=>g>1?_tt`Réussir ${g} défis du jour`:_tt`Réussir ${g} défi du jour`,()=>S.stats.dc,[1,10,30],[0,1,2]);
+addA('w',[_T('Premier pouvoir'),_T('Maître des pouvoirs')],g=>g===1?_T('Débloquer un pouvoir'):_T('Débloquer les 4 pouvoirs'),()=>Object.values(S.pow).filter(p=>p.u).length,[1,4],[0,2]);
+addA('r',[_T('Porte-relique'),_T('Collectionneur de reliques'),_T('Gardien des reliques')],g=>g>1?_tt`Posséder ${g} reliques`:_tt`Posséder ${g} relique`,()=>S.rel.length,[1,4,8],[1,2,3]);
+addA('x',[_T('Curieux'),_T('Encyclopédiste')],g=>_tt`Découvrir ${g} entrées du codex`,()=>cdxN,[10,21],[1,3]);
+const ACH_IDS=ACHS.map(a=>a.id);
+const achName=id=>{const a=ACHS.find(x=>x.id===id);return a?a.n:id;};
+function achCheck(){let n=0,last=null,gs=0,cs=0;for(const a of ACHS){if(S.ach[a.id])continue;if(a.get()>=a.g){S.ach[a.id]=1;n++;last=a;const c=Math.max(150,S.cps*600);S.coins+=c;S.total+=c;S.gems+=a.gems;gs+=a.gems;cs+=c;}}
+  if(n&&!SIM){sBoost();toast(n===1?'🏆 '+last.n+_T(' · ')+(gs?'+'+gs+_T(' ◆ et '):'+')+fmt(cs)+_T(' pièces'):'🏆 '+n+_T(' succès débloqués ! +')+fmt(cs)+_T(' pièces')+(gs?_T(' et ')+gs+' ◆':''));}return n;}
+const DCK=['kills','merges','bosses','taps','gold','chests'];
+const DCD={
+ kills:{n:g=>_tt`Casser ${fmt(g)} cristaux`,get:()=>S.stats.kills,goal:()=>Math.round(200+30*S.maxDepth)},
+ merges:{n:g=>_tt`Fusionner ${g} fois des comètes`,get:()=>S.stats.merges,goal:()=>4+Math.floor(S.maxDepth/3)},
+ bosses:{n:g=>g>1?_tt`Vaincre ${g} cristaux géants`:_tt`Vaincre ${g} cristal géant`,get:()=>S.stats.bosses,goal:()=>1+Math.floor(S.maxDepth/30)},
+ taps:{n:g=>_tt`Toucher l’arène ${g} fois`,get:()=>S.stats.taps,goal:()=>60+3*S.maxDepth},
+ gold:{n:g=>g>1?_tt`Attraper ${g} comètes dorées`:_tt`Attraper ${g} comète dorée`,get:()=>S.stats.gold,goal:()=>1+Math.floor(S.maxDepth/40)},
+ chests:{n:g=>g>1?_tt`Ouvrir ${g} coffres`:_tt`Ouvrir ${g} coffre`,get:()=>S.stats.chests,goal:()=>1+Math.floor(S.maxDepth/50)}};
+function dcEnsure(){const d=dstr(new Date());if(S.dc.d===d&&S.dc.l.length)return;
+  const av=DCK.filter(k=>k!=='bosses'||S.maxDepth>=8);let h=0;for(const ch of d+S.asc)h=(h*31+ch.charCodeAt(0))>>>0;
+  const r=()=>{h=(h*1664525+1013904223)>>>0;return h/4294967296;};
+  for(let i=av.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[av[i],av[j]]=[av[j],av[i]];}
+  S.dc={d,l:av.slice(0,3).map(k=>({k,b:DCD[k].get(),g:DCD[k].goal(),done:0}))};}
+function dcReward(i){const c=Math.max(200,S.cps*(600+300*i));S.coins+=c;S.total+=c;let msg='+'+fmt(c)+_T(' pièces');if(i===1){S.gems+=1;msg+=_T(' et 1 ◆');}if(i===2){giveChest('r',true);msg+=_T(' et un coffre rare');}if(!SIM){sBoost();toast(_T('🎯 Défi réussi : ')+msg);}}
+function dcCheck(){dcEnsure();let n=0;S.dc.l.forEach((c,i)=>{if(c.done)return;if(DCD[c.k].get()-c.b>=c.g){c.done=1;n++;S.stats.dc++;dcReward(i);}});
+  if(n&&S.dc.l.every(c=>c.done)){S.gems+=2;giveChest('c',true);if(!SIM)setTimeout(()=>toast(_T('🎯 3 défis réussis : +2 ◆ et un coffre !')),1700);}return n;}
+const MIN=[[_T('Améthyste'),_T('Violette, elle dort dans la géode profonde.')],[_T('Ambre'),_T('Ardent et tiède, il vient des zones chaudes.')],[_T('Saphir'),_T('Bleu des abysses, froid et très dur.')],[_T('Rubis'),_T('Rouge sombre qui pulse comme un cœur.')],[_T('Tanzanite'),_T('Rare : sa couleur change selon l’angle.')],[_T('Aigue-marine'),_T('Claire comme une étoile, au cœur de la supernova.')]];
+function cdxList(){const a=[];MIN.forEach((m,z)=>a.push({g:_T('Minéraux'),n:m[0],d:m[1],h:CRY[z][0],got:S.maxDepth>=10*z+1,hint:_T('Atteins la profondeur ')+(10*z+1)}));
+  BOSSES.forEach(b=>a.push({g:_T('Cristaux géants'),n:b.n,d:b.d,h:b.hu,got:!!S.cod.b[b.id],hint:_T('Vaincs-le une fois')}));
+  for(let t=0;t<TIERS;t++)a.push({g:_T('Comètes'),n:_T('Comète ')+TN[t],d:_T('Palier ')+(t+1)+_T(' · dégâts ×')+fmt(D(t)),h:TC[t],got:S.cod.t>t,hint:_T('Fusionne jusqu’au palier ')+(t+1)});return a;}
+function cdxScan(){S.cod.t=Math.max(S.cod.t,maxTier()+1);cdxN=cdxList().filter(x=>x.got).length;}
+let jSec='ach',jTimer=0,jRender=null;
+function jEl(bd,html,cls){const d=document.createElement('div');d.className=cls||'jc';d.innerHTML=html;bd.appendChild(d);return d;}
+function jAch(bd){const n=Object.keys(S.ach).length;jEl(bd,_tt`<b>${n} / ${ACHS.length}</b> succès<span class="jm">Chaque succès rapporte des pièces, et parfois des gemmes ◆.</span>`,'jh');
+  for(const a of ACHS){const ok=!!S.ach[a.id],p=Math.min(1,a.get()/a.g);jEl(bd,`<div class="ji" style="--c:${ok?'#ffc66b':'#46525d'}">${ok?'🏆':'🔒'}</div><div class="jx"><b>${a.n}</b><span>${a.df(a.g)}</span>${ok?'':`<div class="tm"><i style="width:${(p*100).toFixed(1)}%"></i></div>`}</div><div class="jr">${ok?'✓':(a.gems?'+'+a.gems+' ◆':'')}</div>`,'jc jrow'+(ok?' ok':''));}}
+function jDc(bd){dcEnsure();jEl(bd,_T('<b>Défis du jour</b><span class="jm">Trois nouveaux défis chaque jour. La récompense arrive toute seule.</span>'),'jh');
+  S.dc.l.forEach((c,i)=>{const d=DCD[c.k],v=Math.min(c.g,Math.max(0,d.get()-c.b)),rw=[_T('pièces'),_T('pièces + 1 ◆'),_T('pièces + coffre rare')][i];
+    jEl(bd,`<div class="jx"><b>${d.n(c.g)}</b><span>${fmt(v)} / ${fmt(c.g)} · ${rw}</span><div class="tm"><i style="width:${(v/c.g*100).toFixed(1)}%"></i></div></div><div class="jr">${c.done?'✓':''}</div>`,'jc jrow'+(c.done?' ok':''));});
+  jEl(bd,_T('<b>Série de connexions</b><span class="jm">Reviens chaque jour : le coffre du jour (onglet Missions) rapporte de plus en plus.</span>'),'jh');
+  const rd=dailyReady(),cur=rd?dailyReward().st-1:S.daily.streak,dn=cur<=0?0:((cur-1)%7)+1,nx=dailyReward();
+  jEl(bd,_tt`<div class="jdots">${[1,2,3,4,5,6,7].map(k=>`<i class="${k<=dn?'on':''}">${k===7?'📦':k}</i>`).join('')}</div><span class="jm" style="display:block">${rd?_T('Ton coffre du jour est prêt !'):_T('Série en cours : ')+cur+_T(' jour')+(cur>1?'s':'')+_T('. Reviens demain !')} Prochain bonus de pièces : ×${(1+.15*Math.min(nx.st-1,9)).toFixed(2)} · le 7ᵉ jour, un coffre épique.</span>`,'jc');}
+function jCdx(bd){const L=cdxList(),n=L.filter(x=>x.got).length;jEl(bd,_tt`<b>${n} / ${L.length}</b> découverts<span class="jm">Chaque découverte donne +1 % de gains, pour toujours (actuellement +${n} %).</span>`,'jh');
+  let cur='';for(const x of L){if(x.g!==cur){cur=x.g;const s=document.createElement('div');s.className='st';s.textContent=cur;bd.appendChild(s);}
+    jEl(bd,`<div class="ji" style="--c:${x.got?`hsl(${x.h},80%,58%)`:'#37424d'}"></div><div class="jx"><b>${x.got?x.n:'???'}</b><span>${x.got?x.d:x.hint}</span></div>`,'jc jrow'+(x.got?' ok':''));}}
+function jSkin(bd){jEl(bd,_T('<b>Apparence des comètes</b><span class="jm">Change la couleur des comètes et de leur traînée.</span>'),'jh');
+  for(const k in SKINS){const s=SKINS[k],own=!!S.skins[k]||(s.ach&&!!S.ach[s.ach]),eq=S.skin===k,lock=!own&&!!s.ach;
+    const el=jEl(bd,`<div class="jsk">${[0,3,6,9].map(t=>`<i style="background:hsl(${skinHue(t,k)},100%,58%)"></i>`).join('')}</div><div class="jx"><b>${s.n}</b><span>${eq?_T('Équipée'):own?_T('Débloquée'):s.ach?_T('Succès : ')+achName(s.ach):_T('Coût : ')+s.cost+' ◆'}</span></div><button class="g ${own?'vi':'am'}"></button>`,'jc jrow'+(eq?' ok':''));
+    const b=el.querySelector('button');b.textContent=eq?'✓':own?_T('Équiper'):lock?'🔒':_T('Acheter');if(eq||lock)b.classList.add('off');
+    b.addEventListener('click',()=>{initAudio();if(eq||lock)return;if(!own){if(S.gems<s.cost){sDeny();toast(_T('Il te faut ')+s.cost+' ◆');return;}S.gems-=s.cost;}S.skins[k]=1;S.skin=k;sBoost();save();jRender&&jRender();});}}
+function jStats(bd){const L=cdxList();
+  const it=[...STATDEF.map(([n,f])=>[n,String(f())]),[_T('Gains / heure'),fmt(S.cps*3600)],[_T('Succès'),Object.keys(S.ach).length+' / '+ACHS.length],[_T('Codex'),cdxN+' / '+L.length],[_T('Reliques'),S.rel.length+' / '+RELICS.length]];
+  jEl(bd,'<div class="jg">'+it.map(([n,v])=>`<div><b>${v}</b><span>${n}</span></div>`).join('')+'</div>','jc');
+  const c=jEl(bd,_T('<b style="font-size:13px">Ta progression</b><canvas width="640" height="240" style="width:100%;height:auto;margin-top:8px"></canvas><span class="jm" style="display:block"><i style="color:#34e8c8">━</i> profondeur · <i style="color:#ffc66b">━</i> gains par seconde (échelle log)</span>'),'jc');
+  const cv=c.querySelector('canvas');if(!cv||!cv.getContext)return;const x=cv.getContext('2d');if(!x)return;
+  const H=S.hist.concat([[Math.floor(S.stats.play),S.depth,Math.log10(Math.max(1,S.cps))]]);
+  if(H.length<3){x.fillStyle='#7b8b95';x.font='22px sans-serif';x.fillText(_T('Joue quelques minutes pour voir ta courbe.'),20,120);return;}
+  const W=640,Hh=240,px=24,t0=H[0][0],t1=Math.max(t0+1,H[H.length-1][0]);
+  const line=(k,col)=>{let mn=1e9,mx=-1e9;for(const h of H){mn=Math.min(mn,h[k]);mx=Math.max(mx,h[k]);}if(mx-mn<1e-6)mx=mn+1;x.beginPath();H.forEach((h,i)=>{const X=px+(h[0]-t0)/(t1-t0)*(W-2*px),Y=Hh-px-(h[k]-mn)/(mx-mn)*(Hh-2*px);i?x.lineTo(X,Y):x.moveTo(X,Y);});x.strokeStyle=col;x.lineWidth=3;x.lineJoin='round';x.stroke();};
+  x.strokeStyle='rgba(255,255,255,.08)';x.lineWidth=1;for(let i=0;i<4;i++){const Y=px+i*(Hh-2*px)/3;x.beginPath();x.moveTo(px,Y);x.lineTo(W-px,Y);x.stroke();}
+  line(2,'#ffc66b');line(1,'#34e8c8');}
+function openJournal(sec){
+  closeSettings();if(sec)jSec=sec;
+  const m=document.createElement('div');m.id='set';
+  m.innerHTML=_T('<div class="sp"><div class="sh"><b>🏆 Journal</b><button class="sx">✕</button></div><div class="jt"></div><div class="sb"></div></div>');
+  const tb=m.querySelector('.jt'),bd=m.querySelector('.sb');
+  const SECS=[['ach',_T('Succès')],['dc',_T('Défis')],['cdx',_T('Codex')],['skin',_T('Comètes')],['st',_T('Stats')]],FN={ach:jAch,dc:jDc,cdx:jCdx,skin:jSkin,st:jStats};
+  const render=()=>{tb.innerHTML='';SECS.forEach(([k,n])=>{const b=document.createElement('button');b.textContent=n;b.className=k===jSec?'on':'';b.addEventListener('click',()=>{initAudio();jSec=k;sBuy();render();});tb.appendChild(b);});
+    const sy=bd.scrollTop;bd.innerHTML='';FN[jSec](bd);bd.scrollTop=sy;};
+  jRender=render;render();clearInterval(jTimer);jTimer=setInterval(()=>{if(jSec==='dc'||jSec==='st')render();},1500);
+  m.addEventListener('click',e=>{if(e.target===m)closeSettings();});
+  m.querySelector('.sx').addEventListener('click',closeSettings);
+  document.body.appendChild(m);requestAnimationFrame(()=>m.classList.add('on'));
+}
+function renderRel(box){box.innerHTML='';
+  const add=h=>{const d=document.createElement('div');d.innerHTML=h;box.appendChild(d);return d;};
+  if(S.relPend>0){add(_T('<p><b>Une relique t’attend !</b> Choisis-en une : un bonus puissant, mais avec un prix à payer. Elle est permanente.</p>'));
+    for(const r of relChoices()){const d=add(_tt`<div class="rlc" style="--c:${r.c}"><i>${r.ic}</i><div><b>${r.n}</b><span>${r.d}</span></div><button class="g am">Choisir</button></div>`);const bt=d.querySelector('button');if(bt)bt.addEventListener('click',()=>{initAudio();if(pickRelic(r.id)){if(ui)ui.rlk='';refreshUI(true);}});}}
+  else if(S.rel.length===0&&S.asc<3)add(_tt`<p>Dès ta <b>3ᵉ ascension</b>, une relique permanente t’est offerte : un gros bonus avec un prix à payer. Ascensions : ${S.asc} / 3.</p>`);
+  else if(S.rel.length<RELICS.length)add(_T('<p>Une nouvelle relique t’attend à ta prochaine ascension.</p>'));
+  for(const id of S.rel){const r=RELICS.find(x=>x.id===id);if(r)add(`<div class="rlc own" style="--c:${r.c}"><i>${r.ic}</i><div><b>${r.n}</b><span>${r.d}</span></div></div>`);}}
+
 const num=(v,d,min=0,max=Infinity)=>{v=+v;return Number.isFinite(v)?Math.min(max,Math.max(min,v)):d;};
 const int=(v,d,min=0,max=1e9)=>Math.floor(num(v,d,min,max));
 /* Valide et nettoie n'importe quelle sauvegarde (ancienne version, corrompue ou modifiée) */
@@ -372,6 +513,12 @@ function sanitize(o){
   {const ch=o.chests||{};r.chests={c:int(ch.c,0,0,999),r:int(ch.r,0,0,999),e:int(ch.e,0)};r.chests.e=Math.min(999,r.chests.e);
    const sh=o.shop||{};r.shop={free:Math.min(Date.now()+3*3600e3,num(sh.free,0,0,1e15)),dd:/^\d{4}-\d{2}-\d{2}$/.test(sh.dd)?sh.dd:'',db:(Array.isArray(sh.db)?sh.db:[]).filter(x=>typeof x==='string').slice(0,4)};}
   r.cps=num(o.cps,0,0,1e300);r.total=num(o.total,0,0,1e300);r.asc=int(o.asc,0,0,1e6);r.taps=int(o.taps,0,0,1e9);r.tutStep=int(o.tutStep,0,0,99);
+  {const a=o.ach||{};r.ach={};for(const k of ACH_IDS)if(a[k])r.ach[k]=1;
+   const dc=o.dc||{};r.dc={d:DAYK.test(dc.d)?dc.d:'',l:(Array.isArray(dc.l)?dc.l:[]).slice(0,3).map(x=>({k:DCK.includes(x&&x.k)?x.k:'kills',b:num(x&&x.b,0,0,1e15),g:num(x&&x.g,1,1,1e12),done:x&&x.done?1:0}))};
+   const cd=o.cod||{};r.cod={b:{},t:int(cd.t,0,0,TIERS)};for(const k of BOSS_IDS)if(cd.b&&cd.b[k])r.cod.b[k]=1;
+   r.rel=(Array.isArray(o.rel)?o.rel:[]).filter((x,i,A2)=>RELICS.some(q=>q.id===x)&&A2.indexOf(x)===i);r.relPend=Math.min(RELICS.length-r.rel.length,int(o.relPend,0,0,50));
+   const sk=o.skins||{};r.skins={def:1};for(const k in SKINS)if(sk[k])r.skins[k]=1;r.skin=(SKINS[o.skin]&&(r.skins[o.skin]||(SKINS[o.skin].ach&&r.ach[SKINS[o.skin].ach])))?o.skin:'def';if(r.skin!=='def')r.skins[r.skin]=1;
+   r.hist=(Array.isArray(o.hist)?o.hist:[]).slice(-150).map(h=>[num(h&&h[0],0,0,1e12),num(h&&h[1],1,1,1e5),num(h&&h[2],0,0,400)]);}
   r.last=Math.min(Date.now(),num(o.last,Date.now(),0,1e15));r.v=SAVE_VER;
   return r;
 }
@@ -389,7 +536,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.1.0';
+const GAME_VER='2.2.0';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -400,9 +547,9 @@ function decodeSave(code){try{code=String(code||'').trim();if(!code.startsWith('
 
 /* ---------- calculs ---------- */
 let magnetT=0,midasT=0,boltFx=[];const pcd={bolt:0,magnet:0,midas:0};
-const gm=()=>(1+.15*S.up.gain)*(1+.1*S.stars)*(S.boost.gain>0?2:1)*(midasT>0?3:1);
-const dmgOf=t=>D(t)*Math.pow(1.25,S.lvl[t])*(1+.2*S.up.dmg)*(1+.1*S.stars)*(S.boost.dmg>0?3:1);
-const cometSpeed=()=>1.3*spdMul(S.up.speed)*(S.boost.speed>0?1.6:1);
+const gm=()=>(1+.15*S.up.gain)*(1+.1*S.stars)*(S.boost.gain>0?2:1)*(midasT>0?3:1)*RM('gain')*(1+.01*cdxN);
+const dmgOf=t=>D(t)*Math.pow(1.25,S.lvl[t])*(1+.2*S.up.dmg)*(1+.1*S.stars)*(S.boost.dmg>0?3:1)*RM('dmg');
+const cometSpeed=()=>1.3*spdMul(S.up.speed)*(S.boost.speed>0?1.6:1)*RM('spd');
 const capN=()=>10+5*S.up.cap;
 const totalComets=()=>S.cnt.reduce((a,b)=>a+b,0);
 const buyCost=()=>8*Math.pow(1.14,S.bought0);
@@ -420,8 +567,8 @@ let coinsFx=[],orbsFx=[],cf=0,lastGems=0,autoT=0,gold=null,goldT=45+Math.random(
 function genBoard(){
   const d=S.depth;blocks=[];const bh=baseHp(d);
   if(d%10===0){
-    const total=bh*Math.min(HEX.length,8+3*d)*.4;
-    blocks.push({x:0,y:0,s:.3,rc:.285,hp:total,max:total,boss:true,hue:285,sc:0,delay:0,flash:0,dead:false,seed:rnd(),cr:crackSet()});
+    const bt=bossOf(d),total=bh*Math.min(HEX.length,8+3*d)*.4*RM('boss');
+    blocks.push({x:0,y:0,s:.3,rc:.285,hp:total,max:total,boss:true,bt:bt.id,arm:bt.id==='cuirasse'?total*.3:0,armMax:total*.3,phT:0,hue:bt.hu,sc:0,delay:0,flash:0,dead:false,seed:rnd(),cr:crackSet()});
   }else{
     const cells=HEX.slice().sort((a,b)=>(b.d+rnd()*.05)-(a.d+rnd()*.05)),n=Math.min(cells.length,6+2*d);
     for(let i=0;i<n;i++){const c=cells[i],hp=Math.max(1,Math.round(bh*(.8+.4*rnd())));
@@ -439,8 +586,9 @@ function syncComets(){
 }
 
 /* ---------- audio : tic de cristal, éclats, souffles ---------- */
-const P={full:true,notif:false,vid:true,vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
+const P={lang:'',amb:true,full:true,notif:false,vid:true,vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
 const gainV=()=>0.9*P.vol/100;
+let ambO=[],ambG=null,ambZ=-1;const AMB_ROOT=[55,58.27,49,61.74,65.41,51.91];
 let AC=null,master,wet,noiseBuf,muted=false,lastHit=0,hitBudget=0,hitWin=0;
 function initAudio(){
   if(SIM)return;
@@ -454,10 +602,14 @@ function initAudio(){
   noiseBuf=AC.createBuffer(1,AC.sampleRate,AC.sampleRate);{const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}
   const ns=AC.createBufferSource();ns.buffer=noiseBuf;ns.loop=true;
   const lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=320;
-  const ng=AC.createGain();ng.gain.value=.04;ns.connect(lp);lp.connect(ng);ng.connect(master);ns.start();
+  ambG=AC.createGain();ambG.gain.value=P.amb?1:0;ambG.connect(master);ambO=[];ambZ=-1;
+  const ng=AC.createGain();ng.gain.value=.04;ns.connect(lp);lp.connect(ng);ng.connect(ambG);ns.start();
   const lfo=AC.createOscillator();lfo.frequency.value=.07;const ld=AC.createGain();ld.gain.value=120;lfo.connect(ld);ld.connect(lp.frequency);lfo.start();
-  [[55,.045],[82.4,.02]].forEach(([f,v])=>{const o=AC.createOscillator(),gg=AC.createGain();o.frequency.value=f;gg.gain.value=v;o.connect(gg);gg.connect(master);o.start();});
+  [[55,.045,'sine'],[82.4,.02,'sine'],[110.2,.011,'triangle']].forEach(([f,v,ty])=>{const o=AC.createOscillator(),gg=AC.createGain();o.type=ty;o.frequency.value=f;gg.gain.value=v;o.connect(gg);gg.connect(ambG);o.start();ambO.push(o);});
+  ambSync();
 }
+function ambSync(){if(!AC||ambO.length<3)return;const z=Math.floor((S.depth-1)/10)%6;if(z===ambZ)return;ambZ=z;const r=AMB_ROOT[z],t=AC.currentTime;ambO[0].frequency.setTargetAtTime(r,t,3);ambO[1].frequency.setTargetAtTime(r*1.5,t,3);ambO[2].frequency.setTargetAtTime(r*2.004,t,3);}
+function ambApply(){if(AC&&ambG)ambG.gain.setTargetAtTime(P.amb?1:0,AC.currentTime,.4);}
 function bus(pan=0,send=.2){const b=AC.createGain();let out=b;
   if(AC.createStereoPanner){const p=AC.createStereoPanner();p.pan.value=clamp(pan,-1,1);b.connect(p);out=p;}
   out.connect(master);if(send>0){const s=AC.createGain();s.gain.value=send;out.connect(s);s.connect(wet);}return b;}
@@ -510,9 +662,11 @@ function addParticles(x,y,hue,n,sp,size=.02){if(parts.length>[70,140,220][qLevel
 function floatText(x,y,txt,col,size=14,life=1){if(!P.floats)return;if(floats.length>40)floats.shift();floats.push({x,y,txt,col,size,l:life,ml:life});}
 function damageBlock(b,dmg,fromComet){
   if(b.dead||b.hp<=0)return;
-  let crit=false;if(fromComet&&S.up.crit&&rnd()<critP(S.up.crit)){dmg*=4;crit=true;}
+  if(b.bt==='fantome'&&(b.phT%5)>3.6){if(!SIM&&T-immT>.45){immT=T;floatText(b.x,b.y-b.s,_T('INTOUCHABLE'),'#cdbcff',12,.6);}return;}
+  if(b.arm>0){const ab=Math.min(b.arm,dmg);b.arm-=ab;dmg=ab*.25+(dmg-ab);if(!SIM&&b.arm<=0){floatText(b.x,b.y-b.s,_T('ARMURE BRISÉE'),'#cfe3ff',13,1);rips.push({x:b.x,y:b.y,r:b.s,mr:b.s*2.4,l:.5,ml:.5,h:210});shake=Math.max(shake,6);}}
+  let crit=false;if(fromComet&&S.up.crit&&rnd()<critP(S.up.crit)){dmg*=4*RM('critMul');crit=true;}
   b.hp-=dmg;b.flash=1;b.pulse=1;
-  if(!SIM){wallGlow=Math.min(1,wallGlow+.15);if(crit&&T-critT>.35){critT=T;floatText(b.x,b.y-b.s,'CRITIQUE','#ffe6a0',12,.7);}
+  if(!SIM){wallGlow=Math.min(1,wallGlow+.15);if(crit&&T-critT>.35){critT=T;floatText(b.x,b.y-b.s,_T('CRITIQUE'),'#ffe6a0',12,.7);}
     if(fromComet){addParticles(b.x,b.y,b.hue,3,.38,.013);if(crit){rips.push({x:b.x,y:b.y,r:b.s*.5,mr:b.s*1.8,l:.3,ml:.3,h:45});zoom=Math.max(zoom,.01);}}}
   if(b.hp<=0&&!b.queued){b.queued=true;killQ.push(b);}
 }
@@ -521,8 +675,9 @@ function flushKills(){
 }
 function killBlock(b){
   if(b.dead)return;b.dead=true;b.hp=0;
+  if(b.bt==='fractal'){for(let i=0;i<3;i++){const a=i*2.094+rnd(),hp=b.max*.08;blocks.push({x:Math.cos(a)*.4,y:Math.sin(a)*.4,s:.15,rc:.13,hp,max:hp,boss:false,hue:322,sc:.01,delay:0,flash:0,dead:false,seed:rnd(),cr:crackSet()});}}
   const reward=b.max*.8*Math.pow(.77,S.depth-1)*(1+.6*Math.max(0,(14-S.depth)/14))*gm()*(b.boss?8:1)*(1+Math.min(streak,40)*.0125);S.coins+=reward;S.total+=reward;coinAcc+=reward;
-  streakT=1.1;streak++;S.stats.kills++;if(b.boss){S.stats.bosses++;const q=Math.random();giveChest(S.depth>=30&&q<.15?'e':q<.5?'r':'c');}if(streak>S.stats.maxCombo)S.stats.maxCombo=streak;
+  streakT=1.1;streak++;S.stats.kills++;if(b.boss){S.stats.bosses++;S.cod.b[b.bt||'colosse']=1;const q=Math.random();giveChest(S.depth>=30&&q<.15?'e':q<.5?'r':'c');}if(streak>S.stats.maxCombo)S.stats.maxCombo=streak;
   if(!SIM){
     floatText(b.x,b.y,'+'+fmt(reward),'#ffd58a',b.boss?22:15,1.2);
     addParticles(b.x,b.y,b.hue,b.boss?60:16,b.boss?1.3:.8,b.boss?.05:.034);
@@ -532,11 +687,11 @@ function killBlock(b){
     zoom=Math.max(zoom,b.boss?.07:.016);coinPop=1;comboP=1;
     for(const nb of blocks){if(!nb.dead&&nb!==b&&Math.hypot(nb.x-b.x,nb.y-b.y)<b.s*2.6){nb.flash=Math.max(nb.flash,.7);nb.pulse=.8;}}
     if(b.boss){ts=.18;flashA=.9;}
-    if(streak===10||streak===25||streak===50||streak===100){floatText(0,-.55,'COMBO ×'+streak,'#ffe6a0',24,1.6);sLevel();}
+    if(streak===10||streak===25||streak===50||streak===100){floatText(0,-.55,_T('COMBO ×')+streak,'#ffe6a0',24,1.6);sLevel();}
     if(P.hap&&T-vibT>.08){vibT=T;buzz(b.boss?'boss':'l');}
   }
-  if(b.boss){const g=3+Math.floor(S.depth/10);S.gems+=g;if(!SIM){floatText(0,-.25,'+'+g+' gemmes','#d6c8ff',18,1.8);sGem();}}
-  else if(rnd()<.012){S.gems+=1;if(!SIM){floatText(b.x,b.y-.1,'+1 gemme','#d6c8ff',13,1.4);sGem();}}
+  if(b.boss){const g=3+Math.floor(S.depth/10);S.gems+=g;if(!SIM){floatText(0,-.25,'+'+g+_T(' gemmes'),'#d6c8ff',18,1.8);sGem();}}
+  else if(rnd()<.012){S.gems+=1;if(!SIM){floatText(b.x,b.y-.1,_T('+1 gemme'),'#d6c8ff',13,1.4);sGem();}}
   if(S.up.split){const pw=b.max*splitP(S.up.split);for(const nb of blocks){if(nb.dead)continue;if(Math.hypot(nb.x-b.x,nb.y-b.y)<b.s*2.3+nb.s)damageBlock(nb,pw,false);}}
   if(blocks.every(x=>x.dead||x.queued)&&!clearing){clearing=true;}
 }
@@ -582,6 +737,8 @@ function step(dt){
   flushKills();
   if(clearing&&blocks.every(x=>x.dead))nextDepth();
   else if(clearing)clearing=false;
+  for(const b of blocks){if(b.bt==='fantome')b.phT+=dt;else if(b.bt==='regen'&&!b.dead&&b.hp>0&&b.hp<b.max)b.hp=Math.min(b.max,b.hp+b.max*.01*dt);}
+  histT+=dt;if(histT>=120){histT=0;S.hist.push([Math.floor(S.stats.play),S.depth,Math.log10(Math.max(1,S.cps))]);if(S.hist.length>150)S.hist.shift();}
   for(const b of blocks){if(b.sc<1&&T>0)b.sc=Math.min(1,b.sc+dt*(b.delay>0?(b.delay-=dt,0):4));b.flash=Math.max(0,b.flash-dt*5);}
   streakT-=dt;if(streakT<=0)streak=0;
   cpsT+=dt;if(cpsT>=1){S.cps+=(coinAcc/cpsT-S.cps)*.12;coinAcc=0;cpsT=0;}
@@ -613,41 +770,41 @@ function buyBoost(k){const d=BOOSTDEF[k];if(S.gems<d.cost){if(!SIM)sDeny();retur
 function popBurst(t){if(SIM)return;addParticles(0,0,TC[t],14,.7,.02);}
 function ascend(){
   const g=starsFor(S.runBest);if(g<=0)return false;
-  const keep={gems:S.gems,stars:S.stars+g,maxDepth:S.maxDepth,boost:S.boost,asc:S.asc+1,total:S.total,stats:S.stats,pow:S.pow,mis:S.mis,daily:S.daily,taps:S.taps,tutStep:S.tutStep,chests:S.chests,shop:S.shop};
-  S=Object.assign(fresh(),keep);comets=[];syncComets();genBoard();return true;
+  const keep={gems:S.gems,stars:S.stars+g,maxDepth:S.maxDepth,boost:S.boost,asc:S.asc+1,total:S.total,stats:S.stats,pow:S.pow,mis:S.mis,daily:S.daily,taps:S.taps,tutStep:S.tutStep,chests:S.chests,shop:S.shop,ach:S.ach,dc:S.dc,cod:S.cod,rel:S.rel,relPend:S.relPend,skin:S.skin,skins:S.skins,hist:S.hist};
+  S=Object.assign(fresh(),keep);if(S.asc>=3&&S.rel.length+S.relPend<RELICS.length)S.relPend++;comets=[];syncComets();genBoard();return true;
 }
 function offlineGain(sec){
   if(!(sec>0))return 0;
-  const cap=8*3600*(1+.2*S.up.off),s=Math.min(sec,cap),g=S.cps*s*.5*(1+.2*S.up.off);
+  const cap=8*3600*(1+.2*S.up.off),s=Math.min(sec,cap),g=S.cps*s*.5*(1+.2*S.up.off)*RM('off');
   return g;
 }
 function spawnGold(){
   const a=Math.random()*6.283,tx=(Math.random()-.5)*.8,ty=(Math.random()-.5)*.8,sx=Math.cos(a)*1.12,sy=Math.sin(a)*1.12,dx=tx-sx,dy=ty-sy,m=Math.hypot(dx,dy);
-  gold={x:sx,y:sy,vx:dx/m*.42,vy:dy/m*.42,l:0,tr:[]};goldT=60+Math.random()*70;sGoldSpawn();
-  if(S.stats.gold===0)toast('✦ Une comète dorée traverse l\'arène : touche-la !');
+  gold={x:sx,y:sy,vx:dx/m*.42,vy:dy/m*.42,l:0,tr:[]};goldT=(60+Math.random()*70)/RM('gold');sGoldSpawn();
+  if(S.stats.gold===0)toast(_T('✦ Une comète dorée traverse l\'arène : touche-la !'));
 }
 function collectGold(){
   const r=Math.random();let msg;
-  if(r<.6){const c=Math.max(S.cps*45,buyCost()*3,60);S.coins+=c;S.total+=c;msg='+'+fmt(c)+' pièces';}
-  else if(r<.85){const n=Math.random()<.3?2:1;S.gems+=n;msg='+'+n+' gemme'+(n>1?'s':'');}
+  if(r<.6){const c=Math.max(S.cps*45,buyCost()*3,60);S.coins+=c;S.total+=c;msg='+'+fmt(c)+_T(' pièces');}
+  else if(r<.85){const n=Math.random()<.3?2:1;S.gems+=n;msg='+'+n+_T(' gemme')+(n>1?'s':'');}
   else{const k=['gain','speed','dmg'][Math.floor(Math.random()*3)];S.boost[k]+=30;msg=BOOSTDEF[k].n+' offert (30 s)';}
-  if(Math.random()<.2){giveChest('c',true);msg+=' + un coffre';}
+  if(Math.random()<.2){giveChest('c',true);msg+=_T(' + un coffre');}
   S.stats.gold++;floatText(gold.x,gold.y,msg,'#ffe08a',18,1.8);addParticles(gold.x,gold.y,45,26,1,.03);rips.push({x:gold.x,y:gold.y,r:.05,mr:.5,l:.6,ml:.6,h:45});
-  shake=Math.max(shake,5);zoom=Math.max(zoom,.02);sGem();sBoost();toast('✦ Comète dorée : '+msg);gold=null;
+  shake=Math.max(shake,5);zoom=Math.max(zoom,.02);sGem();sBoost();toast(_T('✦ Comète dorée : ')+msg);gold=null;
 }
 const NOVA_DEPTH=20,NOVA_GEMS=12,NOVA_MAX=10;
 const novaDmgMul=l=>20*(1+.35*l),novaCdSec=l=>Math.max(8,24-1.6*l),novaCost=l=>2500*Math.pow(2.6,l);
 let novaCD=0,novaFx=null;
 function novaDamage(){let top=0;for(let t=0;t<TIERS;t++)if(S.cnt[t]>0)top=t;return dmgOf(top)*novaDmgMul(S.pow.nova.l);}
 function fireNova(){const p=S.pow.nova;if(!p.u||novaCD>0||novaFx)return false;
-  novaFx={r:0,hit:new Set(),dmg:novaDamage()};novaCD=novaCdSec(p.l);shake=Math.max(shake,9);flashA=Math.max(flashA,.5);zoom=Math.max(zoom,.045);sNova();return true;}
+  novaFx={r:0,hit:new Set(),dmg:novaDamage()};novaCD=novaCdSec(p.l)*RM('pcd');shake=Math.max(shake,9);flashA=Math.max(flashA,.5);zoom=Math.max(zoom,.045);sNova();return true;}
 const POWS={
- bolt:{n:'Foudre',ic:'⚡',c:'#6fd8ff',unl:25,gems:15,max:10,cost:l=>6000*Math.pow(2.6,l),cd:l=>Math.max(8,20-1.2*l),
-  d:l=>`Frappe ${4+l} cristaux au hasard · dégâts ×${boltMul(l).toFixed(0)}`,info:'Des éclairs frappent plusieurs cristaux d’un coup.'},
- magnet:{n:'Aimant',ic:'🧲',c:'#c58cff',unl:35,gems:18,max:10,cost:l=>25000*Math.pow(2.6,l),cd:l=>Math.max(22,45-2.5*l),
-  d:l=>`Les comètes visent les cristaux pendant ${(8+.8*l).toFixed(0)} s · recharge ${Math.max(22,45-2.5*l).toFixed(0)} s`,info:'Tes comètes sont attirées par les cristaux restants.'},
- midas:{n:'Midas',ic:'👑',c:'#ffc66b',unl:45,gems:22,max:10,cost:l=>80000*Math.pow(2.6,l),cd:l=>Math.max(35,70-4*l),
-  d:l=>`Pièces ×3 pendant ${(10+1.5*l).toFixed(0)} s · recharge ${Math.max(35,70-4*l).toFixed(0)} s`,info:'Tout ce que tu gagnes est triplé un court instant.'}
+ bolt:{n:_T('Foudre'),ic:'⚡',c:'#6fd8ff',unl:25,gems:15,max:10,cost:l=>6000*Math.pow(2.6,l),cd:l=>Math.max(8,20-1.2*l),
+  d:l=>_tt`Frappe ${4+l} cristaux au hasard · dégâts ×${boltMul(l).toFixed(0)}`,info:_T('Des éclairs frappent plusieurs cristaux d’un coup.')},
+ magnet:{n:_T('Aimant'),ic:'🧲',c:'#c58cff',unl:35,gems:18,max:10,cost:l=>25000*Math.pow(2.6,l),cd:l=>Math.max(22,45-2.5*l),
+  d:l=>_tt`Les comètes visent les cristaux pendant ${(8+.8*l).toFixed(0)} s · recharge ${Math.max(22,45-2.5*l).toFixed(0)} s`,info:_T('Tes comètes sont attirées par les cristaux restants.')},
+ midas:{n:_T('Midas'),ic:'👑',c:'#ffc66b',unl:45,gems:22,max:10,cost:l=>80000*Math.pow(2.6,l),cd:l=>Math.max(35,70-4*l),
+  d:l=>_tt`Pièces ×3 pendant ${(10+1.5*l).toFixed(0)} s · recharge ${Math.max(35,70-4*l).toFixed(0)} s`,info:_T('Tout ce que tu gagnes est triplé un court instant.')}
 };
 const boltMul=l=>12*(1+.3*l),powDur=(k,l)=>k==='magnet'?8+.8*l:10+1.5*l;
 function firePow(k){const p=S.pow[k];if(!p||!p.u||pcd[k]>0)return false;
@@ -658,20 +815,20 @@ function firePow(k){const p=S.pow[k];if(!p||!p.u||pcd[k]>0)return false;
     flushKills();if(!SIM){shake=Math.max(shake,6);flashA=Math.max(flashA,.25);zoom=Math.max(zoom,.025);sBolt();}}
   else if(k==='magnet'){magnetT=powDur(k,p.l);if(!SIM)sBoost();}
   else{midasT=powDur(k,p.l);if(!SIM){sBoost();flashA=Math.max(flashA,.2);}}
-  pcd[k]=POWS[k].cd(p.l);return true;}
-function powState(k){const p=S.pow[k];if(!p.u){const unl=k==='nova'?NOVA_DEPTH:POWS[k].unl;return S.maxDepth<unl?['lk','🔒 Profondeur '+unl]:['rd','Débloquable'];}
+  pcd[k]=POWS[k].cd(p.l)*RM('pcd');return true;}
+function powState(k){const p=S.pow[k];if(!p.u){const unl=k==='nova'?NOVA_DEPTH:POWS[k].unl;return S.maxDepth<unl?['lk',_T('🔒 Profondeur ')+unl]:['rd',_T('Débloquable')];}
   const cd=k==='nova'?novaCD:pcd[k],act=k==='magnet'?magnetT:k==='midas'?midasT:(k==='nova'&&novaFx?1:0);
-  if(act>0)return['ac',k==='nova'?'En cours':'Actif · '+Math.ceil(act)+' s'];if(cd>0)return['cd','Recharge · '+Math.ceil(cd)+' s'];return['rd','● Prêt'];}
-function powSeen(){for(const k in POWS){const p=S.pow[k],d=POWS[k];if(S.maxDepth>=d.unl&&!p.seen){p.seen=true;toast(d.ic+' Nouveau pouvoir : '+d.n+' est débloquable (onglet Boosts)');}}}
+  if(act>0)return['ac',k==='nova'?_T('En cours'):_T('Actif · ')+Math.ceil(act)+' s'];if(cd>0)return['cd',_T('Recharge · ')+Math.ceil(cd)+' s'];return['rd',_T('● Prêt')];}
+function powSeen(){for(const k in POWS){const p=S.pow[k],d=POWS[k];if(S.maxDepth>=d.unl&&!p.seen){p.seen=true;toast(d.ic+_T(' Nouveau pouvoir : ')+d.n+_T(' est débloquable (onglet Boosts)'));}}}
 function powAction(k,first){const p=S.pow[k],d=POWS[k];
   if(!p.u){
-    if(S.maxDepth<d.unl){sDeny();if(first)toast('Atteins la profondeur '+d.unl+' pour débloquer '+d.n+' (record : '+S.maxDepth+')');return false;}
-    if(S.gems<d.gems){sDeny();if(first)toast('Il te faut '+d.gems+' gemmes ◆ pour débloquer '+d.n);return false;}
-    S.gems-=d.gems;p.u=true;sBoost();toast(d.ic+' '+d.n+' débloqué ! Le bouton est dans l’arène.');return true;}
+    if(S.maxDepth<d.unl){sDeny();if(first)toast(_T('Atteins la profondeur ')+d.unl+_T(' pour débloquer ')+d.n+' (record : '+S.maxDepth+')');return false;}
+    if(S.gems<d.gems){sDeny();if(first)toast(_T('Il te faut ')+d.gems+_T(' gemmes ◆ pour débloquer ')+d.n);return false;}
+    S.gems-=d.gems;p.u=true;sBoost();toast(d.ic+' '+d.n+_T(' débloqué ! Le bouton est dans l’arène.'));return true;}
   if(p.l>=d.max)return false;const c=d.cost(p.l);
   if(S.coins<c){sDeny();if(first)toast(needMsg(c));return false;}
   S.coins-=c;p.l++;sLevel();return true;}
-function novaSeen(){if(S.maxDepth>=NOVA_DEPTH&&!S.pow.nova.seen){S.pow.nova.seen=true;toast('⚡ Nouveau pouvoir : la Nova est débloquable (onglet Pouvoirs)');}}
+function novaSeen(){if(S.maxDepth>=NOVA_DEPTH&&!S.pow.nova.seen){S.pow.nova.seen=true;toast(_T('⚡ Nouveau pouvoir : la Nova est débloquable (onglet Pouvoirs)'));}}
 function tapAt(x,y){ // coordonnées normalisées
   if(gold&&Math.hypot(x-gold.x,y-gold.y)<.17){collectGold();return;}
   if(Math.hypot(x,y)>1.05)return;
@@ -715,12 +872,12 @@ addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(()
 
 /* --- fond spatial évolutif --- */
 const BIOMES=[
- {n:'Géode profonde',hu:[178,196,160],base:[200,55,5],f:'planet',ph:172},
- {n:'Nébuleuse violette',hu:[285,320,250],base:[262,50,5],f:'ring',ph:300},
- {n:'Ceinture d\'astéroïdes',hu:[28,42,10],base:[18,45,5],f:'rocks',ph:34},
- {n:'Trou noir',hu:[238,262,215],base:[235,55,4],f:'hole',ph:245},
- {n:'Galaxie d\'or',hu:[44,215,30],base:[225,45,5],f:'galaxy',ph:46},
- {n:'Supernova',hu:[350,18,300],base:[345,50,5],f:'nova',ph:352}
+ {n:_T('Géode profonde'),hu:[178,196,160],base:[200,55,5],f:'planet',ph:172},
+ {n:_T('Nébuleuse violette'),hu:[285,320,250],base:[262,50,5],f:'ring',ph:300},
+ {n:_T('Ceinture d\'astéroïdes'),hu:[28,42,10],base:[18,45,5],f:'rocks',ph:34},
+ {n:_T('Trou noir'),hu:[238,262,215],base:[235,55,4],f:'hole',ph:245},
+ {n:_T('Galaxie d\'or'),hu:[44,215,30],base:[225,45,5],f:'galaxy',ph:46},
+ {n:_T('Supernova'),hu:[350,18,300],base:[345,50,5],f:'nova',ph:352}
 ];
 let bgW=1,bgHh=1,bgNeb=[],stars=[],rocks=[],gal=[],bgFrom=0,bgTo=0,bgMix=1,bgT=0,shoot=null;
 function seeded(sd){let x=sd;return()=>{x=(x*16807)%2147483647;return x/2147483647;};}
@@ -821,64 +978,64 @@ function mkNoise(x){try{const c=document.createElement('canvas');c.width=c.heigh
 
 /* --- panneau --- */
 const BMULT=[1,10,100,'max'];let bm=0;
-const bmLabel=()=>'×'+(BMULT[bm]==='max'?'MAX':BMULT[bm]);
+const bmLabel=()=>'×'+(BMULT[bm]==='max'?_T('MAX'):BMULT[bm]);
 function bulkDo(fn,after,snd,fail,first=true){const n=BMULT[bm],lim=n==='max'?100000:n;let c=0;bulk=true;for(let i=0;i<lim;i++){if(!fn())break;c++;}bulk=false;if(c){snd();if(after)after();}else if(first&&fail)fail();else sDeny();return c>0;}
-const needMsg=cost=>'Il te manque '+fmt(Math.max(0,cost-S.coins))+' pièces';
+const needMsg=cost=>_T('Il te manque ')+fmt(Math.max(0,cost-S.coins))+_T(' pièces');
 function goUp(key,msg){sBuy();tab='ups';buildTabs();buildList();const o=ui.rows&&ui.rows.find(r=>r.k===key);if(o){listEl.scrollTop=Math.max(0,o.el.offsetTop-listEl.offsetTop-10);o.el.classList.add('hl');setTimeout(()=>o.el.classList.remove('hl'),2100);}toast(msg);}
 function novaAction(first){
   const p=S.pow.nova;
   if(!p.u){
-    if(S.maxDepth<NOVA_DEPTH){sDeny();if(first)toast('Atteins la profondeur '+NOVA_DEPTH+' pour débloquer la Nova (record : '+S.maxDepth+')');return false;}
-    if(S.gems<NOVA_GEMS){sDeny();if(first)toast('Il te faut '+NOVA_GEMS+' gemmes ◆ pour débloquer la Nova');return false;}
-    S.gems-=NOVA_GEMS;p.u=true;sBoost();toast('⚡ Nova débloquée ! Le bouton est en bas à droite de l’arène.');return true;}
+    if(S.maxDepth<NOVA_DEPTH){sDeny();if(first)toast(_T('Atteins la profondeur ')+NOVA_DEPTH+_T(' pour débloquer la Nova (record : ')+S.maxDepth+')');return false;}
+    if(S.gems<NOVA_GEMS){sDeny();if(first)toast(_T('Il te faut ')+NOVA_GEMS+_T(' gemmes ◆ pour débloquer la Nova'));return false;}
+    S.gems-=NOVA_GEMS;p.u=true;sBoost();toast(_T('⚡ Nova débloquée ! Le bouton est en bas à droite de l’arène.'));return true;}
   if(p.l>=NOVA_MAX)return false;const c=novaCost(p.l);
   if(S.coins<c){sDeny();if(first)toast(needMsg(c));return false;}
   S.coins-=c;p.l++;sLevel();return true;}
 function plan(next){const n=BMULT[bm],lim=n==='max'?100000:n;let sum=0,cnt=0;for(let k=0;k<lim;k++){const c=next(k);if(c==null)break;if(sum+c>S.coins){if(cnt===0)sum=c;break;}sum+=c;cnt++;}return{sum,cnt};}
 const MISDEF=[
- {goal:n=>Math.round(25*Math.pow(1.7,n)),txt:g=>`Casse ${fmt(g)} cristaux`,val:()=>S.stats.kills,cum:true},
- {goal:n=>8+4*n,txt:g=>`Enchaîne un combo ×${g}`,val:()=>S.stats.maxCombo,cum:false},
- {goal:n=>3+3*n,txt:g=>`Fusionne ${g} fois des comètes`,val:()=>S.stats.merges,cum:true},
- {goal:n=>5+3*n,txt:g=>`Atteins la profondeur ${g}`,val:()=>S.maxDepth,cum:false}
+ {goal:n=>Math.round(25*Math.pow(1.7,n)),txt:g=>_tt`Casse ${fmt(g)} cristaux`,val:()=>S.stats.kills,cum:true},
+ {goal:n=>8+4*n,txt:g=>_tt`Enchaîne un combo ×${g}`,val:()=>S.stats.maxCombo,cum:false},
+ {goal:n=>3+3*n,txt:g=>_tt`Fusionne ${g} fois des comètes`,val:()=>S.stats.merges,cum:true},
+ {goal:n=>5+3*n,txt:g=>_tt`Atteins la profondeur ${g}`,val:()=>S.maxDepth,cum:false}
 ];
 const misGoal=i=>MISDEF[i].goal(S.mis[i].n),misProg=i=>{const d=MISDEF[i],v=d.val()-(d.cum?S.mis[i].base:0);return Math.max(0,Math.min(misGoal(i),v));};
 const misDone=i=>misProg(i)>=misGoal(i),misReward=i=>1+Math.floor(S.mis[i].n/3);
-function misClaim(i){if(!misDone(i))return false;S.gems+=misReward(i);S.mis[i].n++;S.mis[i].base=MISDEF[i].cum?MISDEF[i].val():0;sGem();toast('Mission accomplie ! +'+misReward(i)+' ◆ ');return true;}
+function misClaim(i){if(!misDone(i))return false;S.gems+=misReward(i);S.mis[i].n++;S.mis[i].base=MISDEF[i].cum?MISDEF[i].val():0;sGem();toast(_T('Mission accomplie ! +')+misReward(i)+' ◆ ');return true;}
 const dstr=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const dailyReady=()=>S.daily.last!==dstr(new Date());
-function dailyReward(){const st=S.daily.last===dstr(new Date(Date.now()-864e5))?S.daily.streak+1:1;return{st,gems:2+Math.min(st-1,5),coins:Math.max(200,S.cps*600)};}
+function dailyReward(){const st=S.daily.last===dstr(new Date(Date.now()-864e5))?S.daily.streak+1:1;return{st,gems:2+Math.min(st-1,5),coins:Math.max(200,S.cps*600)*(1+.15*Math.min(st-1,9))};}
 function claimAll(){const g0=S.gems,c0=S.coins;let n=0;if(dailyClaim())n++;for(let i=0;i<MISDEF.length;i++){let k=0;while(k++<30&&misClaim(i))n++;}
-  if(!n)return false;toast('Tout récupéré : +'+(S.gems-g0)+' ◆'+(S.coins>c0?' et '+fmt(S.coins-c0)+' pièces':''));return true;}
+  if(!n)return false;toast(_T('Tout récupéré : +')+(S.gems-g0)+' ◆'+(S.coins>c0?_T(' et ')+fmt(S.coins-c0)+_T(' pièces'):''));return true;}
 const claimCount=()=>(dailyReady()?1:0)+[0,1,2,3].filter(misDone).length;
-function dailyClaim(){if(!dailyReady())return false;const r=dailyReward();S.gems+=r.gems;S.coins+=r.coins;S.total+=r.coins;S.daily={last:dstr(new Date()),streak:r.st};giveChest(r.st%7===0?'e':'c',true);sBoost();toast('Coffre du jour : +'+r.gems+' ◆, '+fmt(r.coins)+' pièces et un '+(r.st%7===0?'coffre épique':'coffre commun'));return true;}
+function dailyClaim(){if(!dailyReady())return false;const r=dailyReward();S.gems+=r.gems;S.coins+=r.coins;S.total+=r.coins;S.daily={last:dstr(new Date()),streak:r.st};giveChest(r.st%7===0?'e':'c',true);sBoost();toast(_T('Coffre du jour : +')+r.gems+' ◆, '+fmt(r.coins)+_T(' pièces et un ')+(r.st%7===0?_T('coffre épique'):_T('coffre commun')));return true;}
 
 /* --- coffres & boutique --- */
 const CHS={
- c:{n:'Coffre commun',mins:8,gem:[1,1],gp:.07,bp:.3,sp:0,price:8,col:'#e3b04b',d:'~8 min de gains, parfois un boost'},
- r:{n:'Coffre rare',mins:30,gem:[1,1],gp:.4,bp:.65,sp:0,price:20,col:'#9fe8ff',d:'~30 min de gains, souvent un boost, parfois une gemme'},
- e:{n:'Coffre épique',mins:100,gem:[1,2],gp:.85,bp:1,sp:.05,price:45,col:'#d9a8ff',d:'~1 h 40 de gains, boost garanti, 1 à 2 gemmes, parfois une ★'}
+ c:{n:_T('Coffre commun'),mins:8,gem:[1,1],gp:.07,bp:.3,sp:0,price:8,col:'#e3b04b',d:_T('~8 min de gains, parfois un boost')},
+ r:{n:_T('Coffre rare'),mins:30,gem:[1,1],gp:.4,bp:.65,sp:0,price:20,col:'#9fe8ff',d:_T('~30 min de gains, souvent un boost, parfois une gemme')},
+ e:{n:_T('Coffre épique'),mins:100,gem:[1,2],gp:.85,bp:1,sp:.05,price:45,col:'#d9a8ff',d:_T('~1 h 40 de gains, boost garanti, 1 à 2 gemmes, parfois une ★')}
 };
 const FREE_H=3,chestName=t=>CHS[t].n;
-function giveChest(t,quiet){S.chests[t]++;if(!SIM&&!quiet){toast('📦 '+CHS[t].n+' obtenu ! (onglet Boutique)');sGem();}}
+function giveChest(t,quiet){S.chests[t]++;if(!SIM&&!quiet){toast('📦 '+CHS[t].n+_T(' obtenu ! (onglet Boutique)'));sGem();}}
 function rollChest(t){
   const d=CHS[t],out=[],cps=Math.max(S.cps,.5);
-  let c=cps*60*d.mins*(.8+Math.random()*.5);c=Math.max(c,40+S.depth*25);S.coins+=c;S.total+=c;out.push({k:'coin',v:'+'+fmt(c),l:'pièces'});
+  let c=cps*60*d.mins*(.8+Math.random()*.5);c=Math.max(c,40+S.depth*25);S.coins+=c;S.total+=c;out.push({k:'coin',v:'+'+fmt(c),l:_T('pièces')});
   let g=0;if(Math.random()<d.gp)g=d.gem[0]+Math.floor(Math.random()*(d.gem[1]-d.gem[0]+1));
-  if(g>0){S.gems+=g;out.push({k:'gem',v:'+'+g,l:g>1?'gemmes':'gemme'});}
+  if(g>0){S.gems+=g;out.push({k:'gem',v:'+'+g,l:g>1?_T('gemmes'):_T('gemme')});}
   if(Math.random()<d.bp){const ks=Object.keys(BOOSTDEF),k=ks[Math.floor(Math.random()*ks.length)],sec=Math.round(BOOSTDEF[k].dur*(t==='c'?.5:t==='r'?.75:1));S.boost[k]+=sec;out.push({k:'boost',v:fmtT(sec),l:BOOSTDEF[k].n,b:k});}
-  if(d.sp&&Math.random()<d.sp){S.stars++;out.push({k:'star',v:'+1',l:'étoile ★'});}
-  if(t==='e'&&Math.random()<.3){S.chests.r++;out.push({k:'chest',v:'+1',l:'coffre rare',t:'r'});}
+  if(d.sp&&Math.random()<d.sp){S.stars++;out.push({k:'star',v:'+1',l:_T('étoile ★')});}
+  if(t==='e'&&Math.random()<.3){S.chests.r++;out.push({k:'chest',v:'+1',l:_T('coffre rare'),t:'r'});}
   S.stats.chests++;return out;
 }
 const DEALS=[
- {id:'rain',n:'Pluie de pièces',d:'25 min de gains instantanés',cost:4,fn:()=>{const c=Math.max(S.cps*1500,200);S.coins+=c;S.total+=c;return '+'+fmt(c)+' pièces';}},
- {id:'pack',n:'Pack boosts',d:'Surcharge + Turbo + Fureur (−40 %)',cost:10,fn:()=>{for(const k in BOOSTDEF)S.boost[k]+=BOOSTDEF[k].dur;return 'Les 3 boosts sont actifs';}},
- {id:'rare',n:'Coffre rare en promo',d:'Un coffre rare à −30 %',cost:14,fn:()=>{giveChest('r',true);return 'Coffre rare ajouté';}},
- {id:'tri',n:'Trio de coffres',d:'3 coffres communs (−35 %)',cost:16,fn:()=>{S.chests.c+=3;return '3 coffres communs ajoutés';}}
+ {id:'rain',n:_T('Pluie de pièces'),d:_T('25 min de gains instantanés'),cost:4,fn:()=>{const c=Math.max(S.cps*1500,200);S.coins+=c;S.total+=c;return '+'+fmt(c)+_T(' pièces');}},
+ {id:'pack',n:_T('Pack boosts'),d:_T('Surcharge + Turbo + Fureur (−40 %)'),cost:10,fn:()=>{for(const k in BOOSTDEF)S.boost[k]+=BOOSTDEF[k].dur;return _T('Les 3 boosts sont actifs');}},
+ {id:'rare',n:_T('Coffre rare en promo'),d:_T('Un coffre rare à −30 %'),cost:14,fn:()=>{giveChest('r',true);return _T('Coffre rare ajouté');}},
+ {id:'tri',n:_T('Trio de coffres'),d:_T('3 coffres communs (−35 %)'),cost:16,fn:()=>{S.chests.c+=3;return _T('3 coffres communs ajoutés');}}
 ];
 function todaysDeals(){const d=dstr(new Date());if(S.shop.dd!==d){S.shop.dd=d;S.shop.db=[];}let h=0;for(const ch of d)h=(h*31+ch.charCodeAt(0))>>>0;const i=h%DEALS.length,j=(i+1+h%(DEALS.length-1))%DEALS.length;return [DEALS[i],DEALS[j]];}
-function buyDeal(df){todaysDeals();if(S.shop.db.includes(df.id)){if(!SIM)toast('Offre déjà achetée aujourd’hui');return false;}if(S.gems<df.cost){if(!SIM){sDeny();toast('Il te faut '+df.cost+' gemmes ◆');}return false;}S.gems-=df.cost;S.shop.db.push(df.id);const m=df.fn();if(!SIM){sBoost();toast(m);}return true;}
-function buyChest(t){const p=CHS[t].price;if(S.gems<p){if(!SIM){sDeny();toast('Il te faut '+p+' gemmes ◆ : elles tombent des cristaux géants');}return false;}S.gems-=p;S.chests[t]++;if(!SIM)sBuy();return true;}
+function buyDeal(df){todaysDeals();if(S.shop.db.includes(df.id)){if(!SIM)toast(_T('Offre déjà achetée aujourd’hui'));return false;}if(S.gems<df.cost){if(!SIM){sDeny();toast(_T('Il te faut ')+df.cost+_T(' gemmes ◆'));}return false;}S.gems-=df.cost;S.shop.db.push(df.id);const m=df.fn();if(!SIM){sBoost();toast(m);}return true;}
+function buyChest(t){const p=CHS[t].price;if(S.gems<p){if(!SIM){sDeny();toast(_T('Il te faut ')+p+_T(' gemmes ◆ : elles tombent des cristaux géants'));}return false;}S.gems-=p;S.chests[t]++;if(!SIM)sBuy();return true;}
 const freeLeft=()=>Math.max(0,(S.shop.free-Date.now())/1000);
 function freeReady(){if(S.shop.free-Date.now()>FREE_H*3600e3)S.shop.free=Date.now()+FREE_H*3600e3;return freeLeft()<=0;}
 function claimFree(){if(!freeReady())return false;S.shop.free=Date.now()+FREE_H*3600e3;S.chests.c++;return true;}
@@ -919,7 +1076,7 @@ function openChest(t){
   if(chOpen||!S.chests[t]||SIM)return false;
   chOpen=true;S.chests[t]--;const items=rollChest(t);save();
   const m=document.createElement('div');m.id='cho';m.className='t-'+t;m.style.setProperty('--gl',CPAL[t].glow);m.style.setProperty('--bd',CPAL[t].band);
-  m.innerHTML=`<div class="cname">${CH_NAMES[t]}</div><div class="cstage"><div class="rays"></div><div class="cglow"></div><div class="cring"></div><div class="chw drop">${chestArt(t,270)}</div><div class="cdust"></div></div><div class="cprompt"><i></i>Touche le coffre</div><div class="crew"></div><div class="cbtns"></div><div class="cflash"></div>`;
+  m.innerHTML=_tt`<div class="cname">${CH_NAMES[t]}</div><div class="cstage"><div class="rays"></div><div class="cglow"></div><div class="cring"></div><div class="chw drop">${chestArt(t,270)}</div><div class="cdust"></div></div><div class="cprompt"><i></i>Touche le coffre</div><div class="crew"></div><div class="cbtns"></div><div class="cflash"></div>`;
   document.body.appendChild(m);requestAnimationFrame(()=>m.classList.add('on'));
   const chw=m.querySelector('.chw'),st=m.querySelector('.cstage'),pr=m.querySelector('.cprompt'),rw=m.querySelector('.crew'),bt=m.querySelector('.cbtns');
   setTimeout(()=>{chw.classList.remove('drop');chw.classList.add('idle');m.classList.add('landed');sThud();},900);
@@ -934,19 +1091,19 @@ function openChest(t){
       card.innerHTML=`<div class="rci">${ic}</div><b>${it.k==='coin'||it.k==='gem'||it.k==='star'?'+0':it.v}</b><span>${it.l}</span>`;rw.appendChild(card);
       if(it.k==='coin'||it.k==='gem'||it.k==='star')countUp(card.querySelector('b'),it.v,700);
       (it.k==='gem'||it.k==='star'||it.k==='chest')?sGem():sPop(i);},1500+i*420));
-    later(()=>{const more=S.chests[t]>0;bt.innerHTML=(more?`<button class="g am" id="cmore">Ouvrir un autre (${S.chests[t]})</button>`:'')+'<button class="g vi" id="cok">Continuer</button>';
+    later(()=>{const more=S.chests[t]>0;bt.innerHTML=(more?_tt`<button class="g am" id="cmore">Ouvrir un autre (${S.chests[t]})</button>`:'')+_T('<button class="g vi" id="cok">Continuer</button>');
       const ok=bt.querySelector('#cok'),mo=bt.querySelector('#cmore');ok.addEventListener('click',()=>{initAudio();closeChest();});
       if(mo)mo.addEventListener('click',()=>{initAudio();const mm=$('cho');if(mm)mm.remove();chOpen=false;openChest(t);});},1500+items.length*420+450);};
   st.addEventListener('click',doOpen);
   return true;
 }
-const CH_NAMES={c:'Coffre commun',r:'Coffre rare',e:'Coffre épique'};
+const CH_NAMES={c:_T('Coffre commun'),r:_T('Coffre rare'),e:_T('Coffre épique')};
 function sThud(){if(!AC)return;const b=bus(0,.15);glide('sine',120,50,.2,.25,.4,b);tick(.15,b,0,500,.05);}
 function sPop(i){if(!AC)return;const b=bus(0,.2);glide('sine',500+i*120,900+i*160,.06,.16,.08,b);tick(.05,b,0,4000,.02);}
 function sTick3(){if(!AC)return;const b=bus(0,.2);for(let i=0;i<5;i++){tick(.12,b,i*.1,1200+i*200,.05);}}
-const fmtDur=s=>{s=Math.floor(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+' h '+String(m).padStart(2,'0'):m+' min';};
-const STATDEF=[['Cristaux cassés',()=>fmt(S.stats.kills)],['Cristaux géants',()=>S.stats.bosses],['Coffres ouverts',()=>S.stats.chests],['Meilleur combo',()=>'×'+S.stats.maxCombo],['Profondeur max',()=>S.maxDepth],['Pièces gagnées',()=>fmt(S.total)],['Comètes achetées',()=>S.stats.buys],['Fusions',()=>S.stats.merges],['Touchers',()=>S.stats.taps],['Comètes dorées',()=>S.stats.gold],['Ascensions',()=>S.asc],['Étoiles',()=>S.stars],['Temps de jeu',()=>fmtDur(S.stats.play)]];
-let tab='comets';const TABS=[['comets','Comètes','<circle cx="16" cy="8" r="3.6"/><path d="M13.4 10.6L4 20M12 7.5L6 13"/>'],['ups','Upgrades','<path d="M5 13l7-7 7 7M5 20l7-7 7 7"/>'],['pow','Pouvoirs','<path d="M13 2.5L5.5 13.5h6l-1 8 8-11.5h-6z"/>'],['boosts','Boutique','<path d="M4 9h16v11H4z"/><path d="M4 9l2-5h12l2 5M10 13h4"/>'],['vault','Voûte','<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>'],['mis','Missions','<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/>']];
+const fmtDur=s=>{s=Math.floor(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+' h '+String(m).padStart(2,'0'):m+_T(' min');};
+const STATDEF=[[_T('Cristaux cassés'),()=>fmt(S.stats.kills)],[_T('Cristaux géants'),()=>S.stats.bosses],[_T('Coffres ouverts'),()=>S.stats.chests],[_T('Meilleur combo'),()=>'×'+S.stats.maxCombo],[_T('Profondeur max'),()=>S.maxDepth],[_T('Pièces gagnées'),()=>fmt(S.total)],[_T('Comètes achetées'),()=>S.stats.buys],[_T('Fusions'),()=>S.stats.merges],[_T('Touchers'),()=>S.stats.taps],[_T('Comètes dorées'),()=>S.stats.gold],[_T('Ascensions'),()=>S.asc],[_T('Étoiles'),()=>S.stars],[_T('Temps de jeu'),()=>fmtDur(S.stats.play)]];
+let tab='comets';const TABS=[['comets',_T('Comètes'),'<circle cx="16" cy="8" r="3.6"/><path d="M13.4 10.6L4 20M12 7.5L6 13"/>'],['ups',_T('Upgrades'),'<path d="M5 13l7-7 7 7M5 20l7-7 7 7"/>'],['pow',_T('Pouvoirs'),'<path d="M13 2.5L5.5 13.5h6l-1 8 8-11.5h-6z"/>'],['boosts',_T('Boutique'),'<path d="M4 9h16v11H4z"/><path d="M4 9l2-5h12l2 5M10 13h4"/>'],['vault',_T('Voûte'),'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>'],['mis',_T('Missions'),'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/>']];
 const tabsEl=$('tabs'),listEl=$('list'),toastEl=$('toast');
 let ui={};
 function toast(t){toastEl.textContent=t;toastEl.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>toastEl.classList.remove('on'),2600);}
@@ -976,51 +1133,51 @@ function buildList(){
     const top=maxTier();
     ui.cards=[];
     const hp=document.createElement('div');hp.className='help';
-    hp.innerHTML='Les comètes rebondissent seules et brisent les cristaux. <b>Achète-en</b>, <b>améliore-les</b> (dégâts +25 %), ou <b>fusionne 3 comètes identiques</b> en une du palier suivant (6× plus puissante). Tu peux aussi <b>toucher les cristaux</b> dans le cercle pour les frapper toi-même.';
+    hp.innerHTML=_T('Les comètes rebondissent seules et brisent les cristaux. <b>Achète-en</b>, <b>améliore-les</b> (dégâts +25 %), ou <b>fusionne 3 comètes identiques</b> en une du palier suivant (6× plus puissante). Tu peux aussi <b>toucher les cristaux</b> dans le cercle pour les frapper toi-même.');
     for(let t=0;t<=top;t++){
       const el=document.createElement('div');el.className='cd cm';
       el.innerHTML=`<div class="orb" style="--c:${tcol(t,60)}"></div><div><div class="nm"></div><div class="st"></div></div>${t===0?'<div class="act b0w"><button class="g am b0"></button><button class="xm"></button></div>':''}<div class="row"><div class="act"><button class="g b1"></button><button class="xm"></button></div><div class="act"><button class="g vi b2"></button><button class="xm"></button></div></div>`;
       const q=s=>el.querySelector(s);const o={t,el,nm:q('.nm'),st:q('.st'),b0:q('.b0'),b1:q('.b1'),b2:q('.b2')};
-      if(o.b0)holdBind(o.b0,f=>bulkDo(buyComet,()=>popBurst(0),sBuy,()=>{if(totalComets()>=capN())goUp('cap','Arène pleine : améliore la Capacité pour en ajouter');else{sDeny();toast(needMsg(buyCost()));}},f!==false));
-      holdBind(o.b1,f=>bulkDo(()=>mergeTier(t),()=>mergeFx(t+1),sMerge,()=>{sDeny();toast(t>=TIERS-1?'Palier maximum atteint':'Fusion : il faut 3 comètes du même palier ('+Math.min(S.cnt[t],3)+' / 3)');},f!==false));holdBind(o.b2,f=>bulkDo(()=>levelTier(t),()=>levelFx(t),sLevel,()=>{sDeny();toast(needMsg(lvlCost(t,S.lvl[t])));},f!==false));
+      if(o.b0)holdBind(o.b0,f=>bulkDo(buyComet,()=>popBurst(0),sBuy,()=>{if(totalComets()>=capN())goUp('cap',_T('Arène pleine : améliore la Capacité pour en ajouter'));else{sDeny();toast(needMsg(buyCost()));}},f!==false));
+      holdBind(o.b1,f=>bulkDo(()=>mergeTier(t),()=>mergeFx(t+1),sMerge,()=>{sDeny();toast(t>=TIERS-1?_T('Palier maximum atteint'):_T('Fusion : il faut 3 comètes du même palier (')+Math.min(S.cnt[t],3)+' / 3)');},f!==false));holdBind(o.b2,f=>bulkDo(()=>levelTier(t),()=>levelFx(t),sLevel,()=>{sDeny();toast(needMsg(lvlCost(t,S.lvl[t])));},f!==false));
       listEl.appendChild(el);ui.cards.push(o);
     }
     listEl.appendChild(hp);
   }else if(tab==='ups'){
     ui.rows=[];
-    const UG=[['Combat',['dmg','speed','crit','split']],['Économie',['gain','off']],['Arène & automatisation',['cap','auto','tap']]];
+    const UG=[[_T('Combat'),['dmg','speed','crit','split']],[_T('Économie'),['gain','off']],[_T('Arène & automatisation'),['cap','auto','tap']]];
     for(const [gn,ks] of UG){{const sc=document.createElement('div');sc.className='sect';sc.textContent=gn;listEl.appendChild(sc);}
     for(const k of ks){
       const el=document.createElement('div');el.className='cd wide ur';
-      el.innerHTML=`<div class="tx"><div class="nm">${UPDEF[k].n}</div><div class="ds"></div></div><button class="xm"></button><button class="g"></button>`;
-      const o={k,el,ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(o.b,f=>bulkDo(()=>buyUp(k),null,sLevel,()=>{sDeny();toast(S.up[k]>=UPDEF[k].max?'Niveau maximum atteint':needMsg(upCost(k)));},f!==false));listEl.appendChild(el);ui.rows.push(o);
+      el.innerHTML=_tt`<div class="tx"><div class="nm">${UPDEF[k].n}</div><div class="ds"></div></div><button class="xm"></button><button class="g"></button>`;
+      const o={k,el,ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(o.b,f=>bulkDo(()=>buyUp(k),null,sLevel,()=>{sDeny();toast(S.up[k]>=UPDEF[k].max?_T('Niveau maximum atteint'):needMsg(upCost(k)));},f!==false));listEl.appendChild(el);ui.rows.push(o);
     }}
   }else if(tab==='boosts'){
     ui.rows=[];
     const sct=t=>{const d=document.createElement('div');d.className='sect';d.textContent=t;listEl.appendChild(d);};
-    sct('Coffres');
-    {const el=document.createElement('div');el.className='cd wide ur';el.innerHTML='<div class="tx"><div class="nm">Coffre offert</div><div class="ds"></div></div><button class="g am"></button>';
-     ui.free={ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(ui.free.b,f=>{if(!claimFree()){if(f!==false){sDeny();toast('Prochain coffre offert dans '+fmtDur(freeLeft()));}return false;}sBoost();openChest('c');return true;});listEl.appendChild(el);}
+    sct(_T('Coffres'));
+    {const el=document.createElement('div');el.className='cd wide ur';el.innerHTML=_T('<div class="tx"><div class="nm">Coffre offert</div><div class="ds"></div></div><button class="g am"></button>');
+     ui.free={ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(ui.free.b,f=>{if(!claimFree()){if(f!==false){sDeny();toast(_T('Prochain coffre offert dans ')+fmtDur(freeLeft()));}return false;}sBoost();openChest('c');return true;});listEl.appendChild(el);}
     ui.tier={};
     for(const t of ['c','r','e']){const d=CHS[t],el=document.createElement('div');el.className='cd wide pc2';el.style.setProperty('--c',d.col);
       el.innerHTML='<div class="pi2">'+chestArt(t,52)+'</div><div class="tx"><div class="nm">'+d.n+'</div><div class="ds">'+d.d+'</div><div class="own"></div></div><div class="cb"><button class="g vi bb"></button><button class="g am ob"></button></div>';
       const o={own:el.querySelector('.own'),bb:el.querySelector('.bb'),ob:el.querySelector('.ob')};
-      holdBind(o.bb,f=>buyChest(t));holdBind(o.ob,f=>{if(!S.chests[t]){if(f!==false){sDeny();toast('Aucun '+d.n.toLowerCase()+' : achète-en un ou trouve-en en jouant');}return false;}openChest(t);return false;});
+      holdBind(o.bb,f=>buyChest(t));holdBind(o.ob,f=>{if(!S.chests[t]){if(f!==false){sDeny();toast(_T('Aucun ')+d.n.toLowerCase()+_T(' : achète-en un ou trouve-en en jouant'));}return false;}openChest(t);return false;});
       listEl.appendChild(el);ui.tier[t]=o;}
-    sct('Offres du jour');
-    ui.deals=[];for(const df of todaysDeals()){const el=document.createElement('div');el.className='cd wide ur';el.innerHTML='<div class="tx"><div class="nm">'+df.n+'</div><div class="ds">'+df.d+' · renouvelé chaque jour</div></div><button class="g vi"></button>';
+    sct(_T('Offres du jour'));
+    ui.deals=[];for(const df of todaysDeals()){const el=document.createElement('div');el.className='cd wide ur';el.innerHTML='<div class="tx"><div class="nm">'+df.n+'</div><div class="ds">'+df.d+_T(' · renouvelé chaque jour</div></div><button class="g vi"></button>');
       const o={df,b:el.querySelector('.g')};holdBind(o.b,f=>buyDeal(df)&&false);listEl.appendChild(el);ui.deals.push(o);}
-    sct('Boosts');
+    sct(_T('Boosts'));
     for(const k in BOOSTDEF){
       const d=BOOSTDEF[k],el=document.createElement('div');el.className='cd wide ur';
-      el.innerHTML=`<div class="tx"><div class="nm">${d.n}</div><div class="ds">${d.d} pendant ${d.dur}s</div><div class="tm"><i style="width:0"></i></div></div><button class="g vi"></button>`;
-      const o={k,el,tm:el.querySelector('.tm i'),b:el.querySelector('.g')};holdBind(o.b,f=>buyBoost(k)||(f!==false&&toast('Il te faut '+d.cost+' gemmes ◆ : elles tombent des cristaux géants (tous les 10 niveaux)'),false));listEl.appendChild(el);ui.rows.push(o);
+      el.innerHTML=_tt`<div class="tx"><div class="nm">${d.n}</div><div class="ds">${d.d} pendant ${d.dur}s</div><div class="tm"><i style="width:0"></i></div></div><button class="g vi"></button>`;
+      const o={k,el,tm:el.querySelector('.tm i'),b:el.querySelector('.g')};holdBind(o.b,f=>buyBoost(k)||(f!==false&&toast(_T('Il te faut ')+d.cost+_T(' gemmes ◆ : elles tombent des cristaux géants (tous les 10 niveaux)')),false));listEl.appendChild(el);ui.rows.push(o);
     }
-    const n=document.createElement('div');n.className='cd wide vt';n.innerHTML='<p>Les gemmes violettes tombent des cristaux géants (toutes les 10 profondeurs) et, plus rarement, des cristaux ordinaires.</p>';listEl.appendChild(n);
+    const n=document.createElement('div');n.className='cd wide vt';n.innerHTML=_T('<p>Les gemmes violettes tombent des cristaux géants (toutes les 10 profondeurs) et, plus rarement, des cristaux ordinaires.</p>');listEl.appendChild(n);
   }else if(tab==='pow'){
-    const hp=document.createElement('div');hp.className='help';hp.innerHTML='Les pouvoirs se lancent depuis les <b>boutons ronds dans l’arène</b>. Débloque-les avec des <b>gemmes ◆</b> une fois la profondeur atteinte, puis améliore-les avec des pièces.';listEl.appendChild(hp);
+    const hp=document.createElement('div');hp.className='help';hp.innerHTML=_T('Les pouvoirs se lancent depuis les <b>boutons ronds dans l’arène</b>. Débloque-les avec des <b>gemmes ◆</b> une fois la profondeur atteinte, puis améliore-les avec des pièces.');listEl.appendChild(hp);
     ui.pw={};
-    const PC=[['nova',{n:'Nova',ic:'✦',c:'#b6ff4a'}],...Object.entries(POWS)];
+    const PC=[['nova',{n:_T('Nova'),ic:'✦',c:'#b6ff4a'}],...Object.entries(POWS)];
     for(const [k,d] of PC){const el=document.createElement('div');el.className='cd wide pc';el.style.setProperty('--c',d.c);
       el.innerHTML='<div class="pi">'+d.ic+'</div><div class="pt"><div class="pn"><span class="nm">'+d.n+'</span><em class="stt"></em></div><div class="pp">'+'<i></i>'.repeat(NOVA_MAX)+'</div><div class="ds"></div></div><button class="g vi"></button>';
       const o={el,ds:el.querySelector('.ds'),b:el.querySelector('.g'),stt:el.querySelector('.stt'),pips:[...el.querySelectorAll('.pp i')]};
@@ -1030,25 +1187,26 @@ function buildList(){
     ui.mis=[];
     const sec=t=>{const d=document.createElement('div');d.className='sect';d.textContent=t;listEl.appendChild(d);};
     {const el=document.createElement('div');el.className='cd wide';el.style.padding='8px';el.innerHTML='<button class="g am" style="width:100%;padding:12px 4px;font-size:14px"></button>';
-     ui.all=el.querySelector('.g');holdBind(ui.all,f=>claimAll()||(f!==false&&(sDeny(),toast('Rien à récupérer pour le moment')),false));listEl.appendChild(el);}
-    sec('Coffre du jour');
-    {const el=document.createElement('div');el.className='cd wide ur';el.innerHTML='<div class="tx"><div class="nm">Coffre quotidien</div><div class="ds"></div></div><button class="g am"></button>';
-     ui.daily={ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(ui.daily.b,f=>dailyClaim()||(f!==false&&toast('Déjà récupéré : reviens demain pour prolonger ta série'),false));listEl.appendChild(el);}
-    sec('Missions');
+     ui.all=el.querySelector('.g');holdBind(ui.all,f=>claimAll()||(f!==false&&(sDeny(),toast(_T('Rien à récupérer pour le moment'))),false));listEl.appendChild(el);}
+    sec(_T('Coffre du jour'));
+    {const el=document.createElement('div');el.className='cd wide ur';el.innerHTML=_T('<div class="tx"><div class="nm">Coffre quotidien</div><div class="ds"></div></div><button class="g am"></button>');
+     ui.daily={ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(ui.daily.b,f=>dailyClaim()||(f!==false&&toast(_T('Déjà récupéré : reviens demain pour prolonger ta série')),false));listEl.appendChild(el);}
+    sec(_T('Missions'));
     for(let i=0;i<MISDEF.length;i++){const el=document.createElement('div');el.className='cd wide ur';
       el.innerHTML='<div class="tx"><div class="nm"></div><div class="ds"></div><div class="tm"><i style="width:0"></i></div></div><button class="g vi"></button>';
       const o={i,nm:el.querySelector('.nm'),ds:el.querySelector('.ds'),tm:el.querySelector('.tm i'),b:el.querySelector('.g')};
-      holdBind(o.b,f=>misClaim(i)||(f!==false&&(sDeny(),toast('Mission en cours : '+fmt(misProg(i))+' / '+fmt(misGoal(i)))),false));listEl.appendChild(el);ui.mis.push(o);}
-    sec('Statistiques');
+      holdBind(o.b,f=>misClaim(i)||(f!==false&&(sDeny(),toast(_T('Mission en cours : ')+fmt(misProg(i))+' / '+fmt(misGoal(i)))),false));listEl.appendChild(el);ui.mis.push(o);}
+    sec(_T('Statistiques'));
     {const el=document.createElement('div');el.className='cd wide';el.innerHTML='<div class="stg">'+STATDEF.map(()=>'<div><b></b><span></span></div>').join('')+'</div>';
      ui.stats=[...el.querySelectorAll('.stg>div')].map((d,k)=>({b:d.querySelector('b'),sp:d.querySelector('span'),k}));ui.stats.forEach(o=>{o.sp.textContent=STATDEF[o.k][0];});listEl.appendChild(el);}
   }else{
     const el=document.createElement('div');el.className='cd wide vt';
-    el.innerHTML=`<h3>La Voûte</h3><p>Referme la mine et recommence plus fort. Tu perds tes comètes, tes niveaux et tes pièces, mais chaque étoile gagnée augmente <b>pour toujours</b> tes gains et tes dégâts de 10 %.</p><div class="big" id="vstars"></div><p id="vinfo"></p><p id="vprev"></p><button class="g vi" id="vbtn" style="width:70%"></button>`;
-    listEl.appendChild(el);ui.v={stars:el.querySelector('#vstars'),info:el.querySelector('#vinfo'),prev:el.querySelector('#vprev'),b:el.querySelector('#vbtn')};
-    ui.v.b.addEventListener('click',()=>{initAudio();const gn=starsFor(S.runBest);if(gn<=0){sDeny();toast('Atteins la profondeur '+ASC_MIN+' pour ascensionner (record actuel : '+S.runBest+')');return;}
-      if(!ui.confirm){ui.confirm=true;ui.v.b.textContent='Confirmer : +'+gn+' ★';setTimeout(()=>{ui.confirm=false;},3500);return;}
-      ui.confirm=false;ascend();sBoost();toast('Ascension ! +'+gn+' étoiles');buildList();});
+    el.innerHTML=_tt`<h3>La Voûte</h3><p>Referme la mine et recommence plus fort. Tu perds tes comètes, tes niveaux et tes pièces, mais chaque étoile gagnée augmente <b>pour toujours</b> tes gains et tes dégâts de 10 %.</p><div class="big" id="vstars"></div><p id="vinfo"></p><p id="vprev"></p><button class="g vi" id="vbtn" style="width:70%"></button>`;
+    listEl.appendChild(el);{const r2=document.createElement('div');r2.className='cd wide vt';r2.innerHTML=_T('<h3>Reliques</h3><div class="rlbox"></div>');listEl.appendChild(r2);ui.rl=r2.querySelector('.rlbox');ui.rlk='';}
+    ui.v={stars:el.querySelector('#vstars'),info:el.querySelector('#vinfo'),prev:el.querySelector('#vprev'),b:el.querySelector('#vbtn')};
+    ui.v.b.addEventListener('click',()=>{initAudio();const gn=starsFor(S.runBest);if(gn<=0){sDeny();toast(_T('Atteins la profondeur ')+ASC_MIN+_T(' pour ascensionner (record actuel : ')+S.runBest+')');return;}
+      if(!ui.confirm){ui.confirm=true;ui.v.b.textContent=_T('Confirmer : +')+gn+' ★';setTimeout(()=>{ui.confirm=false;},3500);return;}
+      ui.confirm=false;ascend();sBoost();toast(_T('Ascension ! +')+gn+_T(' étoiles'));if(S.relPend>0)setTimeout(()=>toast(_T('🔮 Une relique t’attend dans la Voûte !')),1800);buildList();});
   }
   [...listEl.children].forEach((c,i)=>{if(!c.classList)return;c.style.animationDelay=Math.min(i,8)*45+'ms';c.classList.add('enter');c.addEventListener('animationend',()=>{c.classList.remove('enter');c.style.animationDelay='';},{once:true});});
   listEl.querySelectorAll('.xm').forEach(x=>x.addEventListener('click',()=>{initAudio();bm=(bm+1)%4;sBuy();refreshUI();}));
@@ -1060,63 +1218,64 @@ function refreshUI(force){
   if(tab==='comets'){
     const top=maxTier();if(ui.cards&&ui.cards.length!==top+1){buildList();return;}
     for(const o of ui.cards){const t=o.t;
-      o.nm.textContent='Comète '+TN[t]+' · palier '+(t+1);
-      o.st.innerHTML='<b>'+S.cnt[t]+'</b> en jeu · <b>'+fmt(dmgOf(t))+'</b> dégâts par coup · niveau '+S.lvl[t];
+      o.nm.textContent=_T('Comète ')+TN[t]+_T(' · palier ')+(t+1);
+      o.st.innerHTML='<b>'+S.cnt[t]+_T('</b> en jeu · <b>')+fmt(dmgOf(t))+_T('</b> dégâts par coup · niveau ')+S.lvl[t];
       if(o.b0){const p=plan(k=>totalComets()+k>=capN()?null:8*Math.pow(1.14,S.bought0+k)),full=totalComets()>=capN();
         const nC=totalComets(),cp=capN(),gg='<div class="gg'+(full?' full':'')+'"><i style="width:'+Math.min(100,100*nC/cp).toFixed(1)+'%"></i></div>';
-        setBtn(o.b0,full?'Arène pleine · '+nC+' / '+cp+'<small>Touche pour augmenter la Capacité →</small>'+gg:(BMULT[bm]===1?'Acheter une comète':'Acheter ×'+Math.max(1,p.cnt))+'<small>'+fmt(p.sum)+' pièces · '+nC+' / '+cp+' en jeu</small>'+gg,!full&&p.cnt>0);}
+        setBtn(o.b0,full?_T('Arène pleine · ')+nC+' / '+cp+_T('<small>Touche pour augmenter la Capacité →</small>')+gg:(BMULT[bm]===1?_T('Acheter une comète'):_T('Acheter ×')+Math.max(1,p.cnt))+'<small>'+fmt(p.sum)+_T(' pièces · ')+nC+' / '+cp+_T(' en jeu</small>')+gg,!full&&p.cnt>0);}
       const mn=BMULT[bm]==='max'?1e5:BMULT[bm],mc=Math.min(mn,Math.floor(S.cnt[t]/3));
-      setBtn(o.b1,t>=TIERS-1?'Palier max':(mc>1?'Fusionner ×'+mc:'Fusionner 3 → 1')+'<small>'+(mc>1?mc*3+' → '+mc:Math.min(S.cnt[t],3)+' / 3 comètes')+' · palier '+(t+2)+'</small>',t<TIERS-1&&S.cnt[t]>=3);
-      const lp=plan(k=>lvlCost(t,S.lvl[t]+k));setBtn(o.b2,(BMULT[bm]===1?'Améliorer':'Améliorer +'+Math.max(1,lp.cnt)+' niv.')+'<small>'+(BMULT[bm]===1?'dégâts ×1,25 · ':'')+fmt(lp.sum)+'</small>',lp.cnt>0);}
+      setBtn(o.b1,t>=TIERS-1?_T('Palier max'):(mc>1?_T('Fusionner ×')+mc:_T('Fusionner 3 → 1'))+'<small>'+(mc>1?mc*3+' → '+mc:Math.min(S.cnt[t],3)+_T(' / 3 comètes'))+_T(' · palier ')+(t+2)+'</small>',t<TIERS-1&&S.cnt[t]>=3);
+      const lp=plan(k=>lvlCost(t,S.lvl[t]+k));setBtn(o.b2,(BMULT[bm]===1?_T('Améliorer'):_T('Améliorer +')+Math.max(1,lp.cnt)+' niv.')+'<small>'+(BMULT[bm]===1?_T('dégâts ×1,25 · '):'')+fmt(lp.sum)+'</small>',lp.cnt>0);}
   }else if(tab==='ups'){
-    for(const o of ui.rows){const d=UPDEF[o.k],l=S.up[o.k];o.ds.textContent=(l?d.d(l):'Pas encore acquis')+(l<d.max?'  →  '+d.d(l+1):'');
-      if(l>=d.max)setBtn(o.b,'MAX',false);else{const up=plan(k=>S.up[o.k]+k>=d.max?null:d.base*Math.pow(d.g,S.up[o.k]+k));setBtn(o.b,(BMULT[bm]===1?'Niv. '+l:'+'+Math.max(1,up.cnt)+' niv.')+'<small>'+fmt(up.sum)+'</small>',up.cnt>0);}}
+    for(const o of ui.rows){const d=UPDEF[o.k],l=S.up[o.k];o.ds.textContent=(l?d.d(l):_T('Pas encore acquis'))+(l<d.max?'  →  '+d.d(l+1):'');
+      if(l>=d.max)setBtn(o.b,_T('MAX'),false);else{const up=plan(k=>S.up[o.k]+k>=d.max?null:d.base*Math.pow(d.g,S.up[o.k]+k));setBtn(o.b,(BMULT[bm]===1?_T('Niv. ')+l:'+'+Math.max(1,up.cnt)+' niv.')+'<small>'+fmt(up.sum)+'</small>',up.cnt>0);}}
   }else if(tab==='boosts'){
-    if(ui.free){const rd=freeReady(),tx=rd?'Un coffre commun t’attend !':'Prochain coffre dans '+fmtDur(freeLeft());if(ui.free.ds.textContent!==tx)ui.free.ds.textContent=tx;setBtn(ui.free.b,rd?'Ouvrir<small>gratuit</small>':'<small>'+fmtDur(freeLeft())+'</small>',rd);}
-    if(ui.tier)for(const t in ui.tier){const o=ui.tier[t],n=S.chests[t],tx='En stock : '+n;if(o.own.textContent!==tx)o.own.textContent=tx;setBtn(o.bb,'Acheter<small>'+CHS[t].price+' ◆</small>',S.gems>=CHS[t].price);setBtn(o.ob,'Ouvrir<small>'+n+'</small>',n>0);}
-    if(ui.deals)for(const o of ui.deals){const done=S.shop.db.includes(o.df.id);setBtn(o.b,done?'Acheté':'Acheter<small>'+o.df.cost+' ◆</small>',!done&&S.gems>=o.df.cost);}
+    if(ui.free){const rd=freeReady(),tx=rd?_T('Un coffre commun t’attend !'):_T('Prochain coffre dans ')+fmtDur(freeLeft());if(ui.free.ds.textContent!==tx)ui.free.ds.textContent=tx;setBtn(ui.free.b,rd?_T('Ouvrir<small>gratuit</small>'):'<small>'+fmtDur(freeLeft())+'</small>',rd);}
+    if(ui.tier)for(const t in ui.tier){const o=ui.tier[t],n=S.chests[t],tx=_T('En stock : ')+n;if(o.own.textContent!==tx)o.own.textContent=tx;setBtn(o.bb,_T('Acheter<small>')+CHS[t].price+' ◆</small>',S.gems>=CHS[t].price);setBtn(o.ob,_T('Ouvrir<small>')+n+'</small>',n>0);}
+    if(ui.deals)for(const o of ui.deals){const done=S.shop.db.includes(o.df.id);setBtn(o.b,done?_T('Acheté'):_T('Acheter<small>')+o.df.cost+' ◆</small>',!done&&S.gems>=o.df.cost);}
     for(const o of ui.rows){const d=BOOSTDEF[o.k],t=S.boost[o.k];o.tm.style.width=Math.min(100,t/d.dur*100)+'%';
-      setBtn(o.b,(t>0?'Prolonger':'Activer')+'<small>'+d.cost+' ◆</small>',S.gems>=d.cost);}
+      setBtn(o.b,(t>0?_T('Prolonger'):_T('Activer'))+'<small>'+d.cost+' ◆</small>',S.gems>=d.cost);}
   }else if(tab==='pow'){
     if(ui.pw)for(const k in POWS){const o=ui.pw[k],d=POWS[k],p=S.pow[k];let t,ds,ok;
-      if(!p.u){ds=d.info+` Déblocage : profondeur ${d.unl} + ${d.gems} ◆.`;if(S.maxDepth<d.unl){t='Verrouillé<small>profondeur '+d.unl+'</small>';ok=false;}else{t='Débloquer<small>'+d.gems+' ◆</small>';ok=S.gems>=d.gems;}}
-      else{ds=`Niv. ${p.l} · ${d.d(p.l)}`;if(p.l>=d.max){t='MAX';ok=false;}else{const c=d.cost(p.l);t='Améliorer<small>'+fmt(c)+'</small>';ok=S.coins>=c;}}
+      if(!p.u){ds=d.info+_tt` Déblocage : profondeur ${d.unl} + ${d.gems} ◆.`;if(S.maxDepth<d.unl){t=_T('Verrouillé<small>profondeur ')+d.unl+'</small>';ok=false;}else{t=_T('Débloquer<small>')+d.gems+' ◆</small>';ok=S.gems>=d.gems;}}
+      else{ds=_tt`Niv. ${p.l} · ${d.d(p.l)}`;if(p.l>=d.max){t=_T('MAX');ok=false;}else{const c=d.cost(p.l);t=_T('Améliorer<small>')+fmt(c)+'</small>';ok=S.coins>=c;}}
       if(o.ds.textContent!==ds)o.ds.textContent=ds;setBtn(o.b,t,ok);}
     if(ui.nova){const p=S.pow.nova;let t,ds,ok;
-      if(!p.u){ds=`Une onde de choc frappe tous les cristaux (×${novaDmgMul(0)} de ta meilleure comète). Déblocage : profondeur ${NOVA_DEPTH} + ${NOVA_GEMS} ◆.`;
-        if(S.maxDepth<NOVA_DEPTH){t='Verrouillé<small>profondeur '+NOVA_DEPTH+'</small>';ok=false;}else{t='Débloquer<small>'+NOVA_GEMS+' ◆</small>';ok=S.gems>=NOVA_GEMS;}}
-      else{ds=`Niv. ${p.l} · dégâts ×${novaDmgMul(p.l).toFixed(0)} · recharge ${novaCdSec(p.l).toFixed(0)} s`+(p.l<NOVA_MAX?`  →  ×${novaDmgMul(p.l+1).toFixed(0)} · ${novaCdSec(p.l+1).toFixed(0)} s`:'');
-        if(p.l>=NOVA_MAX){t='MAX';ok=false;}else{const c=novaCost(p.l);t='Améliorer<small>'+fmt(c)+'</small>';ok=S.coins>=c;}}
+      if(!p.u){ds=_tt`Une onde de choc frappe tous les cristaux (×${novaDmgMul(0)} de ta meilleure comète). Déblocage : profondeur ${NOVA_DEPTH} + ${NOVA_GEMS} ◆.`;
+        if(S.maxDepth<NOVA_DEPTH){t=_T('Verrouillé<small>profondeur ')+NOVA_DEPTH+'</small>';ok=false;}else{t=_T('Débloquer<small>')+NOVA_GEMS+' ◆</small>';ok=S.gems>=NOVA_GEMS;}}
+      else{ds=_tt`Niv. ${p.l} · dégâts ×${novaDmgMul(p.l).toFixed(0)} · recharge ${novaCdSec(p.l).toFixed(0)} s`+(p.l<NOVA_MAX?_tt`  →  ×${novaDmgMul(p.l+1).toFixed(0)} · ${novaCdSec(p.l+1).toFixed(0)} s`:'');
+        if(p.l>=NOVA_MAX){t=_T('MAX');ok=false;}else{const c=novaCost(p.l);t=_T('Améliorer<small>')+fmt(c)+'</small>';ok=S.coins>=c;}}
       if(ui.nova.ds.textContent!==ds)ui.nova.ds.textContent=ds;setBtn(ui.nova.b,t,ok);}
     for(const k of ['nova','bolt','magnet','midas']){const o=k==='nova'?ui.nova:ui.pw&&ui.pw[k];if(!o||!o.stt)continue;const p=S.pow[k],[c,tx]=powState(k);
       if(o.stt.textContent!==tx)o.stt.textContent=tx;if(o._c!==c){o._c=c;o.stt.className='stt '+c;o.el.classList.toggle('lk',c==='lk');}
       if(o._l!==p.l){o._l=p.l;o.pips.forEach((i,n)=>i.classList.toggle('on',n<p.l));}}
   }else if(tab==='mis'&&ui.daily){
     const r=dailyReward(),rd=dailyReady(),nc=claimCount();
-    setBtn(ui.all,nc>0?'Tout récupérer<small>'+nc+' récompense'+(nc>1?'s':'')+' à prendre</small>':'Tout récupérer<small>rien à prendre pour l\'instant</small>',nc>0);
-    ui.daily.ds.textContent=rd?`Série : jour ${r.st} · +${r.gems} ◆ et ${fmt(r.coins)} pièces`:`Déjà récupéré aujourd'hui · série de ${S.daily.streak} jour${S.daily.streak>1?'s':''}. Reviens demain !`;
-    setBtn(ui.daily.b,rd?'Récupérer':'Demain',rd);
-    for(const o of ui.mis){const i=o.i,g=misGoal(i),p=misProg(i);o.nm.textContent=MISDEF[i].txt(g);o.ds.textContent=fmt(p)+' / '+fmt(g)+' · récompense : '+misReward(i)+' ◆';o.tm.style.width=(100*p/g)+'%';setBtn(o.b,misDone(i)?'Récupérer<small>+'+misReward(i)+' ◆</small>':'En cours',misDone(i));}
+    setBtn(ui.all,nc>0?_T('Tout récupérer<small>')+nc+_T(' récompense')+(nc>1?'s':'')+_T(' à prendre</small>'):_T('Tout récupérer<small>rien à prendre pour l\'instant</small>'),nc>0);
+    ui.daily.ds.textContent=rd?_tt`Série : jour ${r.st} · +${r.gems} ◆ et ${fmt(r.coins)} pièces`:_tt`Déjà récupéré aujourd'hui · série de ${S.daily.streak} jour${S.daily.streak>1?'s':''}. Reviens demain !`;
+    setBtn(ui.daily.b,rd?_T('Récupérer'):_T('Demain'),rd);
+    for(const o of ui.mis){const i=o.i,g=misGoal(i),p=misProg(i);o.nm.textContent=MISDEF[i].txt(g);o.ds.textContent=fmt(p)+' / '+fmt(g)+_T(' · récompense : ')+misReward(i)+' ◆';o.tm.style.width=(100*p/g)+'%';setBtn(o.b,misDone(i)?_T('Récupérer<small>+')+misReward(i)+' ◆</small>':_T('En cours'),misDone(i));}
     for(const o of ui.stats){const v=String(STATDEF[o.k][1]());if(o._v!==v){o._v=v;o.b.textContent=v;}}
   }else if(tab==='vault'&&ui.v){
-    const gn=starsFor(S.runBest);ui.v.stars.textContent='★ '+S.stars+'  ·  +'+(S.stars*10)+' %';
-    ui.v.info.textContent=gn>0?`Ascension disponible : +${gn} étoile${gn>1?'s':''} (profondeur max ${S.runBest}).`:`Atteins la profondeur ${ASC_MIN} pour pouvoir ascensionner (record de cette mine : ${S.runBest}).`;
+    const gn=starsFor(S.runBest);ui.v.stars.textContent='★ '+S.stars+'  ·  +'+(S.stars*10)+_T(' %');
+    ui.v.info.textContent=gn>0?_tt`Ascension disponible : +${gn} étoile${gn>1?'s':''} (profondeur max ${S.runBest}).`:_tt`Atteins la profondeur ${ASC_MIN} pour pouvoir ascensionner (record de cette mine : ${S.runBest}).`;
     {const cur=Math.pow(1+.1*S.stars,2),nxt=Math.pow(1+.1*(S.stars+gn),2);let nd=S.runBest+1;while(starsFor(nd)<=gn&&nd<S.runBest+300)nd++;
      const rec=gn>=3&&gn>=S.stars*.3;
-     ui.v.prev.innerHTML=(gn>0?`Après l'ascension : gains et dégâts <b>×${cur.toFixed(2)} → ×${nxt.toFixed(2)}</b>.`:`Multiplicateur actuel : gains et dégâts <b>×${cur.toFixed(2)}</b>.`)+`<br>Étoile supplémentaire à la profondeur <b>${nd}</b>.`+(gn>0?(rec?'<br><span class="rec">✓ Ascension conseillée : tu gagnes beaucoup d\'étoiles.</span>':'<br>Tu peux encore progresser pour en gagner plus avant de recommencer.'):'');}
-    if(!ui.confirm)setBtn(ui.v.b,gn>0?'Ascension  +'+gn+' ★':'Verrouillée',gn>0);
+     ui.v.prev.innerHTML=(gn>0?_tt`Après l'ascension : gains et dégâts <b>×${cur.toFixed(2)} → ×${nxt.toFixed(2)}</b>.`:_tt`Multiplicateur actuel : gains et dégâts <b>×${cur.toFixed(2)}</b>.`)+_tt`<br>Étoile supplémentaire à la profondeur <b>${nd}</b>.`+(gn>0?(rec?_T('<br><span class="rec">✓ Ascension conseillée : tu gagnes beaucoup d\'étoiles.</span>'):_T('<br>Tu peux encore progresser pour en gagner plus avant de recommencer.')):'');}
+    if(ui.rl){const key=S.rel.join()+'|'+S.relPend+'|'+S.asc;if(ui.rlk!==key){ui.rlk=key;renderRel(ui.rl);}}
+    if(!ui.confirm)setBtn(ui.v.b,gn>0?_T('Ascension  +')+gn+' ★':_T('Verrouillée'),gn>0);
   }
   // pastille de disponibilité
   const dots=tabsEl.querySelectorAll('.dot');
   const pwOk=k=>{const p=S.pow[k],d=k==='nova'?{unl:NOVA_DEPTH,gems:NOVA_GEMS}:POWS[k];return !p.u&&S.maxDepth>=d.unl&&S.gems>=d.gems;};
-  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:Object.keys(BOOSTDEF).some(k=>S.gems>=BOOSTDEF[k].cost)||freeReady()||S.chests.c+S.chests.r+S.chests.e>0,vault:starsFor(S.runBest)>0,mis:dailyReady()||[0,1,2,3].some(misDone)};
+  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:Object.keys(BOOSTDEF).some(k=>S.gems>=BOOSTDEF[k].cost)||freeReady()||S.chests.c+S.chests.r+S.chests.e>0,vault:starsFor(S.runBest)>0||S.relPend>0,mis:dailyReady()||[0,1,2,3].some(misDone)};
   dots.forEach((d,i)=>{d.style.display=av[TABS[i][0]]&&TABS[i][0]!==tab?'inline-block':'none';});
   {const lb=bmLabel();listEl.querySelectorAll('.xm').forEach(x=>{if(x._l!==lb){x.textContent=lb;x._l=lb;}});}
 }
 const hudEls={};
 const powBtn={};{const st=$('stage'),pos={bolt:'left:12px;bottom:14px',magnet:'left:12px;bottom:78px',midas:'right:14px;bottom:100px'};
   if(st&&st.appendChild)for(const k in POWS){const d=POWS[k],el=document.createElement('button');el.className='pwb';el.setAttribute('aria-label',d.n);el.style.cssText=pos[k]+';--c:'+d.c;el.innerHTML='<i>'+d.ic+'</i><b></b>';
-    el.addEventListener('click',()=>{initAudio();if(!firePow(k)){sDeny();toast(pcd[k]>0?d.n+' en recharge : '+Math.ceil(pcd[k])+' s':d.n+' indisponible');}});st.appendChild(el);powBtn[k]={el,tx:el.querySelector('b')};}}
+    el.addEventListener('click',()=>{initAudio();if(!firePow(k)){sDeny();toast(pcd[k]>0?d.n+_T(' en recharge : ')+Math.ceil(pcd[k])+' s':d.n+_T(' indisponible'));}});st.appendChild(el);powBtn[k]={el,tx:el.querySelector('b')};}}
 function hudSet(id,v){const e=hudEls[id]||(hudEls[id]=$(id));if(e._v!==v){e._v=v;e.textContent=v;}}
 function hudStyle(id,prop,v){const e=hudEls[id]||(hudEls[id]=$(id));if(e['_s'+prop]!==v){e['_s'+prop]=v;e.style[prop]=v;}}
 function refreshHud(dt){
@@ -1131,10 +1290,10 @@ function refreshHud(dt){
     if(p.u){const tot=POWS[k].cd(p.l),act=(k==='magnet'?magnetT:k==='midas'?midasT:0),pc=pcd[k]>0?Math.round(100*(1-pcd[k]/tot)):100,rdy=pcd[k]<=0;if(o.p!==pc){o.p=pc;o.el.style.setProperty('--p',pc);}
       if(o.r!==rdy){o.r=rdy;o.el.classList.toggle('rdy',rdy);}const tx=act>0?String(Math.ceil(act)):(rdy?'':String(Math.ceil(pcd[k])));if(o.t!==tx){o.t=tx;o.tx.textContent=tx;}if(o.a!==(act>0)){o.a=act>0;o.el.classList.toggle('act',act>0);}}}
   let alive=0;for(const b of blocks)if(!b.dead)alive++;const tot=blocks.length;
-  hudSet('dl',(S.depth%10===0?'Cristal géant · ':'')+'Profondeur '+S.depth+' · '+BIOMES[bgTo].n);hudSet('bl',alive+' / '+tot);
+  hudSet('dl',(S.depth%10===0?_T('Cristal géant · '):'')+_T('Profondeur ')+S.depth+_T(' · ')+BIOMES[bgTo].n);hudSet('bl',alive+' / '+tot);
   hudStyle('barf','width',(tot?(100*(1-alive/tot)).toFixed(1):0)+'%');
   let h='';for(const k in S.boost)if(S.boost[k]>0)h+=`<span class="bchip">${BOOSTDEF[k].n} ${fmtT(S.boost[k])}</span>`;
-  if(magnetT>0)h+=`<span class="bchip">Aimant ${fmtT(magnetT)}</span>`;if(midasT>0)h+=`<span class="bchip">Midas ×3 ${fmtT(midasT)}</span>`;
+  if(magnetT>0)h+=_tt`<span class="bchip">Aimant ${fmtT(magnetT)}</span>`;if(midasT>0)h+=`<span class="bchip">Midas ×3 ${fmtT(midasT)}</span>`;
   const bx=$('boosts');if(bx._h!==h){bx.innerHTML=h;bx._h=h;}
 }
 
@@ -1145,6 +1304,7 @@ function drawBlock(b){
   const k=b.sc<1?1-Math.pow(1-b.sc,3):1,s=b.s*k*.985*(1+.1*(b.pulse||0)*(b.pulse||0))*(1+.012*Math.sin(T*1.6+b.seed*30)),f=clamp(b.hp/b.max,0,1);
   const boss=b.boss,sat=boss?78:66,lb=boss?50:40;
   g.save();g.translate(b.x,b.y);
+  if(b.bt==='fantome'&&(b.phT%5)>3.6)g.globalAlpha=.3+.1*Math.sin(T*10);
   g.fillStyle='rgba(0,0,0,.38)';hexPath(g,.012,.02,s);g.fill();
   for(let i=0;i<6;i++){
     const a0=Math.PI/3*i-Math.PI/6,a1=a0+Math.PI/3,am=(a0+a1)/2;
@@ -1161,6 +1321,9 @@ function drawBlock(b){
   const nc=f<.15?3:f<.4?2:f<.7?1:0;g.strokeStyle='rgba(8,14,20,.85)';g.lineWidth=.007;
   for(let c=0;c<nc;c++){const pts=b.cr[c];g.beginPath();g.moveTo(0,0);for(const p of pts)g.lineTo(p[0]*s,p[1]*s);g.stroke();}
   if(boss){g.strokeStyle=`hsla(${b.hue},90%,75%,${.35+.2*Math.sin(T*3)})`;g.lineWidth=.012;hexPath(g,0,0,s*1.08,T*.15);g.stroke();}
+  if(boss&&b.bt==='cuirasse'&&b.arm>0){g.strokeStyle='hsla(210,25%,82%,.85)';g.lineWidth=.006+.018*b.arm/b.armMax;hexPath(g,0,0,s*1.22);g.stroke();g.strokeStyle='hsla(210,40%,55%,.55)';g.lineWidth=.007;hexPath(g,0,0,s*1.31);g.stroke();}
+  if(boss&&b.bt==='regen'&&b.hp<b.max){g.strokeStyle=`hsla(135,90%,60%,${.25+.2*Math.sin(T*5)})`;g.lineWidth=.014;hexPath(g,0,0,s*1.16);g.stroke();}
+  if(boss&&b.bt==='fractal'){g.fillStyle='hsla(322,90%,72%,.8)';for(let i=0;i<3;i++){const a=i*2.094+T*.4;g.beginPath();g.arc(Math.cos(a)*s*1.08,Math.sin(a)*s*1.08,s*.07,0,7);g.fill();}}
   g.restore();
 }
 let ARS=null,ARSkey='';
@@ -1209,7 +1372,7 @@ function render(dt){
   }
   // comètes
   for(const c of comets){
-    const hue=TC[c.t],cr=cometR(c.t)*(1+.9*(1-c.sp)*(1-c.sp))*(c.sp<1?c.sp*.5+.5:1)*(1+.06*Math.sin(T*7+c.x*9));
+    const hue=skinHue(c.t),cr=cometR(c.t)*(1+.9*(1-c.sp)*(1-c.sp))*(c.sp<1?c.sp*.5+.5:1)*(1+.06*Math.sin(T*7+c.x*9));
     g.globalCompositeOperation='lighter';
     const tr=c.trail;if(tr.length>4){for(let i=2;i<tr.length;i+=2){const a=i/tr.length;g.strokeStyle=`hsla(${hue},100%,55%,${a*.35})`;g.lineWidth=cr*1.2*a;g.lineCap='butt';g.beginPath();g.moveTo(tr[i-2],tr[i-1]);g.lineTo(tr[i],tr[i+1]);g.stroke();}}
     gr=g.createRadialGradient(c.x,c.y,0,c.x,c.y,cr*2.6);gr.addColorStop(0,`hsla(${hue},100%,55%,.3)`);gr.addColorStop(1,`hsla(${hue},100%,55%,0)`);g.fillStyle=gr;g.beginPath();g.arc(c.x,c.y,cr*2.6,0,7);g.fill();
@@ -1232,14 +1395,14 @@ function render(dt){
   if(P.flash&&flashA>0){const fg=g.createRadialGradient(CX,CY,0,CX,CY,AR*1.2);fg.addColorStop(0,`rgba(255,255,255,${flashA*.55})`);fg.addColorStop(1,`rgba(160,255,240,0)`);g.globalCompositeOperation='lighter';g.fillStyle=fg;g.fillRect(0,0,CW,CH);g.globalCompositeOperation='source-over';}
   // textes (pixels)
   g.textAlign='center';g.textBaseline='middle';
-  if(streak>=4){const a=clamp(streakT*2.5,0,1),sz=(22+Math.min(streak,50)*.5)*(1+.35*comboP);g.globalAlpha=a*.95;g.font=`600 ${sz}px Geist,system-ui,sans-serif`;g.lineWidth=4;g.strokeStyle='rgba(0,0,0,.5)';g.lineJoin='round';const tx='×'+streak,ty=CY-AR*.86;g.strokeText(tx,CX,ty);g.fillStyle=streak>=25?'#ffd47a':streak>=10?'#9ff7e6':'#e9fffb';g.fillText(tx,CX,ty);g.font=`400 10px Geist,system-ui,sans-serif`;g.fillStyle='rgba(233,255,251,.7)';g.fillText('COMBO  +'+Math.round(Math.min(streak,40)*1.25)+' %',CX,ty+sz*.7);g.globalAlpha=1;}
+  if(streak>=4){const a=clamp(streakT*2.5,0,1),sz=(22+Math.min(streak,50)*.5)*(1+.35*comboP);g.globalAlpha=a*.95;g.font=`600 ${sz}px Geist,system-ui,sans-serif`;g.lineWidth=4;g.strokeStyle='rgba(0,0,0,.5)';g.lineJoin='round';const tx='×'+streak,ty=CY-AR*.86;g.strokeText(tx,CX,ty);g.fillStyle=streak>=25?'#ffd47a':streak>=10?'#9ff7e6':'#e9fffb';g.fillText(tx,CX,ty);g.font=`400 10px Geist,system-ui,sans-serif`;g.fillStyle='rgba(233,255,251,.7)';g.fillText(_T('COMBO  +')+Math.round(Math.min(streak,40)*1.25)+_T(' %'),CX,ty+sz*.7);g.globalAlpha=1;}
   for(const b of blocks){if(b.dead||b.sc<.6)continue;const sz=Math.max(9,b.s*AR*(b.boss?.28:.55));g.font=`600 ${sz}px Geist,system-ui,sans-serif`;
     const tx=fmt(Math.ceil(b.hp)),px=CX+b.x*AR,py=CY+b.y*AR+1;g.lineJoin='round';g.lineWidth=Math.max(2.5,sz*.2);g.strokeStyle='rgba(4,10,16,.75)';g.strokeText(tx,px,py);g.fillStyle='#fff';g.fillText(tx,px,py);}
   for(const f of floats){const a=clamp(f.l/f.ml*1.5,0,1);g.globalAlpha=a;g.font=`600 ${f.size}px Geist,system-ui,sans-serif`;g.lineWidth=3;g.strokeStyle='rgba(0,0,0,.55)';g.lineJoin='round';
     g.strokeText(f.txt,CX+f.x*AR,CY+f.y*AR);g.fillStyle=f.col;g.fillText(f.txt,CX+f.x*AR,CY+f.y*AR);}
   g.globalAlpha=1;
   if(bannerT>0){const a=clamp(Math.min(bannerT,2.2-bannerT)*3,0,1);g.globalAlpha=a*.9;g.font=`200 ${Math.max(28,AR*.22)}px Geist,system-ui,sans-serif`;g.fillStyle='#e9fffb';g.shadowColor='rgba(52,232,200,.7)';g.shadowBlur=18;
-    g.fillText(S.depth%10===0?'CRISTAL GÉANT':'PROFONDEUR '+S.depth,CX,CY-AR*.05);g.shadowBlur=0;g.globalAlpha=1;}
+    const bo=S.depth%10===0?bossOf(S.depth):null;g.fillText(bo?bo.n.toUpperCase():_T('PROFONDEUR ')+S.depth,CX,CY-AR*.05);g.shadowBlur=0;if(bo){g.font=`300 ${Math.max(12,AR*.06)}px Geist,system-ui,sans-serif`;g.fillStyle='#b9dcd6';g.fillText(_T('Cristal géant · ')+bo.d,CX,CY+AR*.08);}g.globalAlpha=1;}
   if(tutoOn()&&bannerT<=0){
     const tb=blocks.find(b=>!b.dead&&b.sc>.9),px=tb?CX+tb.x*AR:CX,py=tb?CY+tb.y*AR:CY,pp=(T*1.3)%1;
     for(const [w,c] of [[8,`rgba(0,0,0,${(1-pp)*.5})`],[3,`rgba(255,255,255,${1-pp})`]]){g.lineWidth=w;g.strokeStyle=c;g.beginPath();g.arc(px,py,12+pp*38,0,7);g.stroke();}
@@ -1270,12 +1433,12 @@ function tutUpdate(){
   if(tu._h!==hide){tu._h=hide;tu.classList.toggle('out',hide);}
   let target=null;
   const c0=ui.cards&&tab==='comets'?ui.cards[0]:null,tabEl=k=>tabsEl.querySelector('.tab[data-k="'+k+'"]');
-  if(st===0){tutSet('Touche pour frapper','Tape sur les cristaux : un coup de pouce en plus des comètes.',true);const tp=S.taps||0;tu.querySelectorAll('i').forEach((p,k)=>p.classList.toggle('on',k<tp));}
-  else if(st===1){tutSet('Achète une comète','Les pièces gagnées en cassant des cristaux servent à acheter des comètes. Appuie sur le bouton doré.',false);target=c0?c0.b0:tabEl('comets');}
-  else if(st===2){tutSet('Améliore-la','Chaque niveau augmente les dégâts de ta comète de 25 %.',false);target=c0?c0.b2:tabEl('comets');}
-  else if(st===3){const few=S.cnt[0]<3;tutSet('Fusionne tes comètes',few?'Achète encore des comètes : 3 identiques fusionnent en une comète du palier suivant, 6× plus forte.':'Appuie sur Fusionner : 3 comètes deviennent une seule, 6× plus forte.',false);target=c0?(few?c0.b0:c0.b1):tabEl('comets');}
-  else if(st===4){tutSet('Les Upgrades','Vitesse, critique, capacité… Ouvre l’onglet Upgrades pour renforcer tout ton arsenal.',false);target=tabEl('ups');}
-  else if(st===5){tutSet('Bien joué !','Brise le cristal géant tous les 10 niveaux : il donne des gemmes pour les boosts.',false);}
+  if(st===0){tutSet(_T('Touche pour frapper'),_T('Tape sur les cristaux : un coup de pouce en plus des comètes.'),true);const tp=S.taps||0;tu.querySelectorAll('i').forEach((p,k)=>p.classList.toggle('on',k<tp));}
+  else if(st===1){tutSet(_T('Achète une comète'),_T('Les pièces gagnées en cassant des cristaux servent à acheter des comètes. Appuie sur le bouton doré.'),false);target=c0?c0.b0:tabEl('comets');}
+  else if(st===2){tutSet(_T('Améliore-la'),_T('Chaque niveau augmente les dégâts de ta comète de 25 %.'),false);target=c0?c0.b2:tabEl('comets');}
+  else if(st===3){const few=S.cnt[0]<3;tutSet(_T('Fusionne tes comètes'),few?_T('Achète encore des comètes : 3 identiques fusionnent en une comète du palier suivant, 6× plus forte.'):_T('Appuie sur Fusionner : 3 comètes deviennent une seule, 6× plus forte.'),false);target=c0?(few?c0.b0:c0.b1):tabEl('comets');}
+  else if(st===4){tutSet(_T('Les Upgrades'),_T('Vitesse, critique, capacité… Ouvre l’onglet Upgrades pour renforcer tout ton arsenal.'),false);target=tabEl('ups');}
+  else if(st===5){tutSet(_T('Bien joué !'),_T('Brise le cristal géant tous les 10 niveaux : il donne des gemmes pour les boosts.'),false);}
   if(tutTarget&&tutTarget!==target&&tutTarget.classList)tutTarget.classList.remove('tpulse');
   if(target&&target!==tutTarget){target.classList.add('tpulse');if(tutLast!==st&&target.scrollIntoView)target.scrollIntoView({block:'nearest',behavior:'smooth'});}
   tutTarget=target;tutLast=st;
@@ -1291,63 +1454,65 @@ function buzz(k){if(!P.hap)return;const h=nativeOK()&&NP('Haptics');
 function applyImmersive(){const im=IM();if(im)try{im.set({on:!!P.full});}catch(e){}}
 let nmT=0;
 function nativeMirror(sj){const p=NP('Preferences');if(!p||!nativeOK()||Date.now()-nmT<8000)return;nmT=Date.now();try{p.set({key:SAVEK,value:sj});}catch(e){}}
-async function nativeRestore(){const p=NP('Preferences');if(!p||!nativeOK())return;try{const r0=await p.get({key:SAVEK});if(!r0||!r0.value)return;const r=parseSave(r0.value);if(!r)return;S=r;S.last=Date.now();rebuildWorld();save();toast('Sauvegarde restaurée depuis le stockage de l’app');}catch(e){}}
-async function shareSave(){const sh=NP('Share');const code=exportSave();if(sh){try{await sh.share({title:'Sauvegarde Géode',text:code,dialogTitle:'Envoyer ma sauvegarde'});return;}catch(e){}}try{await navigator.clipboard.writeText(code);toast('Code copié');}catch(e){toast('Partage impossible');}}
+async function nativeRestore(){const p=NP('Preferences');if(!p||!nativeOK())return;try{const r0=await p.get({key:SAVEK});if(!r0||!r0.value)return;const r=parseSave(r0.value);if(!r)return;S=r;S.last=Date.now();rebuildWorld();save();toast(_T('Sauvegarde restaurée depuis le stockage de l’app'));}catch(e){}}
+async function shareSave(){const sh=NP('Share');const code=exportSave();if(sh){try{await sh.share({title:_T('Sauvegarde Géode'),text:code,dialogTitle:_T('Envoyer ma sauvegarde')});return;}catch(e){}}try{await navigator.clipboard.writeText(code);toast(_T('Code copié'));}catch(e){toast(_T('Partage impossible'));}}
 async function notifPerm(){const l=LN();if(!l)return false;try{let p=await l.checkPermissions();if(p.display!=='granted')p=await l.requestPermissions();return p.display==='granted';}catch(e){return false;}}
 function notifCancel(){const l=LN();if(!l||!nativeOK())return;try{l.cancel({notifications:[{id:1},{id:2}]});}catch(e){}}
 function notifSchedule(){const l=LN();if(!l||!nativeOK()||!P.notif)return;
   try{const list=[],now=Date.now();
-    if(S.shop.free>now+5000)list.push({id:1,title:'Géode',body:'📦 Ton coffre gratuit est prêt !',schedule:{at:new Date(S.shop.free+2000),allowWhileIdle:true}});
-    const cap=8*3600*(1+.2*S.up.off);if(S.cps>0)list.push({id:2,title:'Géode',body:'💎 Ta mine est pleine : viens récupérer tes gains.',schedule:{at:new Date(now+cap*1000),allowWhileIdle:true}});
+    if(S.shop.free>now+5000)list.push({id:1,title:_T('Géode'),body:_T('📦 Ton coffre gratuit est prêt !'),schedule:{at:new Date(S.shop.free+2000),allowWhileIdle:true}});
+    const cap=8*3600*(1+.2*S.up.off);if(S.cps>0)list.push({id:2,title:_T('Géode'),body:_T('💎 Ta mine est pleine : viens récupérer tes gains.'),schedule:{at:new Date(now+cap*1000),allowWhileIdle:true}});
     l.cancel({notifications:[{id:1},{id:2}]}).catch(()=>{}).then(()=>{if(list.length)l.schedule({notifications:list}).catch(()=>{});});}catch(e){}}
 /* --- réglages --- */
 let wl=null;
 async function wakeSet(){try{const im=IM();if(im)im.keep({on:!!P.wake});}catch(e){}try{if(P.wake&&navigator.wakeLock&&!wl&&document.visibilityState==='visible'){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null;});}else if(!P.wake&&wl){await wl.release();wl=null;}}catch(e){}}
 const fpsEl=document.createElement('div');fpsEl.id='fpsc';fpsEl.style.display='none';document.body.appendChild(fpsEl);
-function applyPrefs(){applyImmersive();fpsEl.style.display=P.fps?'block':'none';wakeSet();if(master)master.gain.setTargetAtTime(muted?0:gainV(),AC.currentTime,.05);if(muteBtn)muteBtn.textContent=muted?'🔇':'🔊';refreshUI(true);}
-function closeSettings(){const m=$('set');if(!m)return;m.classList.remove('on');setTimeout(()=>m.remove(),200);}
+function applyPrefs(){applyImmersive();ambApply();fpsEl.style.display=P.fps?'block':'none';wakeSet();if(master)master.gain.setTargetAtTime(muted?0:gainV(),AC.currentTime,.05);if(muteBtn)muteBtn.textContent=muted?'🔇':'🔊';refreshUI(true);}
+function closeSettings(){clearInterval(jTimer);const m=$('set');if(!m)return;m.classList.remove('on');setTimeout(()=>m.remove(),200);}
 function openSettings(){
   closeSettings();
   const m=document.createElement('div');m.id='set';
-  m.innerHTML='<div class="sp"><div class="sh"><b>⚙ Réglages</b><button class="sx">✕</button></div><div class="sb"></div></div>';
+  m.innerHTML=_T('<div class="sp"><div class="sh"><b>⚙ Réglages</b><button class="sx">✕</button></div><div class="sb"></div></div>');
   const bd=m.querySelector('.sb');
   const st=t=>{const d=document.createElement('div');d.className='st';d.textContent=t;bd.appendChild(d);};
   const row=(t,d,ctl)=>{const r=document.createElement('div');r.className='rw';r.innerHTML='<div class="rt"><b></b><span></span></div>';r.querySelector('b').textContent=t;r.querySelector('span').textContent=d||'';if(!d)r.querySelector('span').remove();r.appendChild(ctl);bd.appendChild(r);return r;};
   const tog=(t,d,get,set)=>{const b=document.createElement('button');b.className='sw';const u=()=>b.classList.toggle('on',!!get());u();b.addEventListener('click',()=>{initAudio();set(!get());u();savePrefs();applyPrefs();sBuy();});row(t,d,b);};
   const seg=(t,d,opts,get,set)=>{const g=document.createElement('div');g.className='sg';const bs=opts.map(([k,n])=>{const b=document.createElement('button');b.textContent=n;b.addEventListener('click',()=>{initAudio();set(k);mk();savePrefs();applyPrefs();sBuy();});g.appendChild(b);return [k,b];});const mk=()=>bs.forEach(([k,b])=>b.classList.toggle('on',k===get()));mk();row(t,d,g);};
   const btn=(cls,txt,fn)=>{const b=document.createElement('button');b.className='g '+cls;b.textContent=txt;b.addEventListener('click',()=>{initAudio();fn(b);});return b;};
-  st('Graphismes & performance');
-  seg('Qualité','Auto baisse les effets si le jeu rame.',[['auto','Auto'],['max','Max'],['eco','Éco']],()=>qSet,k=>setQMode(k));
-  tog('Économie de batterie','Limite le jeu à 30 images/s.',()=>P.bat,v=>{P.bat=v;});
-  tog('Tremblements & zoom','Secousses et zoom à chaque explosion.',()=>P.shake,v=>{P.shake=v;});
-  tog('Flashs lumineux','Éclair blanc sur les gros cristaux.',()=>P.flash,v=>{P.flash=v;});
-  tog('Chiffres flottants','Gains affichés au-dessus des cristaux.',()=>P.floats,v=>{P.floats=v;});
-  tog('Fonds animés (vidéo)','Décors en vidéo pour chaque zone (~1 Mo chacun). Désactivé en qualité Éco.',()=>P.vid,v=>{P.vid=v;vidKey='';});
-  if(nativeOK())tog('Plein écran immersif','Cache les barres Android. Glisse depuis le bord pour les revoir.',()=>P.full,v=>{P.full=v;});
-  if(nativeOK())tog('Notifications','Coffre gratuit prêt, mine pleine… même quand le jeu est fermé.',()=>P.notif,v=>{P.notif=v;if(v)notifPerm().then(ok=>{if(!ok){P.notif=false;savePrefs();toast('Notifications refusées dans les réglages Android');}});});
-  tog('Compteur FPS','Affiche la fluidité en bas à gauche.',()=>P.fps,v=>{P.fps=v;});
-  st('Son & vibrations');
-  tog('Son','',()=>!muted,v=>{muted=!v;});
-  {const r=document.createElement('input');r.type='range';r.min=0;r.max=100;r.step=5;r.value=P.vol;r.addEventListener('input',()=>{P.vol=+r.value;if(master)master.gain.setTargetAtTime(muted?0:gainV(),AC.currentTime,.05);});r.addEventListener('change',()=>{initAudio();savePrefs();sBuy();});row('Volume','',r);}
-  tog('Vibrations','Petits retours haptiques (si ton téléphone le permet).',()=>P.hap,v=>{P.hap=v;});
-  st('Affichage');
-  seg('Format des nombres','',[['abbr','1,2K'],['sci','1,2e3'],['full','Complet']],()=>P.num,k=>{P.num=k;});
-  tog('Écran toujours allumé','Empêche la mise en veille pendant que tu joues.',()=>P.wake,v=>{P.wake=v;});
-  st('Jeu');
-  {const w=document.createElement('div');w.className='bt';w.style.margin='0';w.appendChild(btn('vi','Rejouer le tutoriel',()=>{S.tutStep=0;closeSettings();toast('Tutoriel relancé');}));w.style.flex='none';row('Tutoriel','',w);}
-  st('Sauvegarde');
-  {const ta=document.createElement('textarea');ta.rows=3;ta.spellcheck=false;ta.placeholder='Code de sauvegarde';bd.appendChild(ta);
+  seg(_T('Langue'),'',[['fr','Français'],['en','English']],()=>LANG,k=>{if(k===LANG)return;P.lang=k;savePrefs();setTimeout(()=>{try{location.reload();}catch(e){}},200);});
+  st(_T('Graphismes & performance'));
+  seg(_T('Qualité'),_T('Auto baisse les effets si le jeu rame.'),[['auto',_T('Auto')],['max',_T('Max')],['eco',_T('Éco')]],()=>qSet,k=>setQMode(k));
+  tog(_T('Économie de batterie'),_T('Limite le jeu à 30 images/s.'),()=>P.bat,v=>{P.bat=v;});
+  tog(_T('Tremblements & zoom'),_T('Secousses et zoom à chaque explosion.'),()=>P.shake,v=>{P.shake=v;});
+  tog(_T('Flashs lumineux'),_T('Éclair blanc sur les gros cristaux.'),()=>P.flash,v=>{P.flash=v;});
+  tog(_T('Chiffres flottants'),_T('Gains affichés au-dessus des cristaux.'),()=>P.floats,v=>{P.floats=v;});
+  tog(_T('Fonds animés (vidéo)'),_T('Décors en vidéo pour chaque zone (~1 Mo chacun). Désactivé en qualité Éco.'),()=>P.vid,v=>{P.vid=v;vidKey='';});
+  if(nativeOK())tog(_T('Plein écran immersif'),_T('Cache les barres Android. Glisse depuis le bord pour les revoir.'),()=>P.full,v=>{P.full=v;});
+  if(nativeOK())tog(_T('Notifications'),_T('Coffre gratuit prêt, mine pleine… même quand le jeu est fermé.'),()=>P.notif,v=>{P.notif=v;if(v)notifPerm().then(ok=>{if(!ok){P.notif=false;savePrefs();toast(_T('Notifications refusées dans les réglages Android'));}});});
+  tog(_T('Compteur FPS'),_T('Affiche la fluidité en bas à gauche.'),()=>P.fps,v=>{P.fps=v;});
+  st(_T('Son & vibrations'));
+  tog(_T('Son'),'',()=>!muted,v=>{muted=!v;});
+  tog(_T('Ambiance sonore'),_T('Nappe grave en fond, qui change selon la zone.'),()=>P.amb,v=>{P.amb=v;});
+  {const r=document.createElement('input');r.type='range';r.min=0;r.max=100;r.step=5;r.value=P.vol;r.addEventListener('input',()=>{P.vol=+r.value;if(master)master.gain.setTargetAtTime(muted?0:gainV(),AC.currentTime,.05);});r.addEventListener('change',()=>{initAudio();savePrefs();sBuy();});row(_T('Volume'),'',r);}
+  tog(_T('Vibrations'),_T('Petits retours haptiques (si ton téléphone le permet).'),()=>P.hap,v=>{P.hap=v;});
+  st(_T('Affichage'));
+  seg(_T('Format des nombres'),'',[['abbr','1,2K'],['sci','1,2e3'],['full',_T('Complet')]],()=>P.num,k=>{P.num=k;});
+  tog(_T('Écran toujours allumé'),_T('Empêche la mise en veille pendant que tu joues.'),()=>P.wake,v=>{P.wake=v;});
+  st(_T('Jeu'));
+  {const w=document.createElement('div');w.className='bt';w.style.margin='0';w.appendChild(btn('vi',_T('Rejouer le tutoriel'),()=>{S.tutStep=0;closeSettings();toast(_T('Tutoriel relancé'));}));w.style.flex='none';row(_T('Tutoriel'),'',w);}
+  st(_T('Sauvegarde'));
+  {const ta=document.createElement('textarea');ta.rows=3;ta.spellcheck=false;ta.placeholder=_T('Code de sauvegarde');bd.appendChild(ta);
    const w=document.createElement('div');w.className='bt';
-   w.appendChild(btn('vi','Exporter',()=>{ta.value=exportSave();ta.focus();ta.select();try{navigator.clipboard.writeText(ta.value).then(()=>toast('Code copié'),()=>toast('Code généré : copie-le'));}catch(e){toast('Code généré : copie-le');}}));
-   if(nativeOK())w.appendChild(btn('vi','Partager',shareSave));
-   w.appendChild(btn('am','Importer',()=>{const v=ta.value.trim();if(!v){sDeny();toast('Colle d’abord ton code');return;}if(!importCode(v)){sDeny();toast('Code invalide');return;}sBoost();toast('Sauvegarde importée');closeSettings();}));
+   w.appendChild(btn('vi',_T('Exporter'),()=>{ta.value=exportSave();ta.focus();ta.select();try{navigator.clipboard.writeText(ta.value).then(()=>toast(_T('Code copié')),()=>toast(_T('Code généré : copie-le')));}catch(e){toast(_T('Code généré : copie-le'));}}));
+   if(nativeOK())w.appendChild(btn('vi',_T('Partager'),shareSave));
+   w.appendChild(btn('am',_T('Importer'),()=>{const v=ta.value.trim();if(!v){sDeny();toast(_T('Colle d’abord ton code'));return;}if(!importCode(v)){sDeny();toast(_T('Code invalide'));return;}sBoost();toast(_T('Sauvegarde importée'));closeSettings();}));
    bd.appendChild(w);
-   const w2=document.createElement('div');w2.className='bt';w2.appendChild(btn('','Sauvegarder maintenant',()=>{save();toast('Partie sauvegardée ✓');}));bd.appendChild(w2);
-   const n=document.createElement('div');n.className='rt';n.innerHTML='<span style="margin-bottom:4px">La partie est aussi sauvegardée automatiquement toutes les 6 secondes.</span>';bd.appendChild(n);}
-  st('Mise à jour');
-  {const w=document.createElement('div');w.className='bt';w.style.margin='0';w.appendChild(btn('am','Mettre à jour',()=>{toast('Mise à jour…');forceUpdate();}));row('Version '+GAME_VER,'Récupère la dernière version du jeu. Ta partie est conservée.',w);}
-  st('Zone dangereuse');
-  {let armed=false,tm=null;const b=btn('dg','Réinitialiser la partie',b=>{if(!armed){armed=true;b.textContent='Touche encore pour tout effacer';sDeny();tm=setTimeout(()=>{armed=false;b.textContent='Réinitialiser la partie';},3500);return;}clearTimeout(tm);closeSettings();resetGame();});const w=document.createElement('div');w.className='bt';w.appendChild(b);bd.appendChild(w);}
+   const w2=document.createElement('div');w2.className='bt';w2.appendChild(btn('',_T('Sauvegarder maintenant'),()=>{save();toast(_T('Partie sauvegardée ✓'));}));bd.appendChild(w2);
+   const n=document.createElement('div');n.className='rt';n.innerHTML=_T('<span style="margin-bottom:4px">La partie est aussi sauvegardée automatiquement toutes les 6 secondes.</span>');bd.appendChild(n);}
+  st(_T('Mise à jour'));
+  {const w=document.createElement('div');w.className='bt';w.style.margin='0';w.appendChild(btn('am',_T('Mettre à jour'),()=>{toast(_T('Mise à jour…'));forceUpdate();}));row(_T('Version ')+GAME_VER,_T('Récupère la dernière version du jeu. Ta partie est conservée.'),w);}
+  st(_T('Zone dangereuse'));
+  {let armed=false,tm=null;const b=btn('dg',_T('Réinitialiser la partie'),b=>{if(!armed){armed=true;b.textContent=_T('Touche encore pour tout effacer');sDeny();tm=setTimeout(()=>{armed=false;b.textContent=_T('Réinitialiser la partie');},3500);return;}clearTimeout(tm);closeSettings();resetGame();});const w=document.createElement('div');w.className='bt';w.appendChild(b);bd.appendChild(w);}
   m.addEventListener('click',e=>{if(e.target===m)closeSettings();});
   m.querySelector('.sx').addEventListener('click',closeSettings);
   document.body.appendChild(m);requestAnimationFrame(()=>m.classList.add('on'));
@@ -1360,24 +1525,29 @@ function rebuildWorld(){
 }
 function resetGame(){
   try{localStorage.removeItem(SAVEK);localStorage.removeItem(BAKK);}catch(e){}
-  S=fresh();rebuildWorld();toast('Partie réinitialisée');sDepth();
+  S=fresh();rebuildWorld();toast(_T('Partie réinitialisée'));sDepth();
 }
 function importCode(code){const r=decodeSave(code);if(!r)return false;S=r;S.last=Date.now();rebuildWorld();save();return true;}
 $('tt-skip').addEventListener('click',()=>{S.tutStep=99;});
-$('nova').addEventListener('click',()=>{initAudio();if(!fireNova()){sDeny();toast(novaCD>0?'Nova en recharge : '+Math.ceil(novaCD)+' s':'Nova en cours…');}});
+$('nova').addEventListener('click',()=>{initAudio();if(!fireNova()){sDeny();toast(novaCD>0?_T('Nova en recharge : ')+Math.ceil(novaCD)+' s':_T('Nova en cours…'));}});
 $('reset').addEventListener('click',()=>{initAudio();openSettings();});
+$('jrn').addEventListener('click',()=>{initAudio();sBuy();openJournal();});
 
 /* --- démarrage --- */
 loadPrefs();
+if(LANG==='en')try{document.documentElement.lang='en';document.title=EN[_T('Géode — le jeu qui creuse tout seul')];
+  const w=document.createTreeWalker(document.body,4);const ns=[];while(w.nextNode())ns.push(w.currentNode);
+  for(const n of ns){const t=n.nodeValue.trim();if(t&&EN[t]!==undefined)n.nodeValue=n.nodeValue.replace(t,EN[t]);}
+  for(const e of document.querySelectorAll('[title],[aria-label]')){for(const a of ['title','aria-label']){const v=e.getAttribute(a);if(v&&EN[v]!==undefined)e.setAttribute(a,EN[v]);}}}catch(e){}
 const had=load();
 if(!had)setTimeout(nativeRestore,500);
 setTimeout(applyImmersive,300);
 resize();
 if(had){
   const away=Math.max(0,(Date.now()-S.last)/1000);
-  if(away>30){const gn=offlineGain(away);if(gn>0){S.coins+=gn;S.total+=gn;setTimeout(()=>toast('Pendant ton absence ('+fmtT(Math.min(away,8*3600))+') : +'+fmt(gn)+' pièces'),600);}}
+  if(away>30){const gn=offlineGain(away);if(gn>0){S.coins+=gn;S.total+=gn;setTimeout(()=>toast(_T('Pendant ton absence (')+fmtT(Math.min(away,8*3600))+') : +'+fmt(gn)+_T(' pièces')),600);}}
 }
-if(dailyReady())setTimeout(()=>toast('🎁 Ton coffre du jour est prêt (onglet Missions)'),2600);
+if(dailyReady())setTimeout(()=>toast(_T('🎁 Ton coffre du jour est prêt (onglet Missions)')),2600);
 dispCoins=S.coins;genBoard();syncComets();buildTabs();buildList();applyPrefs();
 let last=performance.now(),uiT=0,saveT=0,qFrames=0,qSlow=0,emaDt=.016;
 let lastR=0,fpsE=.016,fpsT=0;
@@ -1386,14 +1556,15 @@ function frame(now){
   let dt=(now-last)/1000;last=now;
   if(dt>0&&dt<.5){fpsE+=(dt-fpsE)*.05;fpsT+=dt;if(fpsT>.5){fpsT=0;if(P.fps)fpsEl.textContent=Math.round(1/fpsE)+' fps · Q'+qLevel;}}
   if(qSet==='auto'&&dt<.5){if(++qFrames>90){emaDt+=(dt-emaDt)*.06;if(emaDt>.036){if(++qSlow>100&&qLevel>0){setQ(qLevel-1);qSlow=0;emaDt=.016;qFrames=60;}}else qSlow=Math.max(0,qSlow-2);}}
-  if(dt>4){const gn=offlineGain(dt);S.coins+=gn;S.total+=gn;if(gn>1)toast('Pendant ton absence : +'+fmt(gn)+' pièces');dt=.033;}
+  if(dt>4){const gn=offlineGain(dt);S.coins+=gn;S.total+=gn;if(gn>1)toast(_T('Pendant ton absence : +')+fmt(gn)+_T(' pièces'));dt=.033;}
   dt=Math.min(dt,.05);
   ts=Math.min(1,ts+dt*1.4);step(dt*ts);render(dt);refreshHud(dt);
   uiT+=dt;if(uiT>.2){uiT=0;refreshUI();tutUpdate();}
+  featT+=dt;if(featT>1){featT=0;achCheck();dcCheck();cdxScan();ambSync();}
   saveT+=dt;if(saveT>6){saveT=0;save();}
   requestAnimationFrame(frame);
 }
-if(window.__GEODE_TEST)window.__GEODE_TEST({CH:CHS,DEALS,buyChest,buyDeal,claimFree,freeReady,giveChest,rollChest,openChest,todaysDeals,firePow,powAction,POWS,pcd,openSettings,closeSettings,P,get S(){return S;},set S(v){S=v;},save,load,sanitize,exportSave,decodeSave,importCode,resetGame,step,frame,buildList,buildTabs,setTab:t=>{tab=t;buildList();},refreshUI,fireNova,ascend,claimAll,dailyClaim,offlineGain,setQMode,get qLevel(){return qLevel;},fmt});
+if(window.__GEODE_TEST)window.__GEODE_TEST({ACHS,achCheck,dcEnsure,dcCheck,DCD,RELICS,RM,pickRelic,relChoices,cdxList,cdxScan,bossOf,SKINS,skinHue,openJournal,genBoard,get blocks(){return blocks;},get cdxN(){return cdxN;},renderRel,CH:CHS,DEALS,buyChest,buyDeal,claimFree,freeReady,giveChest,rollChest,openChest,todaysDeals,firePow,powAction,POWS,pcd,openSettings,closeSettings,P,get S(){return S;},set S(v){S=v;},save,load,sanitize,exportSave,decodeSave,importCode,resetGame,step,frame,buildList,buildTabs,setTab:t=>{tab=t;buildList();},refreshUI,fireNova,ascend,claimAll,dailyClaim,offlineGain,setQMode,get qLevel(){return qLevel;},fmt});
 requestAnimationFrame(frame);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();notifSchedule();}else{wakeSet();notifCancel();}});
 addEventListener('pagehide',save);
