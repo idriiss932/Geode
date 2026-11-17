@@ -231,6 +231,7 @@ html,body{background:#05060a}
 .pc .ds{font-size:11.5px;line-height:1.35;color:var(--dim)}
 .pc .g{flex:none;width:92px}.pc.lk{opacity:.6}
 #depthrow{gap:8px}#dl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#bl{flex:none;white-space:nowrap}
+.bgv{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity 1.6s ease;pointer-events:none;background:#000}
 #fpsc{position:fixed;left:6px;bottom:4px;z-index:50;font:10px monospace;color:#9fe;opacity:.7;pointer-events:none}
 </style>
 </head>
@@ -332,7 +333,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='1.7.0';
+const GAME_VER='1.8.0';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -382,7 +383,7 @@ function syncComets(){
 }
 
 /* ---------- audio : tic de cristal, éclats, souffles ---------- */
-const P={vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
+const P={vid:true,vol:90,hap:true,shake:true,flash:true,floats:true,fps:false,bat:false,num:'abbr',wake:false};
 const gainV=()=>0.9*P.vol/100;
 let AC=null,master,wet,noiseBuf,muted=false,lastHit=0,hitBudget=0,hitWin=0;
 function initAudio(){
@@ -714,11 +715,28 @@ function drawFeature(x,i,a,w,h,t){
   }
   x.restore();
 }
+/* --- fonds vidéo --- */
+const BGV=['bg/01_geode_profonde.mp4','bg/02_nebuleuse_violette.mp4','bg/03_ceinture_asteroides.mp4','bg/04_trou_noir.mp4','bg/05_galaxie_or.mp4','bg/06_supernova.mp4'];
+let vidFail=false,vidIdx=-1,vidCur=0,vidLive=false,vidKey='',vidTimer=0;
+const vidEls=[0,1].map(()=>{const v=document.createElement('video');v.className='bgv';v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');v.preload='auto';v.addEventListener('error',()=>{if(!v.getAttribute('src'))return;vidFail=true;vidLive=false;vidKey='';vidEls.forEach(x=>{x.style.opacity=0;});});return v;});
+{const bgc=$('bg');if(bgc&&bgc.parentNode&&bgc.parentNode.insertBefore&&bgc.nextSibling!==undefined)vidEls.forEach(v=>{try{bgc.parentNode.insertBefore(v,bgc.nextSibling);}catch(e){}});}
+const videosOn=()=>P.vid&&!vidFail&&qLevel>0&&typeof location!=='undefined'&&/^https?:/.test(location.protocol)&&document.visibilityState!=='hidden';
+function syncBgVideo(){
+  const on=videosOn(),key=on?'1|'+bgTo:'0';if(key===vidKey)return;vidKey=key;
+  clearTimeout(vidTimer);
+  if(!on){vidLive=false;vidIdx=-1;vidEls.forEach(v=>{v.style.opacity=0;try{v.pause();}catch(e){}});return;}
+  const nx=vidEls[1-vidCur],old=vidEls[vidCur],idx=bgTo;
+  nx.src=BGV[idx];try{nx.load();}catch(e){}
+  const go=()=>{nx.removeEventListener('canplay',go);if(key!==vidKey)return;const pr=nx.play();if(pr&&pr.catch)pr.catch(()=>{});nx.style.opacity=1;old.style.opacity=0;vidLive=true;vidIdx=idx;vidTimer=setTimeout(()=>{if(old!==nx){try{old.pause();old.removeAttribute('src');old.load();}catch(e){}}},1800);vidCur=1-vidCur;};
+  nx.addEventListener('canplay',go);
+}
 function drawBg(dt){
   const w=bgW,h=bgHh,x=bgx;bgT+=dt;
+  if(!SIM)syncBgVideo();
   const want=Math.floor((S.depth-1)/10)%BIOMES.length;
   if(want!==bgTo){bgFrom=bgTo;bgTo=want;bgMix=0;if(!bgFirst)toast('✦ '+BIOMES[want].n);}
   bgFirst=false;
+  if(vidLive){if(bgMix<1)bgMix=Math.min(1,bgMix+dt/3);return;}
   if(bgMix<1)bgMix=Math.min(1,bgMix+dt/3);
   bgAcc+=dt;if(bgAcc<(qLevel>=2?.04:qLevel===1?.08:.15))return;const dd=bgAcc;bgAcc=0;
   x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';
@@ -1117,6 +1135,7 @@ function openSettings(){
   tog('Tremblements & zoom','Secousses et zoom à chaque explosion.',()=>P.shake,v=>{P.shake=v;});
   tog('Flashs lumineux','Éclair blanc sur les gros cristaux.',()=>P.flash,v=>{P.flash=v;});
   tog('Chiffres flottants','Gains affichés au-dessus des cristaux.',()=>P.floats,v=>{P.floats=v;});
+  tog('Fonds animés (vidéo)','Décors en vidéo pour chaque zone (~1 Mo chacun). Désactivé en qualité Éco.',()=>P.vid,v=>{P.vid=v;vidKey='';});
   tog('Compteur FPS','Affiche la fluidité en bas à gauche.',()=>P.fps,v=>{P.fps=v;});
   st('Son & vibrations');
   tog('Son','',()=>!muted,v=>{muted=!v;});
