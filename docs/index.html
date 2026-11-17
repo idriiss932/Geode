@@ -218,6 +218,19 @@ html,body{background:#05060a}
 .pwb.rdy i{opacity:1;filter:none;animation:nvb 1.6s ease-in-out infinite}
 .pwb.rdy{box-shadow:0 0 18px var(--c),0 6px 16px rgba(0,0,0,.5)}
 .pwb.act{box-shadow:0 0 22px var(--c)}.pwb.act i{opacity:1;filter:none}
+.tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0 7px;font-size:9px;letter-spacing:.015em;line-height:1}
+.tab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.tab.on svg{opacity:1;filter:drop-shadow(0 0 5px rgba(52,232,200,.6))}
+.tab .dot{position:absolute;top:5px;left:calc(50% + 7px);margin:0;width:7px;height:7px}
+.pc{display:flex;align-items:center;gap:11px;text-align:left;padding:12px}
+.pc .pi{flex:none;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;color:var(--c);border:1.5px solid var(--c);background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.14),rgba(255,255,255,.02));box-shadow:0 0 14px color-mix(in srgb,var(--c) 40%,transparent),inset 0 0 10px color-mix(in srgb,var(--c) 18%,transparent)}
+.pc .pt{flex:1;min-width:0}.pc .pn{display:flex;align-items:center;gap:8px}.pc .nm{font-size:15px;font-weight:600}
+.pc .stt{font-style:normal;font-size:10px;padding:2px 7px;border-radius:9px;background:rgba(255,255,255,.07);color:var(--dim);white-space:nowrap}
+.pc .stt.rd{background:rgba(52,232,200,.16);color:#7ff5de}.pc .stt.ac{background:rgba(255,198,107,.2);color:#ffd48a}.pc .stt.cd{color:#9fb3bd}
+.pc .pp{display:flex;gap:3px;margin:6px 0 5px}.pc .pp i{width:100%;max-width:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.1)}.pc .pp i.on{background:var(--c);box-shadow:0 0 6px var(--c)}
+.pc .ds{font-size:11.5px;line-height:1.35;color:var(--dim)}
+.pc .g{flex:none;width:92px}.pc.lk{opacity:.6}
+#depthrow{gap:8px}#dl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#bl{flex:none;white-space:nowrap}
 #fpsc{position:fixed;left:6px;bottom:4px;z-index:50;font:10px monospace;color:#9fe;opacity:.7;pointer-events:none}
 </style>
 </head>
@@ -319,7 +332,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='1.6.0';
+const GAME_VER='1.7.0';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -588,6 +601,9 @@ function firePow(k){const p=S.pow[k];if(!p||!p.u||pcd[k]>0)return false;
   else if(k==='magnet'){magnetT=powDur(k,p.l);if(!SIM)sBoost();}
   else{midasT=powDur(k,p.l);if(!SIM){sBoost();flashA=Math.max(flashA,.2);}}
   pcd[k]=POWS[k].cd(p.l);return true;}
+function powState(k){const p=S.pow[k];if(!p.u){const unl=k==='nova'?NOVA_DEPTH:POWS[k].unl;return S.maxDepth<unl?['lk','🔒 Profondeur '+unl]:['rd','Débloquable'];}
+  const cd=k==='nova'?novaCD:pcd[k],act=k==='magnet'?magnetT:k==='midas'?midasT:(k==='nova'&&novaFx?1:0);
+  if(act>0)return['ac',k==='nova'?'En cours':'Actif · '+Math.ceil(act)+' s'];if(cd>0)return['cd','Recharge · '+Math.ceil(cd)+' s'];return['rd','● Prêt'];}
 function powSeen(){for(const k in POWS){const p=S.pow[k],d=POWS[k];if(S.maxDepth>=d.unl&&!p.seen){p.seen=true;toast(d.ic+' Nouveau pouvoir : '+d.n+' est débloquable (onglet Boosts)');}}}
 function powAction(k,first){const p=S.pow[k],d=POWS[k];
   if(!p.u){
@@ -597,7 +613,7 @@ function powAction(k,first){const p=S.pow[k],d=POWS[k];
   if(p.l>=d.max)return false;const c=d.cost(p.l);
   if(S.coins<c){sDeny();if(first)toast(needMsg(c));return false;}
   S.coins-=c;p.l++;sLevel();return true;}
-function novaSeen(){if(S.maxDepth>=NOVA_DEPTH&&!S.pow.nova.seen){S.pow.nova.seen=true;toast('⚡ Nouveau pouvoir : la Nova est débloquable (onglet Boosts)');}}
+function novaSeen(){if(S.maxDepth>=NOVA_DEPTH&&!S.pow.nova.seen){S.pow.nova.seen=true;toast('⚡ Nouveau pouvoir : la Nova est débloquable (onglet Pouvoirs)');}}
 function tapAt(x,y){ // coordonnées normalisées
   if(gold&&Math.hypot(x-gold.x,y-gold.y)<.17){collectGold();return;}
   if(Math.hypot(x,y)>1.05)return;
@@ -762,7 +778,7 @@ const claimCount=()=>(dailyReady()?1:0)+[0,1,2,3].filter(misDone).length;
 function dailyClaim(){if(!dailyReady())return false;const r=dailyReward();S.gems+=r.gems;S.coins+=r.coins;S.total+=r.coins;S.daily={last:dstr(new Date()),streak:r.st};sBoost();toast('Coffre du jour : +'+r.gems+' ◆ et '+fmt(r.coins)+' pièces');return true;}
 const fmtDur=s=>{s=Math.floor(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+' h '+String(m).padStart(2,'0'):m+' min';};
 const STATDEF=[['Cristaux cassés',()=>fmt(S.stats.kills)],['Cristaux géants',()=>S.stats.bosses],['Meilleur combo',()=>'×'+S.stats.maxCombo],['Profondeur max',()=>S.maxDepth],['Pièces gagnées',()=>fmt(S.total)],['Comètes achetées',()=>S.stats.buys],['Fusions',()=>S.stats.merges],['Touchers',()=>S.stats.taps],['Comètes dorées',()=>S.stats.gold],['Ascensions',()=>S.asc],['Étoiles',()=>S.stars],['Temps de jeu',()=>fmtDur(S.stats.play)]];
-let tab='comets';const TABS=[['comets','Comètes'],['ups','Upgrades'],['boosts','Boosts'],['vault','Voûte'],['mis','Missions']];
+let tab='comets';const TABS=[['comets','Comètes','<circle cx="16" cy="8" r="3.6"/><path d="M13.4 10.6L4 20M12 7.5L6 13"/>'],['ups','Upgrades','<path d="M5 13l7-7 7 7M5 20l7-7 7 7"/>'],['pow','Pouvoirs','<path d="M13 2.5L5.5 13.5h6l-1 8 8-11.5h-6z"/>'],['boosts','Boosts','<path d="M12 3l8 6-8 12L4 9z"/><path d="M4 9h16M9 9l3 12 3-12"/>'],['vault','Voûte','<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>'],['mis','Missions','<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/>']];
 const tabsEl=$('tabs'),listEl=$('list'),toastEl=$('toast');
 let ui={};
 function toast(t){toastEl.textContent=t;toastEl.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>toastEl.classList.remove('on'),2600);}
@@ -783,7 +799,7 @@ function goCap(){
 }
 function buildTabs(){
   tabsEl.innerHTML='';
-  for(const [k,n] of TABS){const el=document.createElement('div');el.className='tab'+(k===tab?' on':'');el.innerHTML=n+'<span class="dot" style="display:none"></span>';el.dataset.k=k;
+  for(const [k,n,ic] of TABS){const el=document.createElement('div');el.className='tab'+(k===tab?' on':'');el.innerHTML='<svg viewBox="0 0 24 24">'+ic+'</svg><span>'+n+'</span><span class="dot" style="display:none"></span>';el.dataset.k=k;
     el.addEventListener('click',()=>{initAudio();tab=k;buildTabs();buildList();});tabsEl.appendChild(el);}
 }
 function buildList(){
@@ -804,11 +820,13 @@ function buildList(){
     listEl.appendChild(hp);
   }else if(tab==='ups'){
     ui.rows=[];
-    for(const k in UPDEF){
+    const UG=[['Combat',['dmg','speed','crit','split']],['Économie',['gain','off']],['Arène & automatisation',['cap','auto','tap']]];
+    for(const [gn,ks] of UG){{const sc=document.createElement('div');sc.className='sect';sc.textContent=gn;listEl.appendChild(sc);}
+    for(const k of ks){
       const el=document.createElement('div');el.className='cd wide ur';
       el.innerHTML=`<div class="tx"><div class="nm">${UPDEF[k].n}</div><div class="ds"></div></div><button class="xm"></button><button class="g"></button>`;
       const o={k,el,ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(o.b,f=>bulkDo(()=>buyUp(k),null,sLevel,()=>{sDeny();toast(S.up[k]>=UPDEF[k].max?'Niveau maximum atteint':needMsg(upCost(k)));},f!==false));listEl.appendChild(el);ui.rows.push(o);
-    }
+    }}
   }else if(tab==='boosts'){
     ui.rows=[];
     for(const k in BOOSTDEF){
@@ -816,12 +834,16 @@ function buildList(){
       el.innerHTML=`<div class="tx"><div class="nm">${d.n}</div><div class="ds">${d.d} pendant ${d.dur}s</div><div class="tm"><i style="width:0"></i></div></div><button class="g vi"></button>`;
       const o={k,el,tm:el.querySelector('.tm i'),b:el.querySelector('.g')};holdBind(o.b,f=>buyBoost(k)||(f!==false&&toast('Il te faut '+d.cost+' gemmes ◆ : elles tombent des cristaux géants (tous les 10 niveaux)'),false));listEl.appendChild(el);ui.rows.push(o);
     }
-    {const sc=document.createElement('div');sc.className='sect';sc.textContent='Pouvoirs';listEl.appendChild(sc);
-     const el=document.createElement('div');el.className='cd wide ur';el.innerHTML='<div class="tx"><div class="nm">Nova · onde de choc</div><div class="ds"></div></div><button class="g vi"></button>';
-     ui.nova={ds:el.querySelector('.ds'),b:el.querySelector('.g')};holdBind(ui.nova.b,f=>novaAction(f!==false));listEl.appendChild(el);
-     ui.pw={};for(const k in POWS){const d=POWS[k],e2=document.createElement('div');e2.className='cd wide ur';e2.innerHTML='<div class="tx"><div class="nm">'+d.ic+' '+d.n+'</div><div class="ds"></div></div><button class="g vi"></button>';
-       ui.pw[k]={ds:e2.querySelector('.ds'),b:e2.querySelector('.g')};holdBind(ui.pw[k].b,f=>powAction(k,f!==false));listEl.appendChild(e2);}}
     const n=document.createElement('div');n.className='cd wide vt';n.innerHTML='<p>Les gemmes violettes tombent des cristaux géants (toutes les 10 profondeurs) et, plus rarement, des cristaux ordinaires.</p>';listEl.appendChild(n);
+  }else if(tab==='pow'){
+    const hp=document.createElement('div');hp.className='help';hp.innerHTML='Les pouvoirs se lancent depuis les <b>boutons ronds dans l’arène</b>. Débloque-les avec des <b>gemmes ◆</b> une fois la profondeur atteinte, puis améliore-les avec des pièces.';listEl.appendChild(hp);
+    ui.pw={};
+    const PC=[['nova',{n:'Nova',ic:'✦',c:'#b6ff4a'}],...Object.entries(POWS)];
+    for(const [k,d] of PC){const el=document.createElement('div');el.className='cd wide pc';el.style.setProperty('--c',d.c);
+      el.innerHTML='<div class="pi">'+d.ic+'</div><div class="pt"><div class="pn"><span class="nm">'+d.n+'</span><em class="stt"></em></div><div class="pp">'+'<i></i>'.repeat(NOVA_MAX)+'</div><div class="ds"></div></div><button class="g vi"></button>';
+      const o={el,ds:el.querySelector('.ds'),b:el.querySelector('.g'),stt:el.querySelector('.stt'),pips:[...el.querySelectorAll('.pp i')]};
+      if(k==='nova'){ui.nova=o;holdBind(o.b,f=>novaAction(f!==false));}else{ui.pw[k]=o;holdBind(o.b,f=>powAction(k,f!==false));}
+      listEl.appendChild(el);}
   }else if(tab==='mis'){
     ui.mis=[];
     const sec=t=>{const d=document.createElement('div');d.className='sect';d.textContent=t;listEl.appendChild(d);};
@@ -870,6 +892,7 @@ function refreshUI(force){
   }else if(tab==='boosts'){
     for(const o of ui.rows){const d=BOOSTDEF[o.k],t=S.boost[o.k];o.tm.style.width=Math.min(100,t/d.dur*100)+'%';
       setBtn(o.b,(t>0?'Prolonger':'Activer')+'<small>'+d.cost+' ◆</small>',S.gems>=d.cost);}
+  }else if(tab==='pow'){
     if(ui.pw)for(const k in POWS){const o=ui.pw[k],d=POWS[k],p=S.pow[k];let t,ds,ok;
       if(!p.u){ds=d.info+` Déblocage : profondeur ${d.unl} + ${d.gems} ◆.`;if(S.maxDepth<d.unl){t='Verrouillé<small>profondeur '+d.unl+'</small>';ok=false;}else{t='Débloquer<small>'+d.gems+' ◆</small>';ok=S.gems>=d.gems;}}
       else{ds=`Niv. ${p.l} · ${d.d(p.l)}`;if(p.l>=d.max){t='MAX';ok=false;}else{const c=d.cost(p.l);t='Améliorer<small>'+fmt(c)+'</small>';ok=S.coins>=c;}}
@@ -880,6 +903,9 @@ function refreshUI(force){
       else{ds=`Niv. ${p.l} · dégâts ×${novaDmgMul(p.l).toFixed(0)} · recharge ${novaCdSec(p.l).toFixed(0)} s`+(p.l<NOVA_MAX?`  →  ×${novaDmgMul(p.l+1).toFixed(0)} · ${novaCdSec(p.l+1).toFixed(0)} s`:'');
         if(p.l>=NOVA_MAX){t='MAX';ok=false;}else{const c=novaCost(p.l);t='Améliorer<small>'+fmt(c)+'</small>';ok=S.coins>=c;}}
       if(ui.nova.ds.textContent!==ds)ui.nova.ds.textContent=ds;setBtn(ui.nova.b,t,ok);}
+    for(const k of ['nova','bolt','magnet','midas']){const o=k==='nova'?ui.nova:ui.pw&&ui.pw[k];if(!o||!o.stt)continue;const p=S.pow[k],[c,tx]=powState(k);
+      if(o.stt.textContent!==tx)o.stt.textContent=tx;if(o._c!==c){o._c=c;o.stt.className='stt '+c;o.el.classList.toggle('lk',c==='lk');}
+      if(o._l!==p.l){o._l=p.l;o.pips.forEach((i,n)=>i.classList.toggle('on',n<p.l));}}
   }else if(tab==='mis'&&ui.daily){
     const r=dailyReward(),rd=dailyReady(),nc=claimCount();
     setBtn(ui.all,nc>0?'Tout récupérer<small>'+nc+' récompense'+(nc>1?'s':'')+' à prendre</small>':'Tout récupérer<small>rien à prendre pour l\'instant</small>',nc>0);
@@ -897,8 +923,9 @@ function refreshUI(force){
   }
   // pastille de disponibilité
   const dots=tabsEl.querySelectorAll('.dot');
-  const avail=[S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),Object.keys(BOOSTDEF).some(k=>S.gems>=BOOSTDEF[k].cost)||(!S.pow.nova.u&&S.maxDepth>=NOVA_DEPTH&&S.gems>=NOVA_GEMS),starsFor(S.runBest)>0,dailyReady()||[0,1,2,3].some(misDone)];
-  dots.forEach((d,i)=>{d.style.display=avail[i]&&TABS[i][0]!==tab?'inline-block':'none';});
+  const pwOk=k=>{const p=S.pow[k],d=k==='nova'?{unl:NOVA_DEPTH,gems:NOVA_GEMS}:POWS[k];return !p.u&&S.maxDepth>=d.unl&&S.gems>=d.gems;};
+  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:Object.keys(BOOSTDEF).some(k=>S.gems>=BOOSTDEF[k].cost),vault:starsFor(S.runBest)>0,mis:dailyReady()||[0,1,2,3].some(misDone)};
+  dots.forEach((d,i)=>{d.style.display=av[TABS[i][0]]&&TABS[i][0]!==tab?'inline-block':'none';});
   {const lb=bmLabel();listEl.querySelectorAll('.xm').forEach(x=>{if(x._l!==lb){x.textContent=lb;x._l=lb;}});}
 }
 const hudEls={};
