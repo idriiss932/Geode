@@ -15,7 +15,7 @@ import android.webkit.WebViewClient;
 
 /** Enveloppe le jeu : charge la dernière version publiée sur GitHub Pages (mode hors ligne via le service worker). */
 public class MainActivity extends Activity {
-    static final String URL = "https://idriiss932.github.io/geode/";
+    static final String URL = "https://idriiss932.github.io/Geode/";
     private WebView web;
 
     @Override
