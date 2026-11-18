@@ -1,7 +1,7 @@
 import sys,json,re
 sys.path.insert(0,'/home/claude/geode/tools/i18n')
-import en_a,en_b
-D={**en_a.A,**en_b.B}
+import en_a,en_b,en_c
+D={**en_a.A,**en_b.B,**en_c.C}
 for k in ["Vaincre § cristal§ géant§","Attraper § comète§ dorée§","Ouvrir § coffre§","Posséder § relique§"]:D.pop(k,None)
 D.update({
 "Vaincre § cristal géant":"Defeat {0} giant crystal","Attraper § comète dorée":"Catch {0} golden comet","Ouvrir § coffre":"Open {0} chest","Réussir § défi du jour":"Complete {0} daily challenge",
