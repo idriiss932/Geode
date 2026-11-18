@@ -319,6 +319,8 @@ html,body{background:#05060a}
 #away .a1{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}#away .a2{font-size:13px;color:var(--dim);margin-top:6px}
 #away .a3{font-size:44px;font-weight:300;margin:14px 0 2px;color:#ffe3a6;text-shadow:0 0 24px rgba(255,198,107,.45)}#away .a4{font-size:12.5px;color:var(--dim);line-height:1.4}
 #away .a5{font-size:11.5px;color:#b9dcd6;margin:12px 0 16px;line-height:1.4}#away .g{width:100%;padding:13px 4px;font-size:15px}
+#tabs .tab{flex:1;min-width:0;transition:flex .22s,background .2s,color .2s}#tabs .tab.on{flex:2.3}
+#tabs .tab>span:not(.dot){display:none;white-space:nowrap}#tabs .tab.on>span:not(.dot){display:block}
 </style>
 </head>
 <body>
@@ -627,7 +629,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.4.0';
+const GAME_VER='2.4.1';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -1281,7 +1283,7 @@ function sPop(i){if(!AC)return;const b=bus(0,.2);glide('sine',500+i*120,900+i*16
 function sTick3(){if(!AC)return;const b=bus(0,.2);for(let i=0;i<5;i++){tick(.12,b,i*.1,1200+i*200,.05);}}
 const fmtDur=s=>{s=Math.floor(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+' h '+String(m).padStart(2,'0'):m+' min';};
 const STATDEF=[['Cristaux cassés',()=>fmt(S.stats.kills)],['Cristaux géants',()=>S.stats.bosses],['Coffres ouverts',()=>S.stats.chests],['Meilleur combo',()=>'×'+S.stats.maxCombo],['Profondeur max',()=>S.maxDepth],['Pièces gagnées',()=>fmt(S.total)],['Comètes achetées',()=>S.stats.buys],['Fusions',()=>S.stats.merges],['Touchers',()=>S.stats.taps],['Comètes dorées',()=>S.stats.gold],['Ascensions',()=>S.asc],['Étoiles',()=>S.stars],['Temps de jeu',()=>fmtDur(S.stats.play)],['Événements',()=>S.stats.ev],['Combo de touches',()=>'×'+S.stats.tcMax],['Transcendances',()=>S.tr],['Points de talent',()=>S.tp]];
-let tab='comets';const TABS=[['comets','Comètes','<circle cx="16" cy="8" r="3.6"/><path d="M13.4 10.6L4 20M12 7.5L6 13"/>'],['ups','Upgrades','<path d="M5 13l7-7 7 7M5 20l7-7 7 7"/>'],['pow','Pouvoirs','<path d="M13 2.5L5.5 13.5h6l-1 8 8-11.5h-6z"/>'],['boosts','Boutique','<path d="M4 9h16v11H4z"/><path d="M4 9l2-5h12l2 5M10 13h4"/>'],['vault','Voûte','<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>'],['mis','Missions','<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/>']];
+let tab='comets';const TABS=[['comets','Comètes','<circle cx="16" cy="8" r="3.6"/><path d="M13.4 10.6L4 20M12 7.5L6 13"/>'],['ups','Upgrades','<path d="M5 13l7-7 7 7M5 20l7-7 7 7"/>'],['pow','Pouvoirs','<path d="M13 2.5L5.5 13.5h6l-1 8 8-11.5h-6z"/>'],['boosts','Boutique','<path d="M4 9h16v11H4z"/><path d="M4 9l2-5h12l2 5M10 13h4"/>'],['tal','Talents','<path d="M12 21v-9M12 12c0-3.5 2.5-6 6-6M12 15c0-2.5-2-4.5-5-4.5"/><circle cx="18" cy="6" r="1.8"/><circle cx="7" cy="10.5" r="1.8"/><circle cx="12" cy="4" r="1.8"/>'],['vault','Voûte','<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>'],['mis','Missions','<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/>']];
 const tabsEl=$('tabs'),listEl=$('list'),toastEl=$('toast');
 let ui={};
 function toast(t){toastEl.textContent=t;toastEl.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>toastEl.classList.remove('on'),2600);}
@@ -1361,6 +1363,8 @@ function buildList(){
       const o={el,ds:el.querySelector('.ds'),b:el.querySelector('.g'),stt:el.querySelector('.stt'),pips:[...el.querySelectorAll('.pp i')]};
       if(k==='nova'){ui.nova=o;holdBind(o.b,f=>novaAction(f!==false));}else{ui.pw[k]=o;holdBind(o.b,f=>powAction(k,f!==false));}
       listEl.appendChild(el);}
+  }else if(tab==='tal'){
+    const el=document.createElement('div');el.className='cd wide vt';el.innerHTML='<h3>Talents</h3><div class="rlbox"></div>';listEl.appendChild(el);ui.tl=el.querySelector('.rlbox');ui.tlk='';
   }else if(tab==='mis'){
     ui.mis=[];
     const sec=t=>{const d=document.createElement('div');d.className='sect';d.textContent=t;listEl.appendChild(d);};
@@ -1381,7 +1385,6 @@ function buildList(){
     const el=document.createElement('div');el.className='cd wide vt';
     el.innerHTML=`<h3>La Voûte</h3><p>Referme la mine et recommence plus fort. Tu perds tes comètes, tes niveaux et tes pièces, mais chaque étoile gagnée augmente <b>pour toujours</b> tes gains et tes dégâts de 10 %.</p><div class="big" id="vstars"></div><p id="vinfo"></p><p id="vprev"></p><button class="g vi" id="vbtn" style="width:70%"></button>`;
     listEl.appendChild(el);{const r2=document.createElement('div');r2.className='cd wide vt';r2.innerHTML='<h3>Reliques</h3><div class="rlbox"></div>';listEl.appendChild(r2);ui.rl=r2.querySelector('.rlbox');ui.rlk='';}
-    {const r3=document.createElement('div');r3.className='cd wide vt';r3.innerHTML='<h3>Talents</h3><div class="rlbox"></div>';listEl.appendChild(r3);ui.tl=r3.querySelector('.rlbox');ui.tlk='';}
     {const r4=document.createElement('div');r4.className='cd wide vt';r4.innerHTML='<h3>Transcendance</h3><p id="tcp"></p><div class="big" id="tcm"></div><button class="g vi" id="tcb" style="width:70%"></button>';listEl.appendChild(r4);ui.tc={p:r4.querySelector('#tcp'),m:r4.querySelector('#tcm'),b:r4.querySelector('#tcb')};
      ui.tc.b.addEventListener('click',()=>{initAudio();if(S.asc<20){sDeny();toast('Il faut 20 ascensions pour transcender (actuellement '+S.asc+')');return;}
        if(!ui.tconf){ui.tconf=true;ui.tc.b.textContent='Confirmer la transcendance';setTimeout(()=>{ui.tconf=false;},3500);return;}
@@ -1439,6 +1442,8 @@ function refreshUI(force){
     setBtn(ui.daily.b,rd?'Récupérer':'Demain',rd);
     for(const o of ui.mis){const i=o.i,g=misGoal(i),p=misProg(i);o.nm.textContent=MISDEF[i].txt(g);o.ds.textContent=fmt(p)+' / '+fmt(g)+' · récompense : '+misReward(i)+' ◆';o.tm.style.width=(100*p/g)+'%';setBtn(o.b,misDone(i)?'Récupérer<small>+'+misReward(i)+' ◆</small>':'En cours',misDone(i));}
     for(const o of ui.stats){const v=String(STATDEF[o.k][1]());if(o._v!==v){o._v=v;o.b.textContent=v;}}
+  }else if(tab==='tal'&&ui.tl){
+    const key=S.tp+'|'+JSON.stringify(S.tal);if(ui.tlk!==key){ui.tlk=key;renderTal(ui.tl);}
   }else if(tab==='vault'&&ui.v){
     const gn=starsFor(S.runBest);ui.v.stars.textContent='★ '+S.stars+'  ·  +'+(S.stars*10)+' %';
     ui.v.info.textContent=gn>0?`Ascension disponible : +${gn} étoile${gn>1?'s':''} (profondeur max ${S.runBest}).`:`Atteins la profondeur ${ASC_MIN} pour pouvoir ascensionner (record de cette mine : ${S.runBest}).`;
@@ -1446,7 +1451,6 @@ function refreshUI(force){
      const rec=gn>=3&&gn>=S.stars*.3;
      ui.v.prev.innerHTML=(gn>0?`Après l'ascension : gains et dégâts <b>×${cur.toFixed(2)} → ×${nxt.toFixed(2)}</b>.`:`Multiplicateur actuel : gains et dégâts <b>×${cur.toFixed(2)}</b>.`)+`<br>Étoile supplémentaire à la profondeur <b>${nd}</b>.`+(gn>0?(rec?'<br><span class="rec">✓ Ascension conseillée : tu gagnes beaucoup d\'étoiles.</span>':'<br>Tu peux encore progresser pour en gagner plus avant de recommencer.'):'');}
     if(ui.rl){const key=S.rel.join()+'|'+S.relPend+'|'+S.asc;if(ui.rlk!==key){ui.rlk=key;renderRel(ui.rl);}}
-    if(ui.tl){const key=S.tp+'|'+JSON.stringify(S.tal);if(ui.tlk!==key){ui.tlk=key;renderTal(ui.tl);}}
     if(ui.tc){const mu=1+.3*S.tr;ui.tc.m.textContent='✦ '+S.tr+'  ·  ×'+mu.toFixed(1);
       ui.tc.p.innerHTML='Après <b>20 ascensions</b>, transcende : tu perds tes étoiles, tes ascensions et tes reliques, mais tu gagnes <b>+0,3 de multiplicateur permanent</b> sur les gains et les dégâts, 25 ◆ et 5 points de talent. Ascensions : <b>'+S.asc+' / 20</b>.';
       if(!ui.tconf)setBtn(ui.tc.b,S.asc>=20?'Transcender':'Verrouillée ('+S.asc+' / 20)',S.asc>=20);}
@@ -1455,7 +1459,7 @@ function refreshUI(force){
   // pastille de disponibilité
   const dots=tabsEl.querySelectorAll('.dot');
   const pwOk=k=>{const p=S.pow[k],d=k==='nova'?{unl:NOVA_DEPTH,gems:NOVA_GEMS}:POWS[k];return !p.u&&S.maxDepth>=d.unl&&S.gems>=d.gems;};
-  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:freeReady()||S.chests.c+S.chests.r+S.chests.e>0,vault:starsFor(S.runBest)>0||S.relPend>0||S.tp>0||S.asc>=20,mis:dailyReady()||[0,1,2,3].some(misDone)};
+  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:freeReady()||S.chests.c+S.chests.r+S.chests.e>0,tal:S.tp>0&&Object.keys(TAL).some(k=>TL(k)<TAL[k].max&&S.tp>=talCost(k)),vault:starsFor(S.runBest)>0||S.relPend>0||S.asc>=20,mis:dailyReady()||[0,1,2,3].some(misDone)};
   dots.forEach((d,i)=>{d.style.display=av[TABS[i][0]]&&TABS[i][0]!==tab?'inline-block':'none';});
   {const lb=bmLabel();listEl.querySelectorAll('.xm').forEach(x=>{if(x._l!==lb){x.textContent=lb;x._l=lb;}});}
 }
@@ -1791,7 +1795,7 @@ function frame(now){
   ts=Math.min(1,ts+dt*1.4);{const ns=Math.max(1,Math.ceil(dt/.05));for(let i=0;i<ns;i++)step(dt/ns*ts);}render(dt);refreshHud(dt);
   uiT+=dt;if(uiT>.2){uiT=0;refreshUI();tutUpdate();}
   featT+=dt;if(featT>1){featT=0;achCheck();dcCheck();wkCheck();cdxScan();ambSync();{const h=new Date().getHours();if(h>=2&&h<5&&!S.stats.night)S.stats.night=1;}
-    if(S.tp>0)tipOnce('tal1','Nouveau : des points de talent à dépenser dans l’onglet Voûte.');
+    if(S.tp>0)tipOnce('tal1','Nouveau : des points de talent à dépenser dans l’onglet Talents.');
     if(S.relPend>0)tipOnce('rel1','Une relique t’attend dans l’onglet Voûte : choisis-en une !');
     if(S.asc>=20)tipOnce('tr1','Tu peux transcender (onglet Voûte) pour un bonus permanent.');
     if(S.stats.maxCombo>=10)tipOnce('cb10','Les combos de cristaux augmentent tes gains : enchaîne sans pause !');}

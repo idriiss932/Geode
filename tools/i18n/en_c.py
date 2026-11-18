@@ -55,7 +55,7 @@ C={
 '<div class="aw"><div class="a1">Bon retour !</div><div class="a2">Tu étais parti §§</div><div class="a3">+<span id="awn">0</span></div><div class="a4">pièces gagnées pendant ton absence</div><div class="a5">Rythme actuel : § pièces par seconde.§</div><button class="g am">Récupérer</button></div>':'<div class="aw"><div class="a1">Welcome back!</div><div class="a2">You were away {0}{1}</div><div class="a3">+<span id="awn">0</span></div><div class="a4">coins earned while you were away</div><div class="a5">Current pace: {2} coins per second.{3}</div><button class="g am">Collect</button></div>',
 " L’amélioration « Veille » augmente les gains hors-ligne.":" The “Idle” upgrade increases offline earnings."," (plafond atteint)":" (cap reached)",
 "Pendant ton absence : +":"While you were away: +"," pièces":" coins",
-"Nouveau : des points de talent à dépenser dans l’onglet Voûte.":"New: talent points to spend in the Vault tab.",
+"Nouveau : des points de talent à dépenser dans l’onglet Talents.":"New: talent points to spend in the Talents tab.",
 "Une relique t’attend dans l’onglet Voûte : choisis-en une !":"A relic is waiting in the Vault tab: pick one!",
 "Tu peux transcender (onglet Voûte) pour un bonus permanent.":"You can transcend (Vault tab) for a permanent bonus.",
 "Les combos de cristaux augmentent tes gains : enchaîne sans pause !":"Crystal combos boost your earnings: chain them without a pause!",
