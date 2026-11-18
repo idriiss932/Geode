@@ -72,3 +72,6 @@ C={
 'Réinitialiser les talents (gratuit)':'Reset talents (free)','Puissance':'Power',
 'Touche un talent pour voir son effet et l’améliorer. Chaque talent débloque ceux qui en dépendent. Tu gagnes des points à chaque ascension.':'Tap a talent to see its effect and upgrade it. Each talent unlocks the ones that depend on it. You earn points at every ascension.',
 }
+
+import json as _json
+C.update(_json.load(open(__import__('os').path.join(__import__('os').path.dirname(__file__),'en_guide.json'),encoding='utf-8')))
