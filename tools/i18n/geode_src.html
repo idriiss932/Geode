@@ -389,7 +389,7 @@ const BOOSTDEF={
   dmg:{n:'Fureur',d:'Dégâts ×3',dur:60,cost:8}
 };
 const fresh=()=>({coins:30,gems:0,stars:0,depth:1,maxDepth:1,runBest:1,cnt:[3,0,0,0,0,0,0,0,0,0],lvl:new Array(TIERS).fill(0),bought0:0,
-  up:{speed:0,dmg:0,gain:0,crit:0,split:0,cap:0,tap:0,off:0,auto:0},pow:{nova:{u:false,l:0,seen:false},bolt:{u:false,l:0,seen:false},magnet:{u:false,l:0,seen:false},midas:{u:false,l:0,seen:false}},stats:{kills:0,bosses:0,maxCombo:0,taps:0,merges:0,buys:0,gold:0,play:0,chests:0,dc:0,ev:0,tcMax:0,night:0},ach:{},dc:{d:'',l:[]},cod:{b:{},t:0},rel:[],relPend:0,skin:'def',skins:{def:1},hist:[],mis:[{n:0,base:0},{n:0,base:0},{n:0,base:0},{n:0,base:0}],daily:{last:'',streak:0},boost:{gain:0,speed:0,dmg:0},cps:0,last:Date.now(),total:0,asc:0,taps:0,tutStep:0,chests:{c:0,r:0,e:0},shop:{free:0,dd:'',db:[]},tp:0,tal:{},wk:{w:'',l:[]},tr:0,tip:{}});
+  up:{speed:0,dmg:0,gain:0,crit:0,split:0,cap:0,tap:0,off:0,auto:0},pow:{nova:{u:false,l:0,seen:false},bolt:{u:false,l:0,seen:false},magnet:{u:false,l:0,seen:false},midas:{u:false,l:0,seen:false}},stats:{kills:0,bosses:0,maxCombo:0,taps:0,merges:0,buys:0,gold:0,play:0,chests:0,dc:0,ev:0,tcMax:0,night:0},ach:{},dc:{d:'',l:[]},cod:{b:{},t:0},rel:[],relPend:0,skin:'def',skins:{def:1},hist:[],mis:[{n:0,base:0},{n:0,base:0},{n:0,base:0},{n:0,base:0}],daily:{last:'',streak:0},boost:{gain:0,speed:0,dmg:0},cps:0,last:Date.now(),total:0,asc:0,taps:0,tutStep:0,chests:{c:0,r:0,e:0},shop:{free:0,dd:'',db:[]},tp:0,tal:{},wk:{w:'',l:[]},tr:0,tip:{},cpsL:0});
 let S=fresh();
 const SAVEK='geode_v1',BAKK='geode_v1_bak',PREFK='geode_prefs',SAVE_VER=3;
 let lastBak=0;
@@ -630,7 +630,7 @@ function sanitize(o){
   const d=o.daily||{};r.daily={last:/^\d{4}-\d{2}-\d{2}$/.test(d.last)?d.last:'',streak:int(d.streak,0,0,1e4)};
   {const ch=o.chests||{};r.chests={c:int(ch.c,0,0,999),r:int(ch.r,0,0,999),e:int(ch.e,0)};r.chests.e=Math.min(999,r.chests.e);
    const sh=o.shop||{};r.shop={free:Math.min(Date.now()+3*3600e3,num(sh.free,0,0,1e15)),dd:/^\d{4}-\d{2}-\d{2}$/.test(sh.dd)?sh.dd:'',db:(Array.isArray(sh.db)?sh.db:[]).filter(x=>typeof x==='string').slice(0,4)};}
-  r.cps=num(o.cps,0,0,1e300);r.total=num(o.total,0,0,1e300);r.asc=int(o.asc,0,0,1e6);r.taps=int(o.taps,0,0,1e9);r.tutStep=int(o.tutStep,0,0,99);
+  r.cps=num(o.cps,0,0,1e300);r.cpsL=num(o.cpsL,0,0,1e300);r.total=num(o.total,0,0,1e300);r.asc=int(o.asc,0,0,1e6);r.taps=int(o.taps,0,0,1e9);r.tutStep=int(o.tutStep,0,0,99);
   {const a=o.ach||{};r.ach={};for(const k of ACH_IDS)if(a[k])r.ach[k]=1;
    const dc=o.dc||{};r.dc={d:DAYK.test(dc.d)?dc.d:'',l:(Array.isArray(dc.l)?dc.l:[]).slice(0,3).map(x=>({k:DCK.includes(x&&x.k)?x.k:'kills',b:num(x&&x.b,0,0,1e15),g:num(x&&x.g,1,1,1e12),done:x&&x.done?1:0}))};
    const cd=o.cod||{};r.cod={b:{},t:int(cd.t,0,0,TIERS)};for(const k of BOSS_IDS)if(cd.b&&cd.b[k])r.cod.b[k]=1;
@@ -658,7 +658,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.4.3';
+const GAME_VER='2.4.4';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -869,7 +869,7 @@ function step(dt){
   histT+=dt;if(histT>=120){histT=0;S.hist.push([Math.floor(S.stats.play),S.depth,Math.log10(Math.max(1,S.cps))]);if(S.hist.length>150)S.hist.shift();}
   for(const b of blocks){if(b.sc<1&&T>0)b.sc=Math.min(1,b.sc+dt*(b.delay>0?(b.delay-=dt,0):4));b.flash=Math.max(0,b.flash-dt*5);}
   streakT-=dt;if(streakT<=0)streak=0;
-  cpsT+=dt;if(cpsT>=1){S.cps+=(coinAcc/cpsT-S.cps)*.12;coinAcc=0;cpsT=0;}
+  cpsT+=dt;if(cpsT>=1){S.cps+=(coinAcc/cpsT-S.cps)*.12;S.cpsL+=(S.cps-S.cpsL)/600;coinAcc=0;cpsT=0;}
   if(SIM)return;
   if(tcN&&T-tcT>.75)tcN=0;
   if(ready&&!tutoOn()&&S.maxDepth>=3&&!gold&&!wild&&!gcr&&!mets.length&&!metQ){evT-=dt;if(evT<=0)spawnEvent();}
@@ -916,7 +916,7 @@ function ascend(){
 }
 function offlineGain(sec){
   if(!(sec>0))return 0;
-  const cap=8*3600*(1+.2*S.up.off),s=Math.min(sec,cap),g=S.cps*s*.5*(1+.2*S.up.off)*RM('off')*(1+.1*TL('off'));
+  const cap=8*3600*(1+.2*S.up.off),s=Math.min(sec,cap),g=Math.max(S.cps,S.cpsL||0)*s*.5*(1+.2*S.up.off)*RM('off')*(1+.1*TL('off'));
   return g;
 }
 function spawnGold(){
@@ -1793,10 +1793,10 @@ if(LANG==='en')try{document.documentElement.lang='en';document.title=EN['Géode 
   for(const n of ns){const t=n.nodeValue.trim();if(t&&EN[t]!==undefined)n.nodeValue=n.nodeValue.replace(t,EN[t]);}
   for(const e of document.querySelectorAll('[title],[aria-label]')){for(const a of ['title','aria-label']){const v=e.getAttribute(a);if(v&&EN[v]!==undefined)e.setAttribute(a,EN[v]);}}}catch(e){}
 function showAway(sec,gn){
-  if(!(gn>0))return;
+  if(!(gn>=1))return;
   if(sec<60||$('away')){toast('Pendant ton absence : +'+fmt(gn)+' pièces');return;}
   const cap=8*3600*(1+.2*S.up.off),m=document.createElement('div');m.id='away';
-  m.innerHTML=`<div class="aw"><div class="a1">Bon retour !</div><div class="a2">Tu étais parti ${fmtDur(Math.min(sec,cap))}${sec>cap?' (plafond atteint)':''}</div><div class="a3">+<span id="awn">0</span></div><div class="a4">pièces gagnées pendant ton absence</div><div class="a5">Rythme actuel : ${fmt(S.cps)} pièces par seconde.${S.up.off<3?' L’amélioration « Veille » augmente les gains hors-ligne.':''}</div><button class="g am">Récupérer</button></div>`;
+  m.innerHTML=`<div class="aw"><div class="a1">Bon retour !</div><div class="a2">Tu étais parti ${fmtDur(Math.min(sec,cap))}${sec>cap?' (plafond atteint)':''}</div><div class="a3">+<span id="awn">0</span></div><div class="a4">pièces gagnées pendant ton absence</div><div class="a5">Rythme de référence : ${fmt(Math.max(S.cps,S.cpsL||0))} pièces par seconde.${S.up.off<3?' L’amélioration « Veille » augmente les gains hors-ligne.':''}</div><button class="g am">Récupérer</button></div>`;
   document.body.appendChild(m);requestAnimationFrame(()=>m.classList.add('on'));
   try{countUp(m.querySelector('#awn'),fmt(gn),900);}catch(e){}
   m.querySelector('button').addEventListener('click',()=>{initAudio();sGem();
@@ -1808,7 +1808,7 @@ setTimeout(applyImmersive,300);
 resize();
 if(had){
   const away=Math.max(0,(Date.now()-S.last)/1000);
-  if(away>30){const gn=offlineGain(away);if(gn>0){S.coins+=gn;S.total+=gn;setTimeout(()=>showAway(away,gn),700);}}
+  if(away>30){const gn=offlineGain(away);if(gn>0){S.coins+=gn;S.total+=gn;if(gn>=1)setTimeout(()=>showAway(away,gn),700);}}
 }
 if(dailyReady())setTimeout(()=>toast('🎁 Ton coffre du jour est prêt (onglet Missions)'),2600);
 dispCoins=S.coins;genBoard();syncComets();buildTabs();buildList();applyPrefs();
