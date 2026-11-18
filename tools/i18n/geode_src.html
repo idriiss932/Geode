@@ -321,6 +321,8 @@ html,body{background:#05060a}
 #away .a5{font-size:11.5px;color:#b9dcd6;margin:12px 0 16px;line-height:1.4}#away .g{width:100%;padding:13px 4px;font-size:15px}
 #tabs .tab{flex:1;min-width:0;transition:flex .22s,background .2s,color .2s}#tabs .tab.on{flex:2.3}
 #tabs .tab>span:not(.dot){display:none;white-space:nowrap}#tabs .tab.on>span:not(.dot){display:block}
+.tree{width:100%;height:auto;display:block;margin:2px 0 6px;-webkit-user-select:none}.tree g{cursor:pointer}
+.tree g.pl circle.m{animation:tpl 1.7s ease-in-out infinite}@keyframes tpl{50%{stroke-opacity:.3}}
 </style>
 </head>
 <body>
@@ -368,7 +370,7 @@ const tcol=(t,l=62,a=1)=>`hsla(${TC[t%TIERS]},95%,${l}%,${a})`;
 const D=t=>Math.pow(6,t);
 const lvlCost=(t,l)=>30*Math.pow(10,t)*Math.pow(1.55,l);
 const cometR=t=>.034+.005*t;
-const spdMul=l=>1+1.6*(1-Math.pow(.94,l)),critP=l=>.55*(1-Math.pow(.9,l))*RM('crit'),splitP=l=>.45*(1-Math.pow(.9,l))*RM('split');
+const spdMul=l=>1+1.6*(1-Math.pow(.94,l)),critP=l=>.55*(1-Math.pow(.9,l))*RM('crit')*(1+.1*TL('cr')),splitP=l=>.45*(1-Math.pow(.9,l))*RM('split')*(1+.1*TL('sp'));
 const autoInt=l=>Math.max(.6,6-.55*l)/((1+.06*TL('af'))*RM('auto'));
 const UPDEF={
   speed:{n:'Vitesse',d:l=>`Comètes ${Math.round((spdMul(l)-1)*100)}% plus rapides`,max:999,base:80,g:1.8},
@@ -422,20 +424,25 @@ const RELICS=[
  {id:'trader',n:'Négociant rusé',ic:'⚖',c:'#9be82f',d:'Comètes 15 % moins chères · dégâts −5 %',m:{cheap:.85,dmg:.95}},
  {id:'titan',n:'Brise-titan',ic:'⚒',c:'#ff6b6b',d:'Dégâts ×2 contre les cristaux géants · gains −10 %',m:{bossd:2,gain:.9}}];
 const TAL={
- eco:{n:'Veine riche',d:l=>`Gains +${l*8} %`,max:10,br:0},
- neg:{n:'Négociant',d:l=>`Comètes ${l*3} % moins chères`,max:10,br:0},
- chest:{n:'Chasseur de trésors',d:l=>`${l*4} % de chance d’un coffre bonus par cristal géant`,max:8,br:0},
- pw:{n:'Force brute',d:l=>`Dégâts +${l*8} %`,max:10,br:1},
- tap:{n:'Doigts d’acier',d:l=>`Dégâts des touches +${l*20} %`,max:10,br:1},
- gi:{n:'Tueur de géants',d:l=>`Dégâts contre les cristaux géants +${l*10} %`,max:10,br:1},
- af:{n:'Fusion éclair',d:l=>`Auto-fusion ${l*6} % plus rapide`,max:8,br:2},
- off:{n:'Sommeil lucratif',d:l=>`Gains hors-ligne +${l*10} %`,max:10,br:2},
- bst:{n:'Sablier',d:l=>`Boosts ${l*8} % plus longs`,max:8,br:2},
- gem:{n:'Œil à gemmes',d:l=>`${l*10} % de gemmes en plus`,max:8,br:2}};
-const TALBR=['Économie','Puissance','Automatisation'];
-const TL=k=>S.tal[k]||0,talCost=k=>1+Math.floor(TL(k)/3);
-function buyTal(k){const d=TAL[k];if(!d||TL(k)>=d.max)return false;const c=talCost(k);if(S.tp<c){if(!SIM)sDeny();return false;}S.tp-=c;S.tal[k]=TL(k)+1;if(!SIM)sLevel();return true;}
-function respecTal(){let b=0;for(const k in S.tal)for(let l=0;l<S.tal[k];l++)b+=1+Math.floor(l/3);S.tp+=b;S.tal={};if(!SIM)sBuy();return b;}
+ eco:{n:'Veine riche',d:l=>`Gains +${l*8} %`,max:10,br:0,p:null,x:62,y:120,c:1,ic:'◆'},
+ neg:{n:'Négociant',d:l=>`Comètes ${l*3} % moins chères`,max:10,br:0,p:'eco',x:35,y:222,c:1,ic:'⚖'},
+ chest:{n:'Chasseur de trésors',d:l=>`${l*4} % de chance d’un coffre bonus par cristal géant`,max:8,br:0,p:'eco',x:89,y:222,c:1,ic:'▣'},
+ gold:{n:'Chasseur d’or',d:l=>`Comètes dorées ${l*12} % plus fréquentes`,max:5,br:0,p:'neg',x:35,y:324,c:2,ic:'✦'},
+ ev:{n:'Magnétisme chaotique',d:l=>`Événements ${l*10} % plus fréquents`,max:5,br:0,p:'chest',x:89,y:324,c:2,ic:'☄'},
+ pw:{n:'Force brute',d:l=>`Dégâts +${l*8} %`,max:10,br:1,p:null,x:180,y:120,c:1,ic:'✹'},
+ tap:{n:'Doigts d’acier',d:l=>`Dégâts des touches +${l*20} %`,max:10,br:1,p:'pw',x:153,y:222,c:1,ic:'◉'},
+ gi:{n:'Tueur de géants',d:l=>`Dégâts contre les cristaux géants +${l*10} %`,max:10,br:1,p:'pw',x:207,y:222,c:1,ic:'♛'},
+ cr:{n:'Œil de lynx',d:l=>`Chances de critique +${l*10} %`,max:5,br:1,p:'tap',x:153,y:324,c:2,ic:'✧'},
+ sp:{n:'Onde de choc',d:l=>`Éclatement +${l*10} %`,max:5,br:1,p:'gi',x:207,y:324,c:2,ic:'❋'},
+ af:{n:'Fusion éclair',d:l=>`Auto-fusion ${l*6} % plus rapide`,max:8,br:2,p:null,x:298,y:120,c:1,ic:'↻'},
+ off:{n:'Sommeil lucratif',d:l=>`Gains hors-ligne +${l*10} %`,max:10,br:2,p:'af',x:271,y:222,c:1,ic:'☾'},
+ bst:{n:'Sablier',d:l=>`Boosts ${l*8} % plus longs`,max:8,br:2,p:'af',x:325,y:222,c:1,ic:'⏳'},
+ gem:{n:'Œil à gemmes',d:l=>`${l*10} % de gemmes en plus`,max:8,br:2,p:'off',x:271,y:324,c:2,ic:'◇'},
+ pcd:{n:'Maître des pouvoirs',d:l=>`Recharge des pouvoirs −${l*4} %`,max:5,br:2,p:'bst',x:325,y:324,c:2,ic:'⚡'}};
+const TALBR=['Économie','Puissance','Automatisation'],TALCOL=['#ffc66b','#ff6b6b','#5af0e0'];
+const TL=k=>S.tal[k]||0,talCost=k=>TAL[k].c+Math.floor(TL(k)/3),talOpen=k=>{const q=TAL[k].p;return !q||TL(q)>0;};
+function buyTal(k){const d=TAL[k];if(!d||TL(k)>=d.max||!talOpen(k))return false;const c=talCost(k);if(S.tp<c){if(!SIM)sDeny();return false;}S.tp-=c;S.tal[k]=TL(k)+1;if(!SIM)sLevel();return true;}
+function respecTal(){let b=0;for(const k in S.tal)for(let l=0;l<S.tal[k];l++)b+=TAL[k].c+Math.floor(l/3);S.tp+=b;S.tal={};if(!SIM)sBuy();return b;}
 function transcend(){if(S.asc<20)return false;
   const keep={gems:S.gems+25,stars:0,maxDepth:S.maxDepth,boost:S.boost,asc:0,total:S.total,stats:S.stats,pow:S.pow,mis:S.mis,daily:S.daily,taps:S.taps,tutStep:S.tutStep,chests:S.chests,shop:S.shop,ach:S.ach,dc:S.dc,cod:S.cod,rel:[],relPend:0,skin:S.skin,skins:S.skins,hist:S.hist,tp:S.tp+5,tal:S.tal,wk:S.wk,tr:S.tr+1,tip:S.tip};
   S=Object.assign(fresh(),keep);comets=[];syncComets();genBoard();return true;}
@@ -558,14 +565,34 @@ function openJournal(sec){
   document.body.appendChild(m);requestAnimationFrame(()=>m.classList.add('on'));
 }
 function renderTal(box){box.innerHTML='';
-  const add=h=>{const d=document.createElement('div');d.innerHTML=h;box.appendChild(d);return d;},CL=['#ffc66b','#ff6b6b','#5af0e0'];
-  add(`<p><b>${S.tp}</b> point${S.tp>1?'s':''} de talent à dépenser. Tu en gagnes à chaque ascension. Les talents sont permanents.</p>`);
-  TALBR.forEach((bn,bi)=>{add(`<div class="tbr">${bn}</div>`);
-    for(const k in TAL){const d=TAL[k];if(d.br!==bi)continue;const l=TL(k),mx=l>=d.max,c=talCost(k),can=!mx&&S.tp>=c;
-      const el=add(`<div class="rlc" style="--c:${CL[bi]}"><i class="tl">${l}</i><div><b>${d.n}</b><span>${l?d.d(l):'Pas encore appris'}${mx?'':' → '+d.d(l+1)}</span></div><button class="g ${can?'':'off'}">${mx?'MAX':c+' pt'}</button></div>`);
-      const bt=el.querySelector('button');if(bt)bt.addEventListener('click',()=>{initAudio();if(buyTal(k)){if(ui)ui.tlk='';refreshUI(true);}else if(!mx){sDeny();toast(`Il te faut ${c} point${c>1?'s':''} de talent`);}});}});
-  const rs=add('<button class="g am" style="width:100%;margin-top:12px;padding:11px 4px;font-size:13px">Réinitialiser les talents (gratuit)</button>').querySelector('button');
-  rs.addEventListener('click',()=>{initAudio();if(!Object.keys(S.tal).length){sDeny();return;}const n=respecTal();toast(`Talents réinitialisés : +${n} point${n>1?'s':''}`);if(ui)ui.tlk='';refreshUI(true);});}
+  if(!ui.tsel||!TAL[ui.tsel])ui.tsel='eco';
+  const sel=ui.tsel,ks=Object.keys(TAL),X=k=>TAL[k].x,Y=k=>TAL[k].y;let sv='';
+  const ln=(x1,y1,x2,y2,col,lit,half)=>`<path d="M${x1} ${y1}C${x1} ${(y1+y2)/2} ${x2} ${(y1+y2)/2} ${x2} ${y2}" fill="none" stroke="${lit?col:half?col:'rgba(255,255,255,.12)'}" stroke-opacity="${lit?.95:half?.4:1}" stroke-width="${lit?3.2:2}" ${half&&!lit?'stroke-dasharray="4 5"':''} stroke-linecap="round"${lit?` style="filter:drop-shadow(0 0 4px ${col})"`:''}/>`;
+  for(const k of ks){const d=TAL[k],col=TALCOL[d.br];
+    if(d.p)sv+=ln(X(d.p),Y(d.p),d.x,d.y,col,TL(k)>0,TL(d.p)>0);
+    else sv+=ln(180,60,d.x,d.y,col,TL(k)>0,true);}
+  sv+=`<circle cx="180" cy="38" r="26" fill="#0d121b" stroke="rgba(255,255,255,.35)" stroke-width="2"/><text x="180" y="40" text-anchor="middle" dominant-baseline="middle" font-size="19" font-weight="600" fill="#fff">${S.tp}</text><text x="180" y="72" text-anchor="middle" font-size="9" letter-spacing="1.5" fill="#9fc3cb" stroke="#0d121b" stroke-width="3" paint-order="stroke">POINTS</text>`;
+  TALBR.forEach((bn,bi)=>{const hx=bi===0?62:bi===1?180:298;sv+=`<text x="${hx}" y="92" text-anchor="middle" font-size="9" letter-spacing="1.4" fill="${TALCOL[bi]}" stroke="#0d121b" stroke-width="3" paint-order="stroke">${bn.toUpperCase()}</text>`;});
+  for(const k of ks){const d=TAL[k],col=TALCOL[d.br],l=TL(k),mx=l>=d.max,op=talOpen(k),can=op&&!mx&&S.tp>=talCost(k),r=22;
+    let st,fi,gl,go=1;
+    if(!op){st='#3a4552';fi='#10161e';gl='#566472';go=.55;}
+    else if(l===0){st=col;fi='#0f151f';gl=col;}
+    else{st=mx?'#ffd47a':col;fi=col;gl='#fff';}
+    sv+=`<g data-k="${k}" class="${can?'pl':''}">`+(sel===k?`<circle cx="${d.x}" cy="${d.y}" r="${r+6}" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="1.6" stroke-dasharray="3 4"/>`:'')
+      +`<circle class="m" cx="${d.x}" cy="${d.y}" r="${r}" fill="${fi}" fill-opacity="${l>0?.28:1}" stroke="${st}" stroke-width="${l>0?2.6:2}"${l>0?` style="filter:drop-shadow(0 0 6px ${st})"`:''}/>`
+      +`<text x="${d.x}" y="${d.y+1}" text-anchor="middle" dominant-baseline="middle" font-size="18" fill="${gl}" fill-opacity="${go}">${op?d.ic:'🔒'}</text>`
+      +(l>0?`<circle cx="${d.x+16}" cy="${d.y+16}" r="9" fill="#0b1018" stroke="${st}" stroke-width="1.6"/><text x="${d.x+16}" y="${d.y+17}" text-anchor="middle" dominant-baseline="middle" font-size="${mx?10:10}" font-weight="600" fill="#fff">${mx?'★':l}</text>`:'')
+      +`<circle cx="${d.x}" cy="${d.y}" r="${r+8}" fill="transparent"/></g>`;}
+  const t=document.createElement('div');t.innerHTML=`<svg class="tree" viewBox="0 0 360 372" role="img" aria-label="Arbre de talents">${sv}</svg>`;box.appendChild(t);
+  const sd=TAL[sel],l=TL(sel),mx=l>=sd.max,op=talOpen(sel),c=talCost(sel),can=op&&!mx&&S.tp>=c;
+  const dt=document.createElement('div');dt.className='rlc';dt.style.setProperty('--c',TALCOL[sd.br]);
+  dt.innerHTML=`<i class="tl">${l}/${sd.max}</i><div><b>${sd.n}</b><span>${l?sd.d(l):'Pas encore appris'}${mx?'':' → '+sd.d(l+1)}</span>${op?'':`<span style="color:#ff9a9a">Requiert : ${TAL[sd.p].n}</span>`}</div><button class="g ${can?'':'off'}">${mx?'MAX':!op?'Verrouillé':c+' pt'}</button>`;
+  Object.assign(dt.style,{position:'sticky',top:'4px',zIndex:3,background:'#0d1219',boxShadow:'0 10px 18px rgba(0,0,0,.55)',margin:'0 0 6px'});box.insertBefore(dt,t);
+  box.querySelectorAll('svg g[data-k]').forEach(g2=>g2.addEventListener('click',()=>{initAudio();ui.tsel=g2.dataset.k;sBuy();ui.tlk='';refreshUI(true);}));
+  dt.querySelector('button').addEventListener('click',()=>{initAudio();if(buyTal(sel)){ui.tlk='';refreshUI(true);}else if(!mx){sDeny();toast(op?`Il te faut ${c} point${c>1?'s':''} de talent`:'Débloque d’abord : '+TAL[sd.p].n);}});
+  const ex=document.createElement('p');ex.style.cssText='font-size:11.5px;color:var(--dim);margin:10px 2px 0';ex.textContent='Touche un talent pour le voir, puis améliore-le. Chaque talent débloque ceux qui en dépendent. Tu gagnes des points à chaque ascension.';box.appendChild(ex);
+  const rs=document.createElement('button');rs.className='g am';rs.style.cssText='width:100%;margin-top:12px;padding:11px 4px;font-size:13px';rs.textContent='Réinitialiser les talents (gratuit)';box.appendChild(rs);
+  rs.addEventListener('click',()=>{initAudio();if(!Object.keys(S.tal).length){sDeny();return;}const n=respecTal();toast(`Talents réinitialisés : +${n} point${n>1?'s':''}`);ui.tlk='';refreshUI(true);});}
 function renderRel(box){box.innerHTML='';
   const add=h=>{const d=document.createElement('div');d.innerHTML=h;box.appendChild(d);return d;};
   if(S.relPend>0){add('<p><b>Une relique t’attend !</b> Choisis-en une : un bonus puissant, mais avec un prix à payer. Elle est permanente.</p>');
@@ -629,7 +656,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.4.1';
+const GAME_VER='2.4.2';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -892,7 +919,7 @@ function offlineGain(sec){
 }
 function spawnGold(){
   const a=Math.random()*6.283,tx=(Math.random()-.5)*.8,ty=(Math.random()-.5)*.8,sx=Math.cos(a)*1.12,sy=Math.sin(a)*1.12,dx=tx-sx,dy=ty-sy,m=Math.hypot(dx,dy);
-  gold={x:sx,y:sy,vx:dx/m*.42,vy:dy/m*.42,l:0,tr:[]};goldT=(60+Math.random()*70)/RM('gold');sGoldSpawn();
+  gold={x:sx,y:sy,vx:dx/m*.42,vy:dy/m*.42,l:0,tr:[]};goldT=(60+Math.random()*70)/(RM('gold')*(1+.12*TL('gold')));sGoldSpawn();
   if(S.stats.gold===0)toast('✦ Une comète dorée traverse l\'arène : touche-la !');
 }
 function collectGold(){
@@ -905,7 +932,7 @@ function collectGold(){
   shake=Math.max(shake,5);zoom=Math.max(zoom,.02);sGem();sBoost();toast('✦ Comète dorée : '+msg);gold=null;
 }
 /* --- événements aléatoires --- */
-function evReset(){evT=(75+Math.random()*80)/RM('ev');}
+function evReset(){evT=(75+Math.random()*80)/(RM('ev')*(1+.1*TL('ev')));}
 function spawnEvent(){
   const r=Math.random();
   if(r<.38){metTot=9;metQ=9;metHit=0;metAct=true;metTm=.2;toast('☄ Pluie de météorites : touche-les vite !');sEv();}
@@ -968,7 +995,7 @@ const novaDmgMul=l=>20*(1+.35*l),novaCdSec=l=>Math.max(8,24-1.6*l),novaCost=l=>2
 let novaCD=0,novaFx=null;
 function novaDamage(){let top=0;for(let t=0;t<TIERS;t++)if(S.cnt[t]>0)top=t;return dmgOf(top)*novaDmgMul(S.pow.nova.l);}
 function fireNova(){const p=S.pow.nova;if(!p.u||novaCD>0||novaFx)return false;
-  novaFx={r:0,hit:new Set(),dmg:novaDamage()};novaCD=novaCdSec(p.l)*RM('pcd');shake=Math.max(shake,9);flashA=Math.max(flashA,.5);zoom=Math.max(zoom,.045);sNova();return true;}
+  novaFx={r:0,hit:new Set(),dmg:novaDamage()};novaCD=novaCdSec(p.l)*RM('pcd')*(1-.04*TL('pcd'));shake=Math.max(shake,9);flashA=Math.max(flashA,.5);zoom=Math.max(zoom,.045);sNova();return true;}
 const POWS={
  bolt:{n:'Foudre',ic:'⚡',c:'#6fd8ff',unl:25,gems:15,max:10,cost:l=>6000*Math.pow(2.6,l),cd:l=>Math.max(8,20-1.2*l),
   d:l=>`Frappe ${4+l} cristaux au hasard · dégâts ×${boltMul(l).toFixed(0)}`,info:'Des éclairs frappent plusieurs cristaux d’un coup.'},
@@ -986,7 +1013,7 @@ function firePow(k){const p=S.pow[k];if(!p||!p.u||pcd[k]>0)return false;
     flushKills();if(!SIM){shake=Math.max(shake,6);flashA=Math.max(flashA,.25);zoom=Math.max(zoom,.025);sBolt();}}
   else if(k==='magnet'){magnetT=powDur(k,p.l);if(!SIM)sBoost();}
   else{midasT=powDur(k,p.l);if(!SIM){sBoost();flashA=Math.max(flashA,.2);}}
-  pcd[k]=POWS[k].cd(p.l)*RM('pcd');return true;}
+  pcd[k]=POWS[k].cd(p.l)*RM('pcd')*(1-.04*TL('pcd'));return true;}
 function powState(k){const p=S.pow[k];if(!p.u){const unl=k==='nova'?NOVA_DEPTH:POWS[k].unl;return S.maxDepth<unl?['lk','🔒 Profondeur '+unl]:['rd','Débloquable'];}
   const cd=k==='nova'?novaCD:pcd[k],act=k==='magnet'?magnetT:k==='midas'?midasT:(k==='nova'&&novaFx?1:0);
   if(act>0)return['ac',k==='nova'?'En cours':'Actif · '+Math.ceil(act)+' s'];if(cd>0)return['cd','Recharge · '+Math.ceil(cd)+' s'];return['rd','● Prêt'];}
@@ -1443,7 +1470,7 @@ function refreshUI(force){
     for(const o of ui.mis){const i=o.i,g=misGoal(i),p=misProg(i);o.nm.textContent=MISDEF[i].txt(g);o.ds.textContent=fmt(p)+' / '+fmt(g)+' · récompense : '+misReward(i)+' ◆';o.tm.style.width=(100*p/g)+'%';setBtn(o.b,misDone(i)?'Récupérer<small>+'+misReward(i)+' ◆</small>':'En cours',misDone(i));}
     for(const o of ui.stats){const v=String(STATDEF[o.k][1]());if(o._v!==v){o._v=v;o.b.textContent=v;}}
   }else if(tab==='tal'&&ui.tl){
-    const key=S.tp+'|'+JSON.stringify(S.tal);if(ui.tlk!==key){ui.tlk=key;renderTal(ui.tl);}
+    const key=S.tp+'|'+JSON.stringify(S.tal)+'|'+ui.tsel;if(ui.tlk!==key){ui.tlk=key;renderTal(ui.tl);}
   }else if(tab==='vault'&&ui.v){
     const gn=starsFor(S.runBest);ui.v.stars.textContent='★ '+S.stars+'  ·  +'+(S.stars*10)+' %';
     ui.v.info.textContent=gn>0?`Ascension disponible : +${gn} étoile${gn>1?'s':''} (profondeur max ${S.runBest}).`:`Atteins la profondeur ${ASC_MIN} pour pouvoir ascensionner (record de cette mine : ${S.runBest}).`;
@@ -1459,7 +1486,7 @@ function refreshUI(force){
   // pastille de disponibilité
   const dots=tabsEl.querySelectorAll('.dot');
   const pwOk=k=>{const p=S.pow[k],d=k==='nova'?{unl:NOVA_DEPTH,gems:NOVA_GEMS}:POWS[k];return !p.u&&S.maxDepth>=d.unl&&S.gems>=d.gems;};
-  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:freeReady()||S.chests.c+S.chests.r+S.chests.e>0,tal:S.tp>0&&Object.keys(TAL).some(k=>TL(k)<TAL[k].max&&S.tp>=talCost(k)),vault:starsFor(S.runBest)>0||S.relPend>0||S.asc>=20,mis:dailyReady()||[0,1,2,3].some(misDone)};
+  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:freeReady()||S.chests.c+S.chests.r+S.chests.e>0,tal:S.tp>0&&Object.keys(TAL).some(k=>talOpen(k)&&TL(k)<TAL[k].max&&S.tp>=talCost(k)),vault:starsFor(S.runBest)>0||S.relPend>0||S.asc>=20,mis:dailyReady()||[0,1,2,3].some(misDone)};
   dots.forEach((d,i)=>{d.style.display=av[TABS[i][0]]&&TABS[i][0]!==tab?'inline-block':'none';});
   {const lb=bmLabel();listEl.querySelectorAll('.xm').forEach(x=>{if(x._l!==lb){x.textContent=lb;x._l=lb;}});}
 }

@@ -63,4 +63,11 @@ C={
 '<div class="jx"><b>§</b><span>§ / § · § ◆ + coffre §</span><div class="tm"><i style="width:§%"></i></div></div><div class="jr">§</div>':'<div class="jx"><b>{0}</b><span>{1} / {2} · {3} ◆ + {4} chest</span><div class="tm"><i style="width:{5}%"></i></div></div><div class="jr">{6}</div>',
 'commun':'common',
 '<h3>Transcendance</h3><p id="tcp"></p><div class="big" id="tcm"></div><button class="g vi" id="tcb" style="width:70%"></button>':'<h3>Transcendence</h3><p id="tcp"></p><div class="big" id="tcm"></div><button class="g vi" id="tcb" style="width:70%"></button>',
+'Chasseur d’or':'Gold hunter','Comètes dorées § % plus fréquentes':'Golden comets {0}% more frequent','Magnétisme chaotique':'Chaotic magnetism',
+'Événements § % plus fréquents':'Events {0}% more frequent','Œil de lynx':'Lynx eye','Chances de critique +§ %':'Crit chance +{0}%','Onde de choc':'Shockwave',
+'Éclatement +§ %':'Splash +{0}%','Maître des pouvoirs':'Power master','Recharge des pouvoirs −§ %':'Power cooldown −{0}%',
+'<svg class="tree" viewBox="0 0 360 372" role="img" aria-label="Arbre de talents">§</svg>':'<svg class="tree" viewBox="0 0 360 372" role="img" aria-label="Talent tree">{0}</svg>',
+'Verrouillé':'Locked','Débloque d’abord : ':'Unlock first: ','<span style="color:#ff9a9a">Requiert : §</span>':'<span style="color:#ff9a9a">Requires: {0}</span>',
+'Touche un talent pour le voir, puis améliore-le. Chaque talent débloque ceux qui en dépendent. Tu gagnes des points à chaque ascension.':'Tap a talent to inspect it, then upgrade it. Each talent unlocks the ones that depend on it. You earn points at every ascension.',
+'Réinitialiser les talents (gratuit)':'Reset talents (free)','Puissance':'Power',
 }
