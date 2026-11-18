@@ -539,7 +539,7 @@ function load(){
   try{const raw=localStorage.getItem(SAVEK);if(raw)r=parseSave(raw);if(!r){const bk=localStorage.getItem(BAKK);if(bk)r=parseSave(bk);}}catch(e){}
   if(!r)return false;S=r;return true;
 }
-const GAME_VER='2.3.5';
+const GAME_VER='2.3.6';
 async function forceUpdate(){
   save();
   try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();}if(window.caches){for(const k of await caches.keys())await caches.delete(k);}}catch(e){}
@@ -1271,7 +1271,7 @@ function refreshUI(force){
   // pastille de disponibilité
   const dots=tabsEl.querySelectorAll('.dot');
   const pwOk=k=>{const p=S.pow[k],d=k==='nova'?{unl:NOVA_DEPTH,gems:NOVA_GEMS}:POWS[k];return !p.u&&S.maxDepth>=d.unl&&S.gems>=d.gems;};
-  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:Object.keys(BOOSTDEF).some(k=>S.gems>=BOOSTDEF[k].cost)||freeReady()||S.chests.c+S.chests.r+S.chests.e>0,vault:starsFor(S.runBest)>0||S.relPend>0,mis:dailyReady()||[0,1,2,3].some(misDone)};
+  const av={comets:S.coins>=buyCost()||[...Array(TIERS).keys()].some(t=>S.cnt[t]>=3),ups:Object.keys(UPDEF).some(k=>S.up[k]<UPDEF[k].max&&S.coins>=upCost(k)),pow:['nova','bolt','magnet','midas'].some(pwOk),boosts:freeReady()||S.chests.c+S.chests.r+S.chests.e>0,vault:starsFor(S.runBest)>0||S.relPend>0,mis:dailyReady()||[0,1,2,3].some(misDone)};
   dots.forEach((d,i)=>{d.style.display=av[TABS[i][0]]&&TABS[i][0]!==tab?'inline-block':'none';});
   {const lb=bmLabel();listEl.querySelectorAll('.xm').forEach(x=>{if(x._l!==lb){x.textContent=lb;x._l=lb;}});}
 }
